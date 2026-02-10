@@ -1,0 +1,107 @@
+{
+  "timestamp": "2026-02-10T15:26:09.542447",
+  "instruction": null,
+  "demos": [],
+  "optimization_trials": [
+    {
+      "trial": 5,
+      "score": 77.5,
+      "parameters": "GEPA Iteration 5",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 5,
+      "score": 77.5,
+      "parameters": "GEPA Iteration 5",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 5,
+      "score": 77.5,
+      "parameters": "GEPA Iteration 5",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 5,
+      "score": 77.5,
+      "parameters": "GEPA Iteration 5",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 26,
+      "score": 78.0,
+      "parameters": "GEPA Iteration 26",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 26,
+      "score": 78.0,
+      "parameters": "GEPA Iteration 26",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 26,
+      "score": 78.0,
+      "parameters": "GEPA Iteration 26",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 26,
+      "score": 78.0,
+      "parameters": "GEPA Iteration 26",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 33,
+      "score": 79.5,
+      "parameters": "GEPA Iteration 33",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 33,
+      "score": 79.5,
+      "parameters": "GEPA Iteration 33",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 33,
+      "score": 79.5,
+      "parameters": "GEPA Iteration 33",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 33,
+      "score": 79.5,
+      "parameters": "GEPA Iteration 33",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 36,
+      "score": 78.0,
+      "parameters": "GEPA Iteration 36",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 36,
+      "score": 78.0,
+      "parameters": "GEPA Iteration 36",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 36,
+      "score": 79.5,
+      "parameters": "GEPA Iteration 36",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 36,
+      "score": 79.5,
+      "parameters": "GEPA Iteration 36",
+      "optimizer": "gepa"
+    }
+  ],
+  "instruction_candidates": [],
+  "baseline_accuracy": 66.0,
+  "optimized_accuracy": 65.0,
+  "improvement": -1.0
+}
