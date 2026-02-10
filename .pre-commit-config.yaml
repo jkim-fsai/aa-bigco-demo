@@ -1,0 +1,75 @@
+default_language_version:
+  python: python3
+
+ci:
+  autofix_prs: true
+  autoupdate_commit_msg: '[pre-commit.ci] pre-commit suggestions'
+  autoupdate_schedule: 'quarterly'
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+    - id: check-added-large-files
+    - id: check-ast
+    - id: check-yaml
+    - id: check-toml
+    - id: check-json
+    - id: check-byte-order-marker
+      exclude: .gitignore
+    - id: check-merge-conflict
+    - id: detect-private-key
+    - id: trailing-whitespace
+    - id: end-of-file-fixer
+  - repo: https://github.com/psf/black
+    rev: 23.3.0
+    hooks:
+    - id: black
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.13.3
+    hooks:
+      - id: ruff-check
+        args: ["--select", "ARG,F841", "--fix"]
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.15.0  # Specify the version of mypy you want to use
+    hooks:
+    - id: mypy
+      additional_dependencies: [types-requests, types-setuptools, types-Markdown]  # Add any additional dependencies you might need
+      args: ["--ignore-missing-imports"]  # Specify the mypy.ini configuration filedefault_language_version:
+  python: python3
+
+ci:
+  autofix_prs: true
+  autoupdate_commit_msg: '[pre-commit.ci] pre-commit suggestions'
+  autoupdate_schedule: 'quarterly'
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+    - id: check-added-large-files
+    - id: check-ast
+    - id: check-yaml
+    - id: check-toml
+    - id: check-json
+    - id: check-byte-order-marker
+      exclude: .gitignore
+    - id: check-merge-conflict
+    - id: detect-private-key
+    - id: trailing-whitespace
+    - id: end-of-file-fixer
+  - repo: https://github.com/psf/black
+    rev: 23.3.0
+    hooks:
+    - id: black
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.13.3
+    hooks:
+      - id: ruff-check
+        args: ["--select", "ARG,F841", "--fix"]
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.15.0  # Specify the version of mypy you want to use
+    hooks:
+    - id: mypy
+      additional_dependencies: [types-requests, types-setuptools, types-Markdown]  # Add any additional dependencies you might need
+      args: ["--ignore-missing-imports"]  # Specify the mypy.ini configuration file

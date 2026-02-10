@@ -15,11 +15,69 @@ from dspy.primitives.prediction import Prediction
 class OptimizationTracker(logging.Handler):
     """Custom logging handler to capture per-iteration optimization metrics."""
 
-    def __init__(self) -> None:
+    def __init__(self, output_dir: Path = Path("log_viz/runs")) -> None:
         super().__init__()
         self.trials: list[dict] = []
         self.instructions: list[str] = []
         self.current_instruction_idx = 0
+
+        # JSONL logging for real-time visualization
+        self.output_dir = output_dir
+        self.output_dir.mkdir(parents=True, exist_ok=True)
+        self.run_id = datetime.now().strftime("%Y%m%d_%H%M%S")
+        self.trials_jsonl_path = self.output_dir / f"trials_{self.run_id}.jsonl"
+        self.jsonl_file = None
+        self.written_trial_ids = set()  # Deduplication
+
+    def open_jsonl(self) -> None:
+        """Open JSONL file for writing."""
+        if self.jsonl_file is None:
+            self.jsonl_file = open(self.trials_jsonl_path, "a", buffering=1)
+            metadata = {
+                "type": "metadata",
+                "run_id": self.run_id,
+                "timestamp": datetime.now().isoformat(),
+                "status": "started"
+            }
+            self.jsonl_file.write(json.dumps(metadata) + "\n")
+            self.jsonl_file.flush()
+
+    def close_jsonl(self) -> None:
+        """Close JSONL file."""
+        if self.jsonl_file:
+            metadata = {
+                "type": "metadata",
+                "run_id": self.run_id,
+                "timestamp": datetime.now().isoformat(),
+                "status": "completed",
+                "total_trials": len(self.trials)
+            }
+            self.jsonl_file.write(json.dumps(metadata) + "\n")
+            self.jsonl_file.flush()
+            self.jsonl_file.close()
+            self.jsonl_file = None
+
+    def write_trial_to_jsonl(self, trial: dict) -> None:
+        """Write trial to JSONL with deduplication."""
+        trial_id = f"{trial['trial']}_{trial['score']}_{trial.get('eval_type', '')}"
+
+        if trial_id in self.written_trial_ids:
+            return
+
+        self.written_trial_ids.add(trial_id)
+
+        if self.jsonl_file:
+            trial_entry = {
+                "type": "trial",
+                "run_id": self.run_id,
+                "timestamp": datetime.now().isoformat(),
+                **trial
+            }
+            try:
+                self.jsonl_file.write(json.dumps(trial_entry) + "\n")
+                self.jsonl_file.flush()
+            except Exception as e:
+                logging.error(f"Failed to write trial to JSONL: {e}")
 
     def emit(self, record: logging.LogRecord) -> None:
         msg = record.getMessage()
@@ -53,6 +111,7 @@ class OptimizationTracker(logging.Handler):
                 "optimizer": "mipro",
                 "eval_type": "minibatch" if is_minibatch else "full",
             })
+            self.write_trial_to_jsonl(self.trials[-1])
 
         # Capture best scores and default program scores
         # Format: "Default program score: 66.5" or "New best full eval score! Score: 68.5"
@@ -69,6 +128,7 @@ class OptimizationTracker(logging.Handler):
                 "eval_type": "full",
                 "is_best": is_best,
             })
+            self.write_trial_to_jsonl(self.trials[-1])
 
         # Capture GEPA iteration scores
         gepa_iter_match = re.search(r"Iteration (\d+): (?:Valset score for new program|Best score on valset): ([\d.]+)", msg)
@@ -81,6 +141,7 @@ class OptimizationTracker(logging.Handler):
                 "parameters": f"GEPA Iteration {iteration}",
                 "optimizer": "gepa",
             })
+            self.write_trial_to_jsonl(self.trials[-1])
 
         # Capture best score updates
         if "Best full score so far!" in msg:
@@ -281,74 +342,82 @@ def print_prompt_evolution(baseline_instruction: str, optimized_info: dict) -> N
 
 
 async def main() -> None:
-    # Capture baseline instruction
-    baseline_qa = BasicQA()
-    baseline_instruction = "Given the fields `context`, `question`, produce the fields `answer`."
+    # Open JSONL file for real-time logging
+    optimization_tracker.open_jsonl()
 
-    # Step 1: Evaluate baseline on TEST set (unoptimized)
-    print("=" * 60)
-    print("BASELINE EVALUATION (no optimization)")
-    print("=" * 60)
-    baseline_accuracy = await evaluate_async(baseline_qa, testset)
-    print(f"Baseline Accuracy: {baseline_accuracy:.1f}%\n")
+    try:
+        # Capture baseline instruction
+        baseline_qa = BasicQA()
+        baseline_instruction = "Given the fields `context`, `question`, produce the fields `answer`."
 
-    # Step 2: Run GEPA optimization
-    print("=" * 60)
-    print("RUNNING GEPA OPTIMIZATION")
-    print("=" * 60)
-    print("Optimizing instructions via evolutionary search...")
-    print("(Watch the logs below to see prompt evolution)\n")
+        # Step 1: Evaluate baseline on TEST set (unoptimized)
+        print("=" * 60)
+        print("BASELINE EVALUATION (no optimization)")
+        print("=" * 60)
+        baseline_accuracy = await evaluate_async(baseline_qa, testset)
+        print(f"Baseline Accuracy: {baseline_accuracy:.1f}%\n")
 
-    # GEPA needs a separate LM for reflection/instruction proposal
-    reflection_lm = dspy.LM("openai/gpt-4.1-nano", temperature=1.0)
+        # Step 2: Run GEPA optimization
+        print("=" * 60)
+        print("RUNNING GEPA OPTIMIZATION")
+        print("=" * 60)
+        print("Optimizing instructions via evolutionary search...")
+        print("(Watch the logs below to see prompt evolution)\n")
 
-    optimizer = dspy.GEPA(
-        metric=gepa_metric,
-        auto="light",
-        reflection_lm=reflection_lm,
-        num_threads=10,
-    )
-    optimized_qa = optimizer.compile(BasicQA(), trainset=trainset)
+        # GEPA needs a separate LM for reflection/instruction proposal
+        reflection_lm = dspy.LM("openai/gpt-4.1-nano", temperature=1.0)
 
-    # Step 3: Display per-iteration metrics
-    print_optimization_progress(optimization_tracker)
+        optimizer = dspy.GEPA(
+            metric=gepa_metric,
+            auto="light",
+            reflection_lm=reflection_lm,
+            num_threads=10,
+        )
+        optimized_qa = optimizer.compile(BasicQA(), trainset=trainset)
 
-    # Step 4: Extract and display prompt evolution
-    optimized_info = extract_optimized_prompt_info(optimized_qa)
-    print_prompt_evolution(baseline_instruction, optimized_info)
+        # Step 3: Display per-iteration metrics
+        print_optimization_progress(optimization_tracker)
 
-    # Include iteration metrics in the saved results
-    tracker_summary = optimization_tracker.get_summary()
-    optimized_info["optimization_trials"] = tracker_summary["trials"]
-    optimized_info["instruction_candidates"] = tracker_summary["instructions_proposed"]
+        # Step 4: Extract and display prompt evolution
+        optimized_info = extract_optimized_prompt_info(optimized_qa)
+        print_prompt_evolution(baseline_instruction, optimized_info)
 
-    # Save optimization results to JSON for documentation
-    results_file = Path("optimization_results.json")
-    results_file.write_text(json.dumps(optimized_info, indent=2))
-    print(f"\nOptimization details saved to: {results_file}")
+        # Include iteration metrics in the saved results
+        tracker_summary = optimization_tracker.get_summary()
+        optimized_info["optimization_trials"] = tracker_summary["trials"]
+        optimized_info["instruction_candidates"] = tracker_summary["instructions_proposed"]
 
-    # Step 5: Evaluate optimized module on TEST set (held-out)
-    print("\n" + "=" * 60)
-    print("OPTIMIZED EVALUATION (on held-out test set)")
-    print("=" * 60)
-    optimized_accuracy = await evaluate_async(optimized_qa, testset)
-    print(f"Optimized Accuracy: {optimized_accuracy:.1f}%\n")
+        # Save optimization results to JSON for documentation
+        results_file = Path("optimization_results.json")
+        results_file.write_text(json.dumps(optimized_info, indent=2))
+        print(f"\nOptimization details saved to: {results_file}")
 
-    # Step 6: Show comparison
-    print("=" * 60)
-    print("RESULTS COMPARISON")
-    print("=" * 60)
-    print(f"Baseline Accuracy:  {baseline_accuracy:.1f}%")
-    print(f"Optimized Accuracy: {optimized_accuracy:.1f}%")
-    improvement = optimized_accuracy - baseline_accuracy
-    print(f"Improvement:        {improvement:+.1f}%")
-    print("=" * 60)
+        # Step 5: Evaluate optimized module on TEST set (held-out)
+        print("\n" + "=" * 60)
+        print("OPTIMIZED EVALUATION (on held-out test set)")
+        print("=" * 60)
+        optimized_accuracy = await evaluate_async(optimized_qa, testset)
+        print(f"Optimized Accuracy: {optimized_accuracy:.1f}%\n")
 
-    # Update results file with final scores
-    optimized_info["baseline_accuracy"] = baseline_accuracy
-    optimized_info["optimized_accuracy"] = optimized_accuracy
-    optimized_info["improvement"] = improvement
-    results_file.write_text(json.dumps(optimized_info, indent=2))
+        # Step 6: Show comparison
+        print("=" * 60)
+        print("RESULTS COMPARISON")
+        print("=" * 60)
+        print(f"Baseline Accuracy:  {baseline_accuracy:.1f}%")
+        print(f"Optimized Accuracy: {optimized_accuracy:.1f}%")
+        improvement = optimized_accuracy - baseline_accuracy
+        print(f"Improvement:        {improvement:+.1f}%")
+        print("=" * 60)
+
+        # Update results file with final scores
+        optimized_info["baseline_accuracy"] = baseline_accuracy
+        optimized_info["optimized_accuracy"] = optimized_accuracy
+        optimized_info["improvement"] = improvement
+        results_file.write_text(json.dumps(optimized_info, indent=2))
+
+    finally:
+        # Close JSONL file
+        optimization_tracker.close_jsonl()
 
 
 if __name__ == "__main__":
