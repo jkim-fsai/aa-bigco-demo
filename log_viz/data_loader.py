@@ -85,6 +85,33 @@ class TrialDataLoader:
             st.error(f"Error loading historical results: {e}")
             return None
 
+    @st.cache_data(ttl=10)
+    def get_all_result_files(_self) -> Dict[str, Path]:
+        """Get all optimization result JSON files."""
+        results = {}
+        base_dir = Path(".")
+
+        # Check for main optimization_results.json
+        if HISTORICAL_RESULTS.exists():
+            results["main"] = HISTORICAL_RESULTS
+
+        # Check for optimizer-specific results
+        for optimizer in ["gepa", "mipro", "miprov2"]:
+            result_file = base_dir / f"optimization_results_{optimizer}.json"
+            if result_file.exists():
+                results[optimizer] = result_file
+
+        return results
+
+    def load_result_file(self, file_path: Path) -> Optional[Dict]:
+        """Load a specific result file."""
+        try:
+            with open(file_path, "r") as f:
+                return json.load(f)
+        except Exception as e:
+            st.error(f"Error loading {file_path}: {e}")
+            return None
+
     def get_run_metadata(self, run_id: str) -> Dict:
         """Extract metadata from a run."""
         jsonl_path = RUNS_DIR / f"{run_id}.jsonl"

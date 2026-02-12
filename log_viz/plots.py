@@ -11,7 +11,7 @@ from utils.config import COLORS, PLOT_HEIGHT
 def create_score_over_time_plot(
     df: pd.DataFrame,
     historical_df: Optional[pd.DataFrame] = None,
-    title: str = "Optimization Progress"
+    title: str = "Optimization Progress (Training Set)"
 ) -> go.Figure:
     """Create main score vs iteration plot with live and historical data."""
 
@@ -89,7 +89,7 @@ def create_running_max_plot(df: pd.DataFrame) -> go.Figure:
     ))
 
     fig.update_layout(
-        title="Best Score Tracker",
+        title="Best Score Tracker (Training Set)",
         xaxis_title="Trial Number",
         yaxis_title="Score (%)",
         height=PLOT_HEIGHT,
@@ -110,7 +110,7 @@ def create_score_distribution_plot(df: pd.DataFrame) -> go.Figure:
         df,
         x="score",
         nbins=20,
-        title="Score Distribution",
+        title="Score Distribution (Training Set)",
         labels={"score": "Score (%)", "count": "Frequency"},
         color_discrete_sequence=[COLORS["secondary"]]
     )

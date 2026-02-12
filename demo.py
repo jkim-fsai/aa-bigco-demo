@@ -18,8 +18,10 @@ class OptimizationTracker(logging.Handler):
     def __init__(self, output_dir: Path = Path("log_viz/runs")) -> None:
         super().__init__()
         self.trials: list[dict] = []
-        self.instructions: list[str] = []
+        self.instructions: list[dict] = []
         self.current_instruction_idx = 0
+        self.capturing_gepa_instruction = False
+        self.current_gepa_instruction = {"index": 0, "instruction": "", "type": "gepa"}
 
         # JSONL logging for real-time visualization
         self.output_dir = output_dir
@@ -82,10 +84,10 @@ class OptimizationTracker(logging.Handler):
     def emit(self, record: logging.LogRecord) -> None:
         msg = record.getMessage()
 
-        # Capture proposed instructions
+        # Capture proposed instructions (MIPROv2 format)
         if "Proposed Instructions for Predictor" in msg:
             self.current_instruction_idx = 0
-        elif re.match(r"^\d+:", msg):
+        elif re.match(r"^\d+:", msg) and "Iteration" not in msg:
             # Instruction candidate line like "0: Given the fields..."
             match = re.match(r"^(\d+):\s*(.+)$", msg)
             if match:
@@ -93,7 +95,24 @@ class OptimizationTracker(logging.Handler):
                 self.instructions.append({
                     "index": int(idx),
                     "instruction": instruction.strip(),
+                    "type": "mipro"
                 })
+
+        # Capture GEPA proposed instructions (full text in single log message)
+        gepa_instruction_match = re.search(
+            r"Iteration (\d+): Proposed new text for generate_answer\.predict:\s*(.+)",
+            msg,
+            re.DOTALL  # Allow . to match newlines
+        )
+        if gepa_instruction_match:
+            iteration = int(gepa_instruction_match.group(1))
+            instruction_text = gepa_instruction_match.group(2).strip()
+            self.instructions.append({
+                "index": iteration,
+                "instruction": instruction_text,
+                "type": "gepa",
+                "iteration": iteration
+            })
 
         # Capture trial scores (MIPROv2 format with optional minibatch info)
         # Format 1: "Score: 70.0 with parameters ['...']."
@@ -255,11 +274,33 @@ def extract_optimized_prompt_info(optimized_module: BasicQA) -> dict:
         "demos": [],
     }
 
-    # Extract instruction from the predictor's signature
+    # Extract instruction from the predictor's signature (multiple possible locations)
+    instruction = None
+
+    # Try extended_signature.instructions (MIPROv2, COPRO)
     if hasattr(predictor, "extended_signature"):
         sig = predictor.extended_signature
         if hasattr(sig, "instructions"):
-            info["instruction"] = sig.instructions
+            instruction = sig.instructions
+
+    # Try signature.instructions (GEPA, some optimizers)
+    if not instruction and hasattr(predictor, "signature"):
+        sig = predictor.signature
+        if hasattr(sig, "instructions"):
+            instruction = sig.instructions
+
+    # Try predictor.predict.signature for GEPA
+    if not instruction and hasattr(predictor, "predict"):
+        if hasattr(predictor.predict, "signature"):
+            sig = predictor.predict.signature
+            if hasattr(sig, "instructions"):
+                instruction = sig.instructions
+        if hasattr(predictor.predict, "extended_signature"):
+            sig = predictor.predict.extended_signature
+            if hasattr(sig, "instructions"):
+                instruction = sig.instructions
+
+    info["instruction"] = instruction
 
     # Extract few-shot demos
     if hasattr(predictor, "demos") and predictor.demos:
@@ -273,6 +314,106 @@ def extract_optimized_prompt_info(optimized_module: BasicQA) -> dict:
             info["demos"].append(demo_info)
 
     return info
+
+
+def generate_evolution_summary(
+    instruction_candidates: list[dict],
+    optimization_trials: list[dict],
+    final_instruction: str | None,
+    baseline_accuracy: float,
+    optimized_accuracy: float,
+    max_instruction_chars: int = 400_000,  # ~100K tokens for instruction history
+) -> str:
+    """Generate an LLM summary of the optimization evolution."""
+
+    # Deduplicate instruction candidates (they appear twice in logs)
+    seen = set()
+    unique_candidates = []
+    for cand in instruction_candidates:
+        key = (cand.get("iteration", cand["index"]), cand["instruction"][:100])
+        if key not in seen:
+            seen.add(key)
+            unique_candidates.append(cand)
+
+    # Sort by iteration
+    unique_candidates.sort(key=lambda x: x.get("iteration", x["index"]))
+
+    # Truncate individual instructions and estimate total size
+    for cand in unique_candidates:
+        if len(cand["instruction"]) > 2000:
+            cand["instruction"] = cand["instruction"][:2000] + "... [truncated]"
+
+    # Sample evenly if total chars exceed budget
+    total_chars = sum(len(c["instruction"]) for c in unique_candidates)
+    if total_chars > max_instruction_chars and len(unique_candidates) > 1:
+        # Calculate how many we can keep
+        avg_chars = total_chars / len(unique_candidates)
+        max_candidates = int(max_instruction_chars / avg_chars)
+        max_candidates = max(max_candidates, 2)  # Keep at least 2
+
+        # Sample evenly across iterations
+        step = len(unique_candidates) / max_candidates
+        sampled_indices = [int(i * step) for i in range(max_candidates)]
+        unique_candidates = [unique_candidates[i] for i in sampled_indices]
+
+    # Build instruction history
+    instruction_history = []
+    for cand in unique_candidates:
+        iteration = cand.get("iteration", cand["index"])
+        instruction_history.append(f"## Iteration {iteration}\n{cand['instruction']}")
+
+    # Deduplicate and sort trials
+    seen_trials = set()
+    unique_trials = []
+    for trial in optimization_trials:
+        key = (trial["trial"], trial["score"])
+        if key not in seen_trials:
+            seen_trials.add(key)
+            unique_trials.append(trial)
+    unique_trials.sort(key=lambda x: x["trial"])
+
+    # Format score progression
+    score_progression = "\n".join([
+        f"Iteration {t['trial']}: {t['score']:.1f}%"
+        for t in unique_trials
+    ])
+
+    # Create the prompt
+    prompt = f"""Analyze the following DSPy GEPA optimization run and provide a concise summary of the instruction evolution.
+
+## Optimization Results
+- Baseline Accuracy (before optimization): {baseline_accuracy:.1f}%
+- Optimized Accuracy (after optimization): {optimized_accuracy:.1f}%
+- Improvement: {optimized_accuracy - baseline_accuracy:+.1f}%
+
+## Score Progression Per Iteration
+{score_progression}
+
+## Instruction Proposals (in chronological order)
+{chr(10).join(instruction_history)}
+
+## Final Optimized Instruction
+{final_instruction if final_instruction else "(Not extracted)"}
+
+---
+
+Please provide a summary that covers:
+1. **Overall Trajectory**: How did the optimization progress? Did scores improve consistently or plateau?
+2. **What Worked**: What instruction patterns or strategies led to score improvements?
+3. **What Didn't Work**: What approaches were tried but didn't help (or hurt performance)?
+4. **Key Patterns**: Any notable trends in how instructions evolved (e.g., increasing specificity, adding constraints, etc.)
+5. **Recommendations**: Based on this evolution, what might improve results further?
+
+Keep the summary concise (3-5 paragraphs) and actionable."""
+
+    # Use DSPy LM to generate the summary
+    summary_lm = dspy.LM("openai/gpt-4.1-nano", temperature=0.3)
+
+    try:
+        response = summary_lm(prompt)
+        return response if isinstance(response, str) else response[0]
+    except Exception as e:
+        return f"Error generating summary: {e}"
 
 
 def print_optimization_progress(tracker: OptimizationTracker) -> None:
@@ -413,7 +554,27 @@ async def main() -> None:
         optimized_info["baseline_accuracy"] = baseline_accuracy
         optimized_info["optimized_accuracy"] = optimized_accuracy
         optimized_info["improvement"] = improvement
+
+        # Generate evolution summary using LLM
+        print("\n" + "=" * 60)
+        print("GENERATING EVOLUTION SUMMARY...")
+        print("=" * 60)
+
+        evolution_summary = generate_evolution_summary(
+            instruction_candidates=optimized_info["instruction_candidates"],
+            optimization_trials=optimized_info["optimization_trials"],
+            final_instruction=optimized_info.get("instruction"),
+            baseline_accuracy=baseline_accuracy,
+            optimized_accuracy=optimized_accuracy,
+        )
+
+        optimized_info["evolution_summary"] = evolution_summary
+        print("\nEvolution Summary:")
+        print(evolution_summary)
+
+        # Save updated results with summary
         results_file.write_text(json.dumps(optimized_info, indent=2))
+        print(f"\nResults saved to: {results_file}")
 
     finally:
         # Close JSONL file
