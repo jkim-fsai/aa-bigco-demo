@@ -7,5 +7,47 @@ requires-python = ">=3.11"
 dependencies = [
     "dspy>=3.1.3",
     "datasets",
-    "pre-commit",
+    # Pin so resolver uses 23.0.0 (indexed in Xray, no issues). 23.0.1 is unscanned → block → timeout.
+    "pyarrow==23.0.0",
+    # streamlit 1.54.0 requires pandas<3. Use 2.x; 2.3.3 arm64 is indexed; 2.3.3 x86_64 may timeout (unscanned).
+    "pandas>=2,<3",
+    # 0.24.0 unscanned → timeout. Pin to 0.23.0 (indexed, no issues).
+    "typer-slim==0.23.0",
+    # 0.24.0 unscanned → timeout. Pin to 0.23.0 (indexed, no issues).
+    "typer==0.23.0",
+    # 1.53.1 unscanned → timeout. 1.54.0 (and 1.51.0) indexed, no issues.
+    "streamlit==1.54.0",
 ]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7.0",
+    "pytest-asyncio>=0.21",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+asyncio_mode = "auto"
+
+[tool.coverage.run]
+source = ["dspy_demo", "log_viz"]
+omit = ["*/tests/*", "*/__pycache__/*"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "if __name__ == .__main__.:",
+    "raise NotImplementedError",
+]
+
+# Use only JFrog Artifactory; public PyPI is disabled.
+# Auth: UV_INDEX_JFROG_USERNAME + UV_INDEX_JFROG_PASSWORD, or keyring/netrc for fsaiartifact.jfrog.io.
+# Fail fast on Xray blocks: export UV_HTTP_TIMEOUT=5 (uv retries 3×, so ~15s max per request)
+[[tool.uv.index]]
+name = "jfrog"
+url = "https://fsaiartifact.jfrog.io/artifactory/api/pypi/fsai-private-py-AUS-virtual/simple"
+default = true
