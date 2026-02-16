@@ -1,12 +1,18 @@
 """Instruction evolution viewer component."""
-from typing import Dict
+
+from typing import Any, Dict
 
 import streamlit as st
 
+from utils import MAX_INSTRUCTION_DISPLAY, deduplicate_instructions, group_by_optimizer_type
 
-def display_instruction_evolution(historical_data: Dict):
-    """Display instruction candidates and evolution."""
 
+def display_instruction_evolution(historical_data: Dict[str, Any]) -> None:
+    """Display instruction candidates and evolution.
+
+    Args:
+        historical_data: Dictionary containing optimization results.
+    """
     st.subheader("📝 Instruction Evolution")
 
     if not historical_data:
@@ -22,29 +28,28 @@ def display_instruction_evolution(historical_data: Dict):
         if candidates:
             has_content = True
 
-            # Group by optimizer type
-            gepa_candidates = [c for c in candidates if c.get("type") == "gepa"]
-            mipro_candidates = [c for c in candidates if c.get("type") == "mipro"]
+            # Group by optimizer type using shared utility
+            groups = group_by_optimizer_type(candidates)
+            gepa_candidates = groups["gepa"]
+            mipro_candidates = groups["mipro"]
 
             if gepa_candidates:
-                # Deduplicate by (iteration, instruction) - some logs capture twice
-                seen = set()
-                unique_candidates = []
-                for cand in gepa_candidates:
-                    key = (cand.get("iteration", cand["index"]), cand["instruction"])
-                    if key not in seen:
-                        seen.add(key)
-                        unique_candidates.append(cand)
+                # Deduplicate using shared utility
+                unique_candidates = deduplicate_instructions(gepa_candidates)
 
                 st.markdown("#### 🧬 GEPA Proposed Instructions")
                 st.caption(f"Evolutionary search proposed {len(unique_candidates)} instruction variants")
-                for cand in unique_candidates[:10]:  # Show first 10
+
+                for cand in unique_candidates[:MAX_INSTRUCTION_DISPLAY]:
                     iteration = cand.get("iteration", cand["index"])
                     with st.expander(f"Iteration {iteration} - Instruction Proposal"):
                         st.markdown(cand["instruction"])
 
-                if len(unique_candidates) > 10:
-                    st.info(f"Showing 10 of {len(unique_candidates)} proposals. Check optimization_results.json for all.")
+                if len(unique_candidates) > MAX_INSTRUCTION_DISPLAY:
+                    st.info(
+                        f"Showing {MAX_INSTRUCTION_DISPLAY} of {len(unique_candidates)} proposals. "
+                        "Check optimization_results.json for all."
+                    )
 
             if mipro_candidates:
                 st.markdown("#### 🔍 MIPROv2 Proposed Instructions")
