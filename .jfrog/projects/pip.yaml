@@ -1,0 +1,8 @@
+version: 1
+type: pip
+resolver:
+    repo: fsai-private-py-AUS-virtual
+    serverId: https://fsaiartifact.jfrog.io
+deployer:
+    repo: fsai-private-py-AUS-virtual
+    serverId: https://fsaiartifact.jfrog.io
