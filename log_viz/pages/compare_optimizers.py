@@ -24,7 +24,7 @@ sidebar_state = render_sidebar(loader)
 selected_run = sidebar_state["selected_run"]
 
 st.title("⚖️ Optimizer Comparison")
-st.markdown("*Compare GEPA vs MIPROv2 instruction evolution and performance*")
+st.markdown("*Compare GEPA vs MIPROv2 performance side-by-side*")
 
 if selected_run:
     st.info(f"Viewing run: **{selected_run.replace('trials_', '')}**")
@@ -133,92 +133,3 @@ if comparison_data:
             hide_index=True,
             use_container_width=True,
         )
-
-st.divider()
-
-# Instruction evolution comparison
-st.subheader("📝 Instruction Evolution Comparison")
-
-tabs = st.tabs(list(results.keys()))
-
-for tab, (name, data) in zip(tabs, results.items()):
-    with tab:
-        st.markdown(f"### {name} - {data.get('optimizer', 'Unknown').upper()}")
-
-        # Show instruction candidates
-        if "instruction_candidates" in data and data["instruction_candidates"]:
-            candidates = data["instruction_candidates"]
-            optimizer_type = data.get("optimizer", "unknown")
-
-            st.markdown(f"**Captured {len(candidates)} instruction proposals**")
-
-            # Group by type if available
-            gepa_cands = [c for c in candidates if c.get("type") == "gepa"]
-            mipro_cands = [c for c in candidates if c.get("type") == "mipro"]
-
-            if gepa_cands:
-                st.markdown("#### GEPA Evolutionary Proposals")
-                for i, cand in enumerate(gepa_cands[:5], 1):
-                    with st.expander(
-                        f"Iteration {cand.get('iteration', cand['index'])}"
-                    ):
-                        st.markdown(cand["instruction"])
-                if len(gepa_cands) > 5:
-                    st.info(f"Showing 5 of {len(gepa_cands)} GEPA proposals")
-
-            if mipro_cands:
-                st.markdown("#### MIPROv2 Proposals")
-                for cand in mipro_cands:
-                    with st.expander(f"Candidate {cand['index']}"):
-                        st.markdown(cand["instruction"])
-
-            if not gepa_cands and not mipro_cands:
-                # Show all if no type specified
-                for cand in candidates[:5]:
-                    with st.expander(f"Candidate {cand['index']}"):
-                        st.markdown(cand["instruction"])
-                if len(candidates) > 5:
-                    st.info(f"Showing 5 of {len(candidates)} proposals")
-
-        else:
-            st.warning("No instruction candidates captured for this run")
-
-        # Show final instruction if available
-        if "instruction" in data and data["instruction"]:
-            st.markdown("#### Final Optimized Instruction")
-            st.success(data["instruction"])
-
-        # Show few-shot demos if available
-        if "demos" in data and data["demos"]:
-            st.markdown(f"#### Few-Shot Demonstrations ({len(data['demos'])} examples)")
-            for i, demo in enumerate(data["demos"][:3], 1):
-                with st.expander(f"Demo {i}"):
-                    st.markdown(f"**Q:** {demo['question']}")
-                    st.markdown(f"**A:** {demo['answer']}")
-                    if "reasoning" in demo:
-                        st.markdown(f"**Reasoning:** {demo['reasoning']}")
-
-st.divider()
-
-# Key insights
-st.subheader("💡 Key Insights")
-
-if len(results) >= 2:
-    st.markdown("""
-    **GEPA vs MIPROv2:**
-
-    - **GEPA** uses evolutionary search to evolve instructions via reflection
-    - **MIPROv2** optimizes both instructions and few-shot demonstrations
-    - **GEPA** typically proposes more instruction variants (~20-30 per run)
-    - **MIPROv2** focuses on instruction quality + example selection
-
-    **What to look for:**
-    - Which optimizer achieves better test set performance?
-    - How do instruction styles differ between optimizers?
-    - Does GEPA's evolutionary approach lead to more creative instructions?
-    - Does MIPROv2's few-shot selection provide better generalization?
-    """)
-else:
-    st.info(
-        "Run both optimizers to see a comparison. Use: `python demo_compare.py gepa` and `python demo_compare.py mipro`"
-    )

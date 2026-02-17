@@ -175,9 +175,8 @@ else:
 
     st.divider()
 
-    # Instruction evolution (only if historical data available)
-    if historical_data:
-        display_instruction_evolution(historical_data)
+    # Instruction evolution (select and view any optimizer's results)
+    display_instruction_evolution(loader)
 
 # Auto-refresh logic
 if auto_refresh and not df.empty:

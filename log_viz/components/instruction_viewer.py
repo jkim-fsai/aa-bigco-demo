@@ -4,6 +4,7 @@ from typing import Any, Dict
 
 import streamlit as st
 
+from data_loader import TrialDataLoader
 from utils import (
     MAX_INSTRUCTION_DISPLAY,
     deduplicate_instructions,
@@ -11,23 +12,63 @@ from utils import (
 )
 
 
-def display_instruction_evolution(historical_data: Dict[str, Any]) -> None:
-    """Display instruction candidates and evolution.
+def display_instruction_evolution(loader: TrialDataLoader) -> None:
+    """Display instruction candidates and evolution for a user-selected optimizer.
+
+    Discovers all available optimization result files and lets the user pick
+    which optimizer's evolution to view.
 
     Args:
-        historical_data: Dictionary containing optimization results.
+        loader: TrialDataLoader instance for discovering and loading result files.
     """
     st.subheader("📝 Instruction Evolution")
 
-    if not historical_data:
-        st.info("No historical data available.")
+    # Discover all available result files
+    result_files = loader.get_all_result_files()
+
+    if not result_files:
+        st.info("No optimization results available. Run an optimizer first.")
         return
 
+    # Build display labels from result file keys
+    labels = {
+        key: _label_for_key(key, loader.load_result_file(path))
+        for key, path in result_files.items()
+    }
+
+    selected_key = st.selectbox(
+        "Select optimization run",
+        options=list(result_files.keys()),
+        format_func=lambda k: labels.get(k, k),
+        key="instruction_evolution_optimizer",
+    )
+
+    data = loader.load_result_file(result_files[selected_key])
+    if not data:
+        st.warning("Could not load result file.")
+        return
+
+    _render_evolution(data)
+
+
+def _label_for_key(key: str, data: Dict[str, Any] | None) -> str:
+    """Build a human-readable label for the selectbox."""
+    if data:
+        optimizer = data.get("optimizer", key).upper()
+        accuracy = data.get("optimized_accuracy")
+        if accuracy is not None:
+            return f"{optimizer} (test accuracy: {accuracy:.1f}%)"
+        return optimizer
+    return key.upper()
+
+
+def _render_evolution(data: Dict[str, Any]) -> None:
+    """Render instruction evolution for a single result dict."""
     has_content = False
 
     # Display instruction candidates
-    if "instruction_candidates" in historical_data:
-        candidates = historical_data["instruction_candidates"]
+    if "instruction_candidates" in data:
+        candidates = data["instruction_candidates"]
 
         if candidates:
             has_content = True
@@ -73,19 +114,19 @@ def display_instruction_evolution(historical_data: Dict[str, Any]) -> None:
                         st.markdown(cand["instruction"])
 
     # Display LLM-generated evolution summary
-    if "evolution_summary" in historical_data and historical_data["evolution_summary"]:
+    if "evolution_summary" in data and data["evolution_summary"]:
         has_content = True
         st.markdown("#### 🧠 LLM Analysis of Evolution")
         st.caption("AI-generated summary of the optimization process")
         with st.container(border=True):
-            st.markdown(historical_data["evolution_summary"])
+            st.markdown(data["evolution_summary"])
         st.divider()
 
     # Display final optimized instruction
-    if "instruction" in historical_data and historical_data["instruction"]:
+    if "instruction" in data and data["instruction"]:
         has_content = True
         st.markdown("#### 🎯 Final Optimized Instruction")
-        st.success(historical_data["instruction"])
+        st.success(data["instruction"])
     elif not has_content:
         st.warning("""**Instruction extraction unavailable**
 
@@ -108,12 +149,12 @@ def display_instruction_evolution(historical_data: Dict[str, Any]) -> None:
         """)
 
     # Display few-shot demonstrations
-    if "demos" in historical_data and historical_data["demos"]:
+    if "demos" in data and data["demos"]:
         has_content = True
         st.markdown("#### Few-Shot Demonstrations")
-        st.write(f"**{len(historical_data['demos'])} examples**")
+        st.write(f"**{len(data['demos'])} examples**")
 
-        for i, demo in enumerate(historical_data["demos"], 1):
+        for i, demo in enumerate(data["demos"], 1):
             with st.expander(f"Demo {i}"):
                 st.markdown(f"**Question:** {demo['question']}")
                 st.markdown(f"**Answer:** {demo['answer']}")
