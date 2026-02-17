@@ -16,7 +16,7 @@ class ModelConfig:
     default_model: str = "openai/gpt-4.1-nano"
     reflection_temperature: float = 1.0
     summary_temperature: float = 0.3
-    async_max: int = 50
+    async_max: int = 100
 
 
 @dataclass(frozen=True)
@@ -41,7 +41,7 @@ class OptimizerConfig:
     """Optimizer default parameters."""
 
     gepa_auto: str = "medium"  # medium/heavy for paper-quality results
-    gepa_num_threads: int = 10
+    gepa_num_threads: int = 25
     mipro_auto: str = "light"
     mipro_num_threads: int = 10
     mipro_num_trials: int = 30

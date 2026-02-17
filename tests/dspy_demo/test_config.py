@@ -28,7 +28,7 @@ class TestModelConfig:
         assert config.default_model == "openai/gpt-4.1-nano"
         assert config.reflection_temperature == 1.0
         assert config.summary_temperature == 0.3
-        assert config.async_max == 50
+        assert config.async_max == 100
 
     def test_immutability(self):
         """Test that frozen dataclass is immutable."""
@@ -65,7 +65,7 @@ class TestOptimizerConfig:
         """Test GEPA optimizer defaults."""
         config = OptimizerConfig()
         assert config.gepa_auto == "medium"
-        assert config.gepa_num_threads == 10
+        assert config.gepa_num_threads == 25
 
     def test_mipro_defaults(self):
         """Test MIPROv2 optimizer defaults."""

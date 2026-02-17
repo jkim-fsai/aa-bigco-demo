@@ -25,15 +25,6 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# Title
-st.title("📊 DSPy Optimization Dashboard")
-st.markdown(
-    "*Real-time visualization of [GEPA](https://arxiv.org/abs/2507.19457) optimization trials*"
-)
-st.caption(
-    "GEPA: Reflective Prompt Evolution via Genetic-Pareto Search (Agrawal et al., 2025)"
-)
-
 
 # Initialize data loader
 @st.cache_resource
@@ -53,11 +44,42 @@ show_historical = sidebar_state["show_historical"]
 if selected_run is None:
     st.stop()
 
+# Detect optimizer from run metadata (fallback: detect from trial data)
+run_metadata = loader.get_run_metadata(selected_run)
+run_optimizer = run_metadata.get("optimizer", "").lower()
+
+# Dynamic title based on optimizer
+OPTIMIZER_INFO = {
+    "gepa": {
+        "label": "GEPA",
+        "subtitle": "Real-time visualization of [GEPA](https://arxiv.org/abs/2507.19457) optimization trials",
+        "caption": "GEPA: Reflective Prompt Evolution via Genetic-Pareto Search (Agrawal et al., 2025)",
+    },
+    "mipro": {
+        "label": "MIPROv2",
+        "subtitle": "Real-time visualization of MIPROv2 optimization trials",
+        "caption": "MIPROv2: Multi-prompt Instruction Proposal Optimizer (Opsahl-Ong et al., 2024)",
+    },
+}
+
+opt_info = OPTIMIZER_INFO.get(run_optimizer, {})
+st.title("📊 DSPy Optimization Dashboard")
+st.markdown(
+    f"*{opt_info.get('subtitle', 'Real-time visualization of DSPy optimization trials')}*"
+)
+st.caption(opt_info.get("caption", f"Optimizer: {run_optimizer.upper() or 'Unknown'}"))
+
+
 # Load current run data
 df = loader.load_jsonl_full(selected_run)
 
-# Always load historical data (for test set results)
-historical_data = loader.load_historical_results()
+# Fallback: detect optimizer from trial data if not in metadata
+if not run_optimizer and not df.empty and "optimizer" in df.columns:
+    run_optimizer = df.iloc[0].get("optimizer", "").lower()
+    opt_info = OPTIMIZER_INFO.get(run_optimizer, {})
+
+# Load historical results for the current run's optimizer
+historical_data = loader.load_historical_results(run_optimizer)
 
 # Load historical data for comparison if requested
 historical_df = None
@@ -70,14 +92,18 @@ if df.empty:
     st.info("⏳ Waiting for optimization to start...")
     st.markdown("The dashboard will automatically update once trials begin.")
 else:
+    optimizer_label = opt_info.get("label", run_optimizer.upper() or "Unknown")
+
     # Metrics cards
-    display_metrics_cards(df)
+    display_metrics_cards(df, optimizer_label=optimizer_label)
 
     # Display held-out test set results if available
     if historical_data and "baseline_accuracy" in historical_data:
         st.divider()
         st.subheader("🎯 Held-Out Test Set Results")
-        st.caption("Final evaluation on completely unseen test set (100 examples)")
+        test_size = run_metadata.get("testset_size", "")
+        test_size_label = f" ({test_size} examples)" if test_size else ""
+        st.caption(f"Final evaluation on completely unseen test set{test_size_label}")
 
         col1, col2, col3 = st.columns(3)
 
@@ -98,7 +124,7 @@ else:
                 value=f"{optimized:.1f}%",
                 delta=f"{improvement:+.1f}%",
                 delta_color="normal",
-                help="Performance of GEPA-optimized model on test set",
+                help=f"Performance of {optimizer_label}-optimized model on test set",
             )
 
         with col3:
@@ -135,12 +161,18 @@ else:
         # Score distribution
         fig_dist = create_score_distribution_plot(df)
         st.plotly_chart(fig_dist, use_container_width=True)
-        st.caption(
-            """**Score Distribution** shows the frequency of different performance levels achieved across all optimization trials.
-        Scores represent the percentage of training examples where GPT-4.1-nano's generated answer contains the gold answer (exact string match, case-insensitive).
-        A narrow distribution indicates consistent performance, while a wide spread suggests high variance in GEPA's evolutionary exploration of the prompt space.
-        Per [Agrawal et al. 2025](https://arxiv.org/abs/2507.19457), GEPA maintains a Pareto front of high-performing candidates during optimization."""
-        )
+        if run_optimizer == "gepa":
+            st.caption(
+                """**Score Distribution** shows the frequency of different performance levels achieved across all optimization trials.
+            Scores represent the percentage of training examples where GPT-4.1-nano's generated answer contains the gold answer (exact string match, case-insensitive).
+            A narrow distribution indicates consistent performance, while a wide spread suggests high variance in GEPA's evolutionary exploration of the prompt space.
+            Per [Agrawal et al. 2025](https://arxiv.org/abs/2507.19457), GEPA maintains a Pareto front of high-performing candidates during optimization."""
+            )
+        else:
+            st.caption(
+                """**Score Distribution** shows the frequency of different performance levels achieved across all optimization trials.
+            Scores represent the percentage of training examples where GPT-4.1-nano's generated answer contains the gold answer (exact string match, case-insensitive)."""
+            )
 
     with col4:
         # Eval type comparison (only for optimizers that log eval_type like MIPROv2)
@@ -148,25 +180,24 @@ else:
             fig_eval = create_eval_type_comparison(df)
             st.plotly_chart(fig_eval, use_container_width=True)
         else:
-            # Alternative visualization for GEPA: Show optimizer info
+            # Show optimizer info
             st.markdown("### Optimizer Details")
             st.markdown(f"""
-            **Optimizer**: {df.iloc[0].get('optimizer', 'Unknown').upper()}
+            **Optimizer**: {optimizer_label}
 
             **Total Iterations Logged**: {len(df)}
 
             **Score Range**: {df['score'].min():.1f}% - {df['score'].max():.1f}%
 
             **Unique Iterations**: {df['trial'].nunique()}
-
-            ---
-
-            *Note: GEPA does not distinguish between minibatch and full evaluations in the same way as MIPROv2.
-            GEPA uses evolutionary search with a Pareto front to balance multiple objectives during optimization.*
             """)
-            st.info(
-                "💡 The 'Eval Type Comparison' chart is available when using MIPROv2 optimizer, which logs minibatch vs full evaluation scores."
-            )
+            if run_optimizer == "gepa":
+                st.caption(
+                    "*GEPA uses evolutionary search with a Pareto front to balance multiple objectives during optimization.*"
+                )
+                st.info(
+                    "💡 The 'Eval Type Comparison' chart is available when using MIPROv2 optimizer, which logs minibatch vs full evaluation scores."
+                )
 
     st.divider()
 
