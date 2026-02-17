@@ -1,12 +1,19 @@
 """Data loading utilities for trial data."""
+
 import json
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 import pandas as pd
 import streamlit as st
 
-from utils.config import HISTORICAL_RESULTS, RUNS_DIR
+from utils.config import (
+    CACHE_TTL_HISTORICAL,
+    CACHE_TTL_JSONL,
+    CACHE_TTL_RUNS,
+    HISTORICAL_RESULTS,
+    RUNS_DIR,
+)
 
 
 class TrialDataLoader:
@@ -15,7 +22,7 @@ class TrialDataLoader:
     def __init__(self):
         self.last_position = {}  # Track file read positions per run
 
-    @st.cache_data(ttl=2)  # Cache for 2 seconds
+    @st.cache_data(ttl=CACHE_TTL_RUNS)
     def get_available_runs(_self) -> List[str]:
         """Get list of available trial run files."""
         if not RUNS_DIR.exists():
@@ -72,8 +79,8 @@ class TrialDataLoader:
         self.last_position[run_id] = 0  # Reset position
         return self.load_jsonl_incremental(run_id)
 
-    @st.cache_data(ttl=10)
-    def load_historical_results(_self) -> Optional[Dict]:
+    @st.cache_data(ttl=CACHE_TTL_HISTORICAL)
+    def load_historical_results(_self) -> Optional[Dict[str, Any]]:
         """Load optimization_results.json for historical comparison."""
         if not HISTORICAL_RESULTS.exists():
             return None
@@ -85,7 +92,7 @@ class TrialDataLoader:
             st.error(f"Error loading historical results: {e}")
             return None
 
-    @st.cache_data(ttl=10)
+    @st.cache_data(ttl=CACHE_TTL_JSONL)
     def get_all_result_files(_self) -> Dict[str, Path]:
         """Get all optimization result JSON files."""
         results = {}

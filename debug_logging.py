@@ -1,4 +1,5 @@
 """Debug script to diagnose logging issues with MIPROv2."""
+
 import logging
 import re
 
@@ -74,7 +75,7 @@ class BasicQA(dspy.Module):
         return self.generate_answer(context=context, question=question)
 
 
-def validate_answer(example: Example, pred, trace=None) -> bool:
+def validate_answer(example: Example, pred, trace=None) -> bool:  # noqa: ARG001
     return example.answer.lower() in pred.answer.lower()
 
 
@@ -107,7 +108,9 @@ if score_messages:
         print(f"  - {msg}")
 
 print("\nSearching for instruction-related messages...")
-instruction_messages = [msg for msg in debug_tracker.all_messages if "instruction" in msg.lower()]
+instruction_messages = [
+    msg for msg in debug_tracker.all_messages if "instruction" in msg.lower()
+]
 print(f"Found {len(instruction_messages)} messages containing 'instruction'")
 
 if instruction_messages:

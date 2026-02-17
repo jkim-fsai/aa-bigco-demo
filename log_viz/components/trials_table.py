@@ -1,4 +1,5 @@
 """Interactive trials table component."""
+
 import pandas as pd
 import streamlit as st
 
@@ -39,7 +40,7 @@ def display_trials_table(df: pd.DataFrame, max_rows: int = 100):
             "Score Range",
             min_value=float(df["score"].min()),
             max_value=float(df["score"].max()),
-            value=(float(df["score"].min()), float(df["score"].max()))
+            value=(float(df["score"].min()), float(df["score"].max())),
         )
 
         df = df[(df["score"] >= min_score) & (df["score"] <= max_score)]
@@ -70,14 +71,11 @@ def display_trials_table(df: pd.DataFrame, max_rows: int = 100):
             "parameters": st.column_config.TextColumn("Parameters", width="large"),
             "optimizer": st.column_config.TextColumn("Optimizer", width="small"),
             "eval_type": st.column_config.TextColumn("Eval Type", width="small"),
-        }
+        },
     )
 
     # Download button
     csv = display_df.to_csv(index=False)
     st.download_button(
-        label="Download as CSV",
-        data=csv,
-        file_name="trials.csv",
-        mime="text/csv"
+        label="Download as CSV", data=csv, file_name="trials.csv", mime="text/csv"
     )

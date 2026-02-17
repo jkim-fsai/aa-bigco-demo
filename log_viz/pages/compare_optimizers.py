@@ -1,4 +1,5 @@
 """Compare multiple optimizer runs side-by-side."""
+
 import json
 from pathlib import Path
 
@@ -6,14 +7,27 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
-st.set_page_config(
-    page_title="Optimizer Comparison",
-    page_icon="⚖️",
-    layout="wide"
-)
+from components.sidebar import render_sidebar
+from data_loader import TrialDataLoader
+
+st.set_page_config(page_title="Optimizer Comparison", page_icon="⚖️", layout="wide")
+
+
+# Initialize data loader and shared sidebar
+@st.cache_resource
+def get_data_loader():
+    return TrialDataLoader()
+
+
+loader = get_data_loader()
+sidebar_state = render_sidebar(loader)
+selected_run = sidebar_state["selected_run"]
 
 st.title("⚖️ Optimizer Comparison")
 st.markdown("*Compare GEPA vs MIPROv2 instruction evolution and performance*")
+
+if selected_run:
+    st.info(f"Viewing run: **{selected_run.replace('trials_', '')}**")
 
 # Find all result files
 result_files = {}
@@ -57,12 +71,17 @@ st.subheader("📊 Performance Comparison")
 comparison_data = []
 for name, data in results.items():
     if "baseline_accuracy" in data and "optimized_accuracy" in data:
-        comparison_data.append({
-            "Optimizer": data.get("optimizer", name).upper(),
-            "Baseline": data["baseline_accuracy"],
-            "Optimized": data["optimized_accuracy"],
-            "Improvement": data.get("improvement", data["optimized_accuracy"] - data["baseline_accuracy"])
-        })
+        comparison_data.append(
+            {
+                "Optimizer": data.get("optimizer", name).upper(),
+                "Baseline": data["baseline_accuracy"],
+                "Optimized": data["optimized_accuracy"],
+                "Improvement": data.get(
+                    "improvement",
+                    data["optimized_accuracy"] - data["baseline_accuracy"],
+                ),
+            }
+        )
 
 if comparison_data:
     df_comparison = pd.DataFrame(comparison_data)
@@ -73,19 +92,23 @@ if comparison_data:
         # Bar chart comparison
         fig = go.Figure()
 
-        fig.add_trace(go.Bar(
-            name="Baseline",
-            x=df_comparison["Optimizer"],
-            y=df_comparison["Baseline"],
-            marker_color="lightblue"
-        ))
+        fig.add_trace(
+            go.Bar(
+                name="Baseline",
+                x=df_comparison["Optimizer"],
+                y=df_comparison["Baseline"],
+                marker_color="lightblue",
+            )
+        )
 
-        fig.add_trace(go.Bar(
-            name="Optimized",
-            x=df_comparison["Optimizer"],
-            y=df_comparison["Optimized"],
-            marker_color="darkblue"
-        ))
+        fig.add_trace(
+            go.Bar(
+                name="Optimized",
+                x=df_comparison["Optimizer"],
+                y=df_comparison["Optimized"],
+                marker_color="darkblue",
+            )
+        )
 
         fig.update_layout(
             title="Test Set Accuracy Comparison",
@@ -93,20 +116,22 @@ if comparison_data:
             yaxis_title="Accuracy (%)",
             barmode="group",
             height=400,
-            template="plotly_white"
+            template="plotly_white",
         )
 
         st.plotly_chart(fig, use_container_width=True)
 
     with col2:
         st.dataframe(
-            df_comparison.style.format({
-                "Baseline": "{:.1f}%",
-                "Optimized": "{:.1f}%",
-                "Improvement": "{:+.1f}%"
-            }),
+            df_comparison.style.format(
+                {
+                    "Baseline": "{:.1f}%",
+                    "Optimized": "{:.1f}%",
+                    "Improvement": "{:+.1f}%",
+                }
+            ),
             hide_index=True,
-            use_container_width=True
+            use_container_width=True,
         )
 
 st.divider()
@@ -134,7 +159,9 @@ for tab, (name, data) in zip(tabs, results.items()):
             if gepa_cands:
                 st.markdown("#### GEPA Evolutionary Proposals")
                 for i, cand in enumerate(gepa_cands[:5], 1):
-                    with st.expander(f"Iteration {cand.get('iteration', cand['index'])}"):
+                    with st.expander(
+                        f"Iteration {cand.get('iteration', cand['index'])}"
+                    ):
                         st.markdown(cand["instruction"])
                 if len(gepa_cands) > 5:
                     st.info(f"Showing 5 of {len(gepa_cands)} GEPA proposals")
@@ -192,4 +219,6 @@ if len(results) >= 2:
     - Does MIPROv2's few-shot selection provide better generalization?
     """)
 else:
-    st.info("Run both optimizers to see a comparison. Use: `python demo_compare.py gepa` and `python demo_compare.py mipro`")
+    st.info(
+        "Run both optimizers to see a comparison. Use: `python demo_compare.py gepa` and `python demo_compare.py mipro`"
+    )
