@@ -17,6 +17,7 @@ dependencies = [
     "typer==0.23.0",
     # 1.53.1 unscanned → timeout. 1.54.0 (and 1.51.0) indexed, no issues.
     "streamlit==1.54.0",
+    "plotly>=5.0",
 ]
 
 [project.optional-dependencies]
