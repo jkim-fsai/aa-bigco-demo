@@ -73,13 +73,26 @@ def render_sidebar(loader: TrialDataLoader) -> Dict[str, Any]:
 
         st.divider()
 
-        # Dataset info
+        # Dataset info (derived from run metadata)
         st.subheader("📚 Dataset Splits")
-        st.caption("**Training Set:** 200 examples")
-        st.caption("Used by GEPA for optimization")
-        st.caption("")
-        st.caption("**Test Set:** 100 examples")
-        st.caption("Held-out for final evaluation")
+        train_size = metadata.get("trainset_size")
+        val_size = metadata.get("valset_size")
+        test_size = metadata.get("testset_size")
+        run_optimizer = metadata.get("optimizer", "")
+
+        if train_size is not None:
+            st.caption(f"**Training Set:** {train_size} examples")
+            if val_size is not None:
+                st.caption(f"**Validation Set:** {val_size} examples")
+            st.caption(
+                f"Used by {run_optimizer.upper() or 'optimizer'} for optimization"
+            )
+            st.caption("")
+            if test_size is not None:
+                st.caption(f"**Test Set:** {test_size} examples")
+                st.caption("Held-out for final evaluation")
+        else:
+            st.caption("Dataset split info not available for this run")
 
         st.divider()
 

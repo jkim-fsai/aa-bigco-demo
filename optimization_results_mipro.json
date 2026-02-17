@@ -1,0 +1,216 @@
+{
+  "optimizer": "mipro",
+  "baseline_accuracy": 66.21621621621621,
+  "optimized_accuracy": 66.75675675675676,
+  "improvement": 0.5405405405405475,
+  "instruction": "You are a knowledgeable assistant focused on extracting precise factual information from structured texts. Given a `context` and a `question`, produce the `answer` by carefully analyzing the information in the context and providing a clear, accurate response that directly addresses the question. Use step-by-step reasoning if necessary to ensure correctness.",
+  "demos": [],
+  "optimization_trials": [
+    {
+      "trial": 1,
+      "score": 74.0,
+      "parameters": "Default program",
+      "optimizer": "mipro",
+      "eval_type": "full",
+      "is_best": false
+    },
+    {
+      "trial": 2,
+      "score": 74.0,
+      "parameters": "Default program",
+      "optimizer": "mipro",
+      "eval_type": "full",
+      "is_best": false
+    },
+    {
+      "trial": 3,
+      "score": 62.86,
+      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 3']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 4,
+      "score": 62.86,
+      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 3']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 5,
+      "score": 77.14,
+      "parameters": "['Predictor 0: Instruction 2', 'Predictor 0: Few-Shot Set 0']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 6,
+      "score": 77.14,
+      "parameters": "['Predictor 0: Instruction 2', 'Predictor 0: Few-Shot Set 0']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 7,
+      "score": 85.71,
+      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 5']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 8,
+      "score": 85.71,
+      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 5']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 9,
+      "score": 62.86,
+      "parameters": "['Predictor 0: Instruction 2', 'Predictor 0: Few-Shot Set 2']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 10,
+      "score": 62.86,
+      "parameters": "['Predictor 0: Instruction 2', 'Predictor 0: Few-Shot Set 2']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 11,
+      "score": 71.43,
+      "parameters": "['Predictor 0: Instruction 0', 'Predictor 0: Few-Shot Set 5']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 12,
+      "score": 71.43,
+      "parameters": "['Predictor 0: Instruction 0', 'Predictor 0: Few-Shot Set 5']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 13,
+      "score": 80.0,
+      "parameters": "['Predictor 0: Instruction 2', 'Predictor 0: Few-Shot Set 0']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 14,
+      "score": 80.0,
+      "parameters": "['Predictor 0: Instruction 2', 'Predictor 0: Few-Shot Set 0']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 15,
+      "score": 77.14,
+      "parameters": "['Predictor 0: Instruction 2', 'Predictor 0: Few-Shot Set 5']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 16,
+      "score": 77.14,
+      "parameters": "['Predictor 0: Instruction 2', 'Predictor 0: Few-Shot Set 5']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 17,
+      "score": 71.43,
+      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 4']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 18,
+      "score": 71.43,
+      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 4']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 19,
+      "score": 82.86,
+      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 5']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 20,
+      "score": 82.86,
+      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 5']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 21,
+      "score": 65.71,
+      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 5']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 22,
+      "score": 65.71,
+      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 5']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 23,
+      "score": 78.0,
+      "parameters": "Best program",
+      "optimizer": "mipro",
+      "eval_type": "full",
+      "is_best": true
+    },
+    {
+      "trial": 24,
+      "score": 78.0,
+      "parameters": "Best program",
+      "optimizer": "mipro",
+      "eval_type": "full",
+      "is_best": true
+    }
+  ],
+  "instruction_candidates": [
+    {
+      "index": 0,
+      "instruction": "Given the fields `context`, `question`, produce the fields `answer`.",
+      "type": "mipro"
+    },
+    {
+      "index": 0,
+      "instruction": "Given the fields `context`, `question`, produce the fields `answer`.",
+      "type": "mipro"
+    },
+    {
+      "index": 1,
+      "instruction": "You are a knowledgeable and precise information extractor. Using the provided context and question, determine the most accurate and concise answer. The answer should directly address the question, relying solely on the information in the context. When applicable, reason step-by-step to ensure accuracy before providing the final answer.",
+      "type": "mipro"
+    },
+    {
+      "index": 1,
+      "instruction": "You are a knowledgeable and precise information extractor. Using the provided context and question, determine the most accurate and concise answer. The answer should directly address the question, relying solely on the information in the context. When applicable, reason step-by-step to ensure accuracy before providing the final answer.",
+      "type": "mipro"
+    },
+    {
+      "index": 2,
+      "instruction": "You are a knowledgeable assistant focused on extracting precise factual information from structured texts. Given a `context` and a `question`, produce the `answer` by carefully analyzing the information in the context and providing a clear, accurate response that directly addresses the question. Use step-by-step reasoning if necessary to ensure correctness.",
+      "type": "mipro"
+    },
+    {
+      "index": 2,
+      "instruction": "You are a knowledgeable assistant focused on extracting precise factual information from structured texts. Given a `context` and a `question`, produce the `answer` by carefully analyzing the information in the context and providing a clear, accurate response that directly addresses the question. Use step-by-step reasoning if necessary to ensure correctness.",
+      "type": "mipro"
+    }
+  ],
+  "timestamp": "2026-02-17T15:19:17.516950",
+  "evolution_summary": "The optimization trajectory shows fluctuating performance with notable peaks around iterations 7, 8, 13, 14, 19, and 20, indicating that the model's scores varied significantly across instruction changes. Overall, there was a slight net improvement (+0.5%) from the baseline, but the scores did not improve monotonically, suggesting some iterations may have introduced noise or conflicting guidance.\n\nInitially, the instructions evolved from a simple directive (\"produce answer\") to more detailed, step-by-step reasoning prompts. Early iterations emphasized clarity and precision, with a focus on accuracy and directness. Later iterations maintained this emphasis but increasingly incorporated explicit reasoning instructions, such as \"reason step-by-step,\" aiming to enhance correctness. The final instruction consolidates these strategies into a balanced, clear directive emphasizing careful analysis and accuracy.\n\nWhat didn't seem to help were instructions that added complexity or multiple constraints without clear benefit, as seen in the fluctuating scores. The evolution shows a trend toward increasing specificity and emphasis on reasoning, which correlates with score peaks, indicating that guiding the model to think carefully may improve performance.\n\nKey patterns include a progression from generic to more detailed, reasoning-focused instructions, suggesting that explicit reasoning prompts can positively influence accuracy. To further improve results, experimenting with more structured reasoning frameworks or combining reasoning prompts with examples could stabilize gains. Additionally, refining the instructions to reduce ambiguity and avoid conflicting directives may help achieve more consistent improvements."
+}

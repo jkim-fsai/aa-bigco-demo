@@ -81,6 +81,7 @@ class OptimizationTracker(logging.Handler):
         self.trials_jsonl_path: Path = self.output_dir / f"trials_{self.run_id}.jsonl"
         self._jsonl_file: Optional[TextIO] = None
         self._written_trial_ids: Set[str] = set()
+        self._dataset_info: Dict[str, Any] = {}
 
     def reset(self) -> None:
         """Reset tracker state for a new optimization run."""
@@ -90,12 +91,35 @@ class OptimizationTracker(logging.Handler):
         self._written_trial_ids = set()
         self.run_id = datetime.now().strftime("%Y%m%d_%H%M%S")
         self.trials_jsonl_path = self.output_dir / f"trials_{self.run_id}.jsonl"
+        self._dataset_info = {}
+
+    def set_dataset_info(
+        self,
+        trainset_size: int,
+        valset_size: int,
+        testset_size: int,
+        optimizer: str = "",
+    ) -> None:
+        """Store dataset split sizes to include in run metadata.
+
+        Args:
+            trainset_size: Number of training examples.
+            valset_size: Number of validation examples.
+            testset_size: Number of test examples.
+            optimizer: Name of the optimizer used.
+        """
+        self._dataset_info = {
+            "trainset_size": trainset_size,
+            "valset_size": valset_size,
+            "testset_size": testset_size,
+            "optimizer": optimizer,
+        }
 
     def open_jsonl(self) -> None:
         """Open JSONL file for writing trial data."""
         if self._jsonl_file is None:
             self._jsonl_file = open(self.trials_jsonl_path, "a", buffering=1)
-            self._write_metadata("started")
+            self._write_metadata("started", **self._dataset_info)
 
     def close_jsonl(self) -> None:
         """Close JSONL file and write completion metadata."""

@@ -204,6 +204,7 @@ class OptimizationPipeline:
             return optimizer.compile(
                 module_class(),
                 trainset=self.data_loader.trainset,
+                valset=self.data_loader.valset,
             )
 
     async def evaluate(
@@ -257,6 +258,12 @@ class OptimizationPipeline:
 
         # Reset tracker for new run
         self.tracker.reset()
+        self.tracker.set_dataset_info(
+            trainset_size=len(self.data_loader.trainset),
+            valset_size=len(self.data_loader.valset),
+            testset_size=len(self.data_loader.testset),
+            optimizer=optimizer_type.value,
+        )
         self.tracker.open_jsonl()
 
         try:

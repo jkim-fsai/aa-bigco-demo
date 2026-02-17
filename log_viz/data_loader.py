@@ -79,9 +79,29 @@ class TrialDataLoader:
         self.last_position[run_id] = 0  # Reset position
         return self.load_jsonl_incremental(run_id)
 
-    @st.cache_data(ttl=CACHE_TTL_HISTORICAL)
-    def load_historical_results(_self) -> Optional[Dict[str, Any]]:
-        """Load optimization_results.json for historical comparison."""
+    def load_historical_results(self, optimizer: str = "") -> Optional[Dict[str, Any]]:
+        """Load optimization results JSON for a specific optimizer.
+
+        Checks for optimizer-specific file first (e.g. optimization_results_gepa.json),
+        then falls back to the generic optimization_results.json.
+
+        Args:
+            optimizer: Optimizer name (e.g. "gepa", "mipro"). Empty string
+                       loads the generic file.
+        """
+        base_dir = HISTORICAL_RESULTS.parent
+
+        # Try optimizer-specific file first
+        if optimizer:
+            specific = base_dir / f"optimization_results_{optimizer}.json"
+            if specific.exists():
+                try:
+                    with open(specific, "r") as f:
+                        return json.load(f)
+                except Exception as e:
+                    st.error(f"Error loading {specific}: {e}")
+
+        # Fall back to generic file
         if not HISTORICAL_RESULTS.exists():
             return None
 
