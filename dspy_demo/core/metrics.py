@@ -9,7 +9,7 @@ from dspy.primitives.prediction import Prediction
 def validate_answer(
     example: Example,
     pred: Prediction,
-    trace: Optional[Any] = None,
+    trace: Optional[Any] = None,  # noqa: ARG001 - required by DSPy metric interface
 ) -> bool:
     """Check if gold answer appears in predicted answer (case-insensitive).
 
@@ -27,9 +27,9 @@ def validate_answer(
 def gepa_metric(
     example: Example,
     pred: Prediction,
-    trace: Optional[Any] = None,
-    student_code: Optional[Any] = None,
-    teacher_code: Optional[Any] = None,
+    trace: Optional[Any] = None,  # noqa: ARG001 - required by GEPA interface
+    student_code: Optional[Any] = None,  # noqa: ARG001 - required by GEPA interface
+    teacher_code: Optional[Any] = None,  # noqa: ARG001 - required by GEPA interface
 ) -> float:
     """GEPA-compatible metric wrapper.
 

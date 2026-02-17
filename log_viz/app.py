@@ -1,4 +1,5 @@
 """Main Streamlit dashboard for DSPy optimization visualization."""
+
 import time
 
 import pandas as pd
@@ -21,18 +22,24 @@ st.set_page_config(
     page_title="DSPy Optimization Dashboard",
     page_icon="📊",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="expanded",
 )
 
 # Title
 st.title("📊 DSPy Optimization Dashboard")
-st.markdown("*Real-time visualization of [GEPA](https://arxiv.org/abs/2507.19457) optimization trials*")
-st.caption("GEPA: Reflective Prompt Evolution via Genetic-Pareto Search (Agrawal et al., 2025)")
+st.markdown(
+    "*Real-time visualization of [GEPA](https://arxiv.org/abs/2507.19457) optimization trials*"
+)
+st.caption(
+    "GEPA: Reflective Prompt Evolution via Genetic-Pareto Search (Agrawal et al., 2025)"
+)
+
 
 # Initialize data loader
 @st.cache_resource
 def get_data_loader():
     return TrialDataLoader()
+
 
 loader = get_data_loader()
 
@@ -45,10 +52,7 @@ with st.sidebar:
 
     if auto_refresh:
         refresh_interval = st.slider(
-            "Refresh interval (seconds)",
-            min_value=1,
-            max_value=10,
-            value=2
+            "Refresh interval (seconds)", min_value=1, max_value=10, value=2
         )
 
     st.divider()
@@ -63,9 +67,7 @@ with st.sidebar:
         st.stop()
 
     selected_run = st.selectbox(
-        "Run ID",
-        options=available_runs,
-        format_func=lambda x: x.replace("trials_", "")
+        "Run ID", options=available_runs, format_func=lambda x: x.replace("trials_", "")
     )
 
     # Run metadata
@@ -130,7 +132,7 @@ else:
                 label="Baseline Test Accuracy",
                 value=f"{baseline:.1f}%",
                 delta=None,
-                help="Performance of unoptimized model on test set"
+                help="Performance of unoptimized model on test set",
             )
 
         with col2:
@@ -141,7 +143,7 @@ else:
                 value=f"{optimized:.1f}%",
                 delta=f"{improvement:+.1f}%",
                 delta_color="normal",
-                help="Performance of GEPA-optimized model on test set"
+                help="Performance of GEPA-optimized model on test set",
             )
 
         with col3:
@@ -153,7 +155,7 @@ else:
                 value=f"{generalization_gap:+.1f}%",
                 delta=f"{generalization_gap:+.1f}%",
                 delta_color="inverse",
-                help="Difference between best training score and test score (positive = overfitting)"
+                help="Difference between best training score and test score (positive = overfitting)",
             )
 
     st.divider()
@@ -178,10 +180,12 @@ else:
         # Score distribution
         fig_dist = create_score_distribution_plot(df)
         st.plotly_chart(fig_dist, use_container_width=True)
-        st.caption("""**Score Distribution** shows the frequency of different performance levels achieved across all optimization trials.
+        st.caption(
+            """**Score Distribution** shows the frequency of different performance levels achieved across all optimization trials.
         Scores represent the percentage of training examples where GPT-4.1-nano's generated answer contains the gold answer (exact string match, case-insensitive).
         A narrow distribution indicates consistent performance, while a wide spread suggests high variance in GEPA's evolutionary exploration of the prompt space.
-        Per [Agrawal et al. 2025](https://arxiv.org/abs/2507.19457), GEPA maintains a Pareto front of high-performing candidates during optimization.""")
+        Per [Agrawal et al. 2025](https://arxiv.org/abs/2507.19457), GEPA maintains a Pareto front of high-performing candidates during optimization."""
+        )
 
     with col4:
         # Eval type comparison (only for optimizers that log eval_type like MIPROv2)
@@ -205,7 +209,9 @@ else:
             *Note: GEPA does not distinguish between minibatch and full evaluations in the same way as MIPROv2.
             GEPA uses evolutionary search with a Pareto front to balance multiple objectives during optimization.*
             """)
-            st.info("💡 The 'Eval Type Comparison' chart is available when using MIPROv2 optimizer, which logs minibatch vs full evaluation scores.")
+            st.info(
+                "💡 The 'Eval Type Comparison' chart is available when using MIPROv2 optimizer, which logs minibatch vs full evaluation scores."
+            )
 
     st.divider()
 

@@ -43,7 +43,9 @@ class TestValidateAnswer:
         """Test that trace parameter doesn't affect result."""
         mock_example.answer = "Paris"
         mock_prediction.answer = "Paris"
-        assert validate_answer(mock_example, mock_prediction, trace="some_trace") is True
+        assert (
+            validate_answer(mock_example, mock_prediction, trace="some_trace") is True
+        )
 
 
 class TestGepaMetric:

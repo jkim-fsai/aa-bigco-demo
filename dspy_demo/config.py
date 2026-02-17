@@ -64,8 +64,12 @@ class PathConfig:
     """File and directory paths."""
 
     base_dir: Path = field(default_factory=lambda: Path(__file__).parent.parent)
-    runs_dir: Path = field(default_factory=lambda: Path(__file__).parent.parent / "log_viz" / "runs")
-    results_file: Path = field(default_factory=lambda: Path("optimization_results.json"))
+    runs_dir: Path = field(
+        default_factory=lambda: Path(__file__).parent.parent / "log_viz" / "runs"
+    )
+    results_file: Path = field(
+        default_factory=lambda: Path("optimization_results.json")
+    )
 
     def results_file_for_optimizer(self, optimizer: str) -> Path:
         """Get results file path for a specific optimizer."""

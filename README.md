@@ -27,7 +27,7 @@ If a version is blocked or unscanned, pin a version that is scanned and allowed 
 
 #### What you can do as non-admin (Options 1 & 2)
 
-**Option 1: `jf scan` / `jf audit` (local, self-service)**  
+**Option 1: `jf scan` / `jf audit` (local, self-service)**
 These bypass server-side indexing: they run the Xray indexer locally and scan against Xray’s vulnerability DB. You need a scoped access token with Xray permissions (not just Artifactory).
 
 ```bash
@@ -40,7 +40,7 @@ jf audit --python
 
 Docs: [LaunchPad – how to run jf scan / jf audit locally](https://futuresecureai.atlassian.net/wiki/spaces/LaunchPad/pages/1144914071).
 
-**Option 2: `POST /api/v1/scanArtifact` (when repo is indexed)**  
+**Option 2: `POST /api/v1/scanArtifact` (when repo is indexed)**
 Requires “Manage Components” permission (not full admin), but **only works for artifacts in repos that are already in Xray’s Indexed Resources**. If the PyPI cache repo is not indexed (typical), this returns `{"error":"Failed to scan component"}`.
 
 ```bash
@@ -48,7 +48,7 @@ jf xr curl -s -XPOST "/api/v1/scanArtifact" -H "Content-Type: application/json" 
   -d '{"checksums":["6eb11feb5a0d452ee41f824e271ca311a09e250441c262ca2fd7ebcf2461a06c"]}'
 ```
 
-**Sustainable fix (one-time admin request)**  
+**Sustainable fix (one-time admin request)**
 Server-side scanning requires: (1) repository indexing (admin-only), (2) a security policy, (3) a watch linking the policy to the repo. Ask your admin to add the PyPI cache repo to **Xray → Settings → Indexed Resources**. After that, new artifacts are indexed and scanned automatically.
 
 - Raise on FPS board: <https://futuresecureai.atlassian.net/jira/software/c/projects/FPS/boards/25>

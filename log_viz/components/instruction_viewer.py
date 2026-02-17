@@ -4,7 +4,11 @@ from typing import Any, Dict
 
 import streamlit as st
 
-from utils import MAX_INSTRUCTION_DISPLAY, deduplicate_instructions, group_by_optimizer_type
+from utils import (
+    MAX_INSTRUCTION_DISPLAY,
+    deduplicate_instructions,
+    group_by_optimizer_type,
+)
 
 
 def display_instruction_evolution(historical_data: Dict[str, Any]) -> None:
@@ -38,7 +42,9 @@ def display_instruction_evolution(historical_data: Dict[str, Any]) -> None:
                 unique_candidates = deduplicate_instructions(gepa_candidates)
 
                 st.markdown("#### 🧬 GEPA Proposed Instructions")
-                st.caption(f"Evolutionary search proposed {len(unique_candidates)} instruction variants")
+                st.caption(
+                    f"Evolutionary search proposed {len(unique_candidates)} instruction variants"
+                )
 
                 for cand in unique_candidates[:MAX_INSTRUCTION_DISPLAY]:
                     iteration = cand.get("iteration", cand["index"])

@@ -268,7 +268,9 @@ class OptimizationPipeline:
                 print("=" * 60)
 
             baseline_module = module_class()
-            baseline_accuracy = await self.evaluate(baseline_module, self.data_loader.testset)
+            baseline_accuracy = await self.evaluate(
+                baseline_module, self.data_loader.testset
+            )
 
             if verbose:
                 print(f"Baseline Accuracy: {baseline_accuracy:.1f}%\n")
@@ -280,7 +282,9 @@ class OptimizationPipeline:
                 print("=" * 60)
 
             optimizer = self._create_optimizer(optimizer_type)
-            optimized_module = self._compile_module(optimizer, optimizer_type, module_class)
+            optimized_module = self._compile_module(
+                optimizer, optimizer_type, module_class
+            )
 
             # Extract prompt info
             prompt_info = self._extract_prompt_info(optimized_module)
@@ -291,7 +295,9 @@ class OptimizationPipeline:
                 print("OPTIMIZED EVALUATION")
                 print("=" * 60)
 
-            optimized_accuracy = await self.evaluate(optimized_module, self.data_loader.testset)
+            optimized_accuracy = await self.evaluate(
+                optimized_module, self.data_loader.testset
+            )
 
             if verbose:
                 print(f"Optimized Accuracy: {optimized_accuracy:.1f}%")
@@ -384,7 +390,7 @@ class OptimizationPipeline:
             for demo in predictor.demos:
                 demo_info: Dict[str, str] = {
                     "question": (
-                        demo.question[:PROCESSING_CONFIG.demo_question_limit] + "..."
+                        demo.question[: PROCESSING_CONFIG.demo_question_limit] + "..."
                         if len(demo.question) > PROCESSING_CONFIG.demo_question_limit
                         else demo.question
                     ),
@@ -392,7 +398,7 @@ class OptimizationPipeline:
                 }
                 if hasattr(demo, "reasoning"):
                     demo_info["reasoning"] = (
-                        demo.reasoning[:PROCESSING_CONFIG.demo_reasoning_limit] + "..."
+                        demo.reasoning[: PROCESSING_CONFIG.demo_reasoning_limit] + "..."
                         if len(demo.reasoning) > PROCESSING_CONFIG.demo_reasoning_limit
                         else demo.reasoning
                     )
@@ -423,15 +429,23 @@ class OptimizationPipeline:
 
         # Truncate individual instructions
         for cand in unique_candidates:
-            if len(cand["instruction"]) > PROCESSING_CONFIG.instruction_truncation_limit:
+            if (
+                len(cand["instruction"])
+                > PROCESSING_CONFIG.instruction_truncation_limit
+            ):
                 cand["instruction"] = (
-                    cand["instruction"][:PROCESSING_CONFIG.instruction_truncation_limit]
+                    cand["instruction"][
+                        : PROCESSING_CONFIG.instruction_truncation_limit
+                    ]
                     + "... [truncated]"
                 )
 
         # Sample evenly if total chars exceed budget
         total_chars = sum(len(c["instruction"]) for c in unique_candidates)
-        if total_chars > PROCESSING_CONFIG.max_instruction_chars and len(unique_candidates) > 1:
+        if (
+            total_chars > PROCESSING_CONFIG.max_instruction_chars
+            and len(unique_candidates) > 1
+        ):
             avg_chars = total_chars / len(unique_candidates)
             max_candidates = int(PROCESSING_CONFIG.max_instruction_chars / avg_chars)
             max_candidates = max(max_candidates, 2)
@@ -444,7 +458,9 @@ class OptimizationPipeline:
         instruction_history = []
         for cand in unique_candidates:
             iteration = cand.get("iteration", cand["index"])
-            instruction_history.append(f"## Iteration {iteration}\n{cand['instruction']}")
+            instruction_history.append(
+                f"## Iteration {iteration}\n{cand['instruction']}"
+            )
 
         # Deduplicate and sort trials
         seen_trials: set = set()
@@ -457,10 +473,9 @@ class OptimizationPipeline:
         unique_trials.sort(key=lambda x: x["trial"])
 
         # Format score progression
-        score_progression = "\n".join([
-            f"Iteration {t['trial']}: {t['score']:.1f}%"
-            for t in unique_trials
-        ])
+        score_progression = "\n".join(
+            [f"Iteration {t['trial']}: {t['score']:.1f}%" for t in unique_trials]
+        )
 
         # Create the prompt
         prompt = f"""Analyze the following DSPy GEPA optimization run and provide a concise summary of the instruction evolution.
@@ -491,7 +506,9 @@ Please provide a summary that covers:
 Keep the summary concise (3-5 paragraphs) and actionable."""
 
         # Use DSPy LM to generate the summary
-        summary_lm = dspy.LM(self.model_name, temperature=MODEL_CONFIG.summary_temperature)
+        summary_lm = dspy.LM(
+            self.model_name, temperature=MODEL_CONFIG.summary_temperature
+        )
 
         try:
             response = summary_lm(prompt)

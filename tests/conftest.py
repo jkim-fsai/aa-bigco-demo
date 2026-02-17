@@ -4,7 +4,7 @@ import json
 import sys
 import tempfile
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, Generator, List
 from unittest.mock import MagicMock
 
 # Mock dspy module and its submodules before any dspy_demo imports
@@ -16,7 +16,7 @@ if "dspy" not in sys.modules:
             for k, v in kwargs.items():
                 setattr(self, k, v)
 
-        def with_inputs(self, *args):
+        def with_inputs(self, *args):  # noqa: ARG002
             return self
 
     class MockPrediction:
@@ -101,11 +101,36 @@ def sample_instruction_candidates() -> List[Dict[str, Any]]:
 def sample_trials() -> List[Dict[str, Any]]:
     """Sample trial data for testing."""
     return [
-        {"trial": 1, "score": 65.0, "parameters": "GEPA Iteration 1", "optimizer": "gepa"},
-        {"trial": 2, "score": 68.5, "parameters": "GEPA Iteration 2", "optimizer": "gepa"},
-        {"trial": 3, "score": 70.0, "parameters": "GEPA Iteration 3", "optimizer": "gepa"},
-        {"trial": 4, "score": 72.5, "parameters": "GEPA Iteration 4", "optimizer": "gepa"},
-        {"trial": 5, "score": 71.0, "parameters": "GEPA Iteration 5", "optimizer": "gepa"},
+        {
+            "trial": 1,
+            "score": 65.0,
+            "parameters": "GEPA Iteration 1",
+            "optimizer": "gepa",
+        },
+        {
+            "trial": 2,
+            "score": 68.5,
+            "parameters": "GEPA Iteration 2",
+            "optimizer": "gepa",
+        },
+        {
+            "trial": 3,
+            "score": 70.0,
+            "parameters": "GEPA Iteration 3",
+            "optimizer": "gepa",
+        },
+        {
+            "trial": 4,
+            "score": 72.5,
+            "parameters": "GEPA Iteration 4",
+            "optimizer": "gepa",
+        },
+        {
+            "trial": 5,
+            "score": 71.0,
+            "parameters": "GEPA Iteration 5",
+            "optimizer": "gepa",
+        },
     ]
 
 
@@ -133,7 +158,7 @@ def sample_historical_data(
 
 
 @pytest.fixture
-def temp_dir() -> Path:
+def temp_dir() -> Generator[Path, None, None]:
     """Create a temporary directory for test files."""
     with tempfile.TemporaryDirectory() as tmpdir:
         yield Path(tmpdir)

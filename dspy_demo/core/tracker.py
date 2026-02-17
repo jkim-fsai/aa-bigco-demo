@@ -166,11 +166,13 @@ class OptimizationTracker(logging.Handler):
         match = LogPatterns.MIPRO_INSTRUCTION.match(msg)
         if match:
             idx, instruction = match.groups()
-            self.instructions.append({
-                "index": int(idx),
-                "instruction": instruction.strip(),
-                "type": "mipro",
-            })
+            self.instructions.append(
+                {
+                    "index": int(idx),
+                    "instruction": instruction.strip(),
+                    "type": "mipro",
+                }
+            )
 
     def _handle_gepa_instruction(self, msg: str) -> None:
         """Handle GEPA instruction proposal messages."""
@@ -178,12 +180,14 @@ class OptimizationTracker(logging.Handler):
         if match:
             iteration = int(match.group(1))
             instruction_text = match.group(2).strip()
-            self.instructions.append({
-                "index": iteration,
-                "instruction": instruction_text,
-                "type": "gepa",
-                "iteration": iteration,
-            })
+            self.instructions.append(
+                {
+                    "index": iteration,
+                    "instruction": instruction_text,
+                    "type": "gepa",
+                    "iteration": iteration,
+                }
+            )
 
     def _handle_mipro_score(self, msg: str) -> None:
         """Handle MIPROv2 score messages."""
@@ -251,5 +255,7 @@ class OptimizationTracker(logging.Handler):
         return {
             "instructions_proposed": self.instructions,
             "trials": self.trials,
-            "best_trial": max(self.trials, key=lambda x: x["score"]) if self.trials else None,
+            "best_trial": (
+                max(self.trials, key=lambda x: x["score"]) if self.trials else None
+            ),
         }

@@ -78,7 +78,7 @@ class TestOptimizationResult:
 
     def test_save_default_path(self, sample_result):
         """Test save uses default path when none provided."""
-        with patch.object(Path, "write_text") as mock_write:
+        with patch.object(Path, "write_text"):
             path = sample_result.save()
             assert path == Path("optimization_results.json")
 
@@ -145,7 +145,7 @@ class TestOptimizationPipeline:
 
     @patch("dspy_demo.pipeline.dspy")
     @patch("dspy_demo.pipeline.logging")
-    def test_configure_sets_up_dspy(self, mock_logging, mock_dspy):
+    def test_configure_sets_up_dspy(self, mock_logging, mock_dspy):  # noqa: ARG002
         """Test that configure sets up DSPy."""
         with patch("dspy_demo.pipeline.DataLoader"):
             pipeline = OptimizationPipeline()
@@ -163,7 +163,7 @@ class TestOptimizationPipeline:
 
     @patch("dspy_demo.pipeline.dspy")
     @patch("dspy_demo.pipeline.logging")
-    def test_configure_only_once(self, mock_logging, mock_dspy):
+    def test_configure_only_once(self, mock_logging, mock_dspy):  # noqa: ARG002
         """Test that configure only runs once."""
         with patch("dspy_demo.pipeline.DataLoader"):
             pipeline = OptimizationPipeline()
@@ -192,7 +192,7 @@ class TestOptimizationPipeline:
             pipeline = OptimizationPipeline()
             mock_dspy.MIPROv2.return_value = MagicMock()
 
-            optimizer = pipeline._create_optimizer(OptimizerType.MIPRO)
+            pipeline._create_optimizer(OptimizerType.MIPRO)
 
             mock_dspy.MIPROv2.assert_called_once()
 
@@ -247,7 +247,11 @@ class TestOptimizationPipeline:
                     trials=[{"trial": 1, "score": 70.0}],
                     instruction_candidates=[
                         {"index": 1, "iteration": 1, "instruction": "Test instruction"},
-                        {"index": 1, "iteration": 1, "instruction": "Test instruction"},  # Duplicate
+                        {
+                            "index": 1,
+                            "iteration": 1,
+                            "instruction": "Test instruction",
+                        },  # Duplicate
                     ],
                 )
 

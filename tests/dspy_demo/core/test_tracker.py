@@ -84,7 +84,7 @@ class TestOptimizationTracker:
     def test_init_creates_output_dir(self, temp_dir):
         """Test that init creates output directory."""
         output_dir = temp_dir / "runs"
-        tracker = OptimizationTracker(output_dir=output_dir)
+        OptimizationTracker(output_dir=output_dir)
         assert output_dir.exists()
 
     def test_init_sets_run_id(self, temp_dir):
@@ -155,7 +155,9 @@ class TestOptimizationTracker:
         tracker.open_jsonl()
 
         record = MagicMock()
-        record.getMessage.return_value = "Iteration 10: Valset score for new program: 0.725"
+        record.getMessage.return_value = (
+            "Iteration 10: Valset score for new program: 0.725"
+        )
 
         tracker.emit(record)
         tracker.close_jsonl()
@@ -171,7 +173,9 @@ class TestOptimizationTracker:
         tracker.open_jsonl()
 
         record = MagicMock()
-        record.getMessage.return_value = "Score: 68.5 with parameters ['instruction_1']."
+        record.getMessage.return_value = (
+            "Score: 68.5 with parameters ['instruction_1']."
+        )
 
         tracker.emit(record)
         tracker.close_jsonl()
@@ -204,7 +208,9 @@ class TestOptimizationTracker:
 
         # Emit same score twice
         record = MagicMock()
-        record.getMessage.return_value = "Iteration 5: Valset score for new program: 0.70"
+        record.getMessage.return_value = (
+            "Iteration 5: Valset score for new program: 0.70"
+        )
 
         tracker.emit(record)
         tracker.emit(record)
@@ -214,7 +220,9 @@ class TestOptimizationTracker:
         # Read JSONL and count trial entries
         with open(tracker.trials_jsonl_path) as f:
             lines = f.readlines()
-        trial_entries = [json.loads(l) for l in lines if json.loads(l)["type"] == "trial"]
+        trial_entries = [
+            json.loads(l) for l in lines if json.loads(l)["type"] == "trial"
+        ]
 
         assert len(trial_entries) == 1  # Only one, not two
 

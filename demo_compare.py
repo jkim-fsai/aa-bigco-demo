@@ -39,6 +39,7 @@ async def main(optimizer_name: str) -> None:
 
     # Save results with optimizer-specific filename
     from pathlib import Path
+
     path = Path(f"optimization_results_{optimizer_name.lower()}.json")
     result.save(path)
     print(f"\nResults saved to: {path}")

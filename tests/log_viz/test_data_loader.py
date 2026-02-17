@@ -11,7 +11,7 @@ import sys
 # Create a proper mock for streamlit that handles cache_data decorator
 mock_streamlit = MagicMock()
 # Make cache_data a decorator that returns the function unchanged
-mock_streamlit.cache_data = lambda **kwargs: lambda func: func
+mock_streamlit.cache_data = lambda **kwargs: lambda func: func  # noqa: ARG005
 sys.modules["streamlit"] = mock_streamlit
 
 from log_viz.data_loader import TrialDataLoader
@@ -33,7 +33,7 @@ class TestTrialDataLoader:
 
             assert df.empty
 
-    def test_load_jsonl_incremental(self, temp_jsonl_file, temp_dir):
+    def test_load_jsonl_incremental(self, temp_jsonl_file, temp_dir):  # noqa: ARG002
         """Test incremental loading of JSONL file."""
         with patch("log_viz.data_loader.RUNS_DIR", temp_dir):
             loader = TrialDataLoader()
@@ -46,7 +46,9 @@ class TestTrialDataLoader:
             assert "trial" in df.columns
             assert "score" in df.columns
 
-    def test_load_jsonl_incremental_tracks_position(self, temp_jsonl_file, temp_dir):
+    def test_load_jsonl_incremental_tracks_position(
+        self, temp_jsonl_file, temp_dir  # noqa: ARG002
+    ):
         """Test that position is tracked between reads."""
         with patch("log_viz.data_loader.RUNS_DIR", temp_dir):
             loader = TrialDataLoader()
@@ -64,7 +66,9 @@ class TestTrialDataLoader:
             # No new data, so empty
             assert len(df) == 0
 
-    def test_load_jsonl_full_resets_position(self, temp_jsonl_file, temp_dir):
+    def test_load_jsonl_full_resets_position(
+        self, temp_jsonl_file, temp_dir  # noqa: ARG002
+    ):
         """Test that full load resets position."""
         with patch("log_viz.data_loader.RUNS_DIR", temp_dir):
             loader = TrialDataLoader()
@@ -77,7 +81,7 @@ class TestTrialDataLoader:
 
             assert len(df) == 5
 
-    def test_load_historical_results(self, temp_results_file, temp_dir):
+    def test_load_historical_results(self, temp_results_file, temp_dir):  # noqa: ARG002
         """Test loading historical results JSON."""
         with patch("log_viz.data_loader.HISTORICAL_RESULTS", temp_results_file):
             loader = TrialDataLoader()
@@ -89,7 +93,9 @@ class TestTrialDataLoader:
 
     def test_load_historical_results_not_exists(self, temp_dir):
         """Test loading non-existent historical results."""
-        with patch("log_viz.data_loader.HISTORICAL_RESULTS", temp_dir / "nonexistent.json"):
+        with patch(
+            "log_viz.data_loader.HISTORICAL_RESULTS", temp_dir / "nonexistent.json"
+        ):
             loader = TrialDataLoader()
             result = loader.load_historical_results()
 
@@ -110,7 +116,7 @@ class TestTrialDataLoader:
 
         assert result is None
 
-    def test_get_run_metadata(self, temp_jsonl_file, temp_dir):
+    def test_get_run_metadata(self, temp_jsonl_file, temp_dir):  # noqa: ARG002
         """Test extracting metadata from run."""
         with patch("log_viz.data_loader.RUNS_DIR", temp_dir):
             loader = TrialDataLoader()

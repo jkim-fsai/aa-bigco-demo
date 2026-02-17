@@ -37,7 +37,11 @@ class TestDeduplicateInstructions:
         """Test that iteration is used in dedup key."""
         candidates = [
             {"index": 1, "iteration": 1, "instruction": "Same text"},
-            {"index": 2, "iteration": 2, "instruction": "Same text"},  # Different iteration
+            {
+                "index": 2,
+                "iteration": 2,
+                "instruction": "Same text",
+            },  # Different iteration
         ]
         result = deduplicate_instructions(candidates)
 
@@ -64,7 +68,11 @@ class TestDeduplicateInstructions:
         long_text = "A" * 150
         candidates = [
             {"index": 1, "iteration": 1, "instruction": long_text + "X"},
-            {"index": 1, "iteration": 1, "instruction": long_text + "Y"},  # Same first 100 chars
+            {
+                "index": 1,
+                "iteration": 1,
+                "instruction": long_text + "Y",
+            },  # Same first 100 chars
         ]
         result = deduplicate_instructions(candidates)
 
@@ -177,7 +185,7 @@ class TestSortByIteration:
         ]
         original_first = candidates[0]
 
-        result = sort_by_iteration(candidates)
+        sort_by_iteration(candidates)
 
         # Original should be unchanged
         assert candidates[0] is original_first

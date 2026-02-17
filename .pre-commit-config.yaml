@@ -21,18 +21,27 @@ repos:
     - id: detect-private-key
     - id: trailing-whitespace
     - id: end-of-file-fixer
-  - repo: https://github.com/psf/black
-    rev: 23.3.0
+  # Use system black (brew install black) to avoid JFrog Xray blocking / old version incompatibility.
+  - repo: local
     hooks:
     - id: black
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.13.3
+      name: black
+      entry: black
+      language: system
+      types: [python]
+  # Use system ruff (brew install ruff) to avoid JFrog Xray blocking the download.
+  - repo: local
     hooks:
       - id: ruff-check
-        args: ["--select", "ARG,F841", "--fix"]
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.15.0  # Specify the version of mypy you want to use
+        name: ruff-check
+        entry: ruff check --select ARG,F841 --fix
+        language: system
+        types: [python]
+  # Use system mypy (brew install mypy) to avoid JFrog Xray blocking type-stub downloads.
+  - repo: local
     hooks:
     - id: mypy
-      additional_dependencies: [types-requests, types-setuptools, types-Markdown]  # Add any additional dependencies you might need
-      args: ["--ignore-missing-imports"]  # Specify the mypy.ini configuration file
+      name: mypy
+      entry: mypy --ignore-missing-imports
+      language: system
+      types: [python]

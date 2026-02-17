@@ -14,7 +14,9 @@ class TestFormatContext:
         """Test formatting single paragraph."""
         ctx = {
             "title": ["Paris"],
-            "sentences": [["Paris is the capital of France.", " It has the Eiffel Tower."]],
+            "sentences": [
+                ["Paris is the capital of France.", " It has the Eiffel Tower."]
+            ],
         }
         result = format_context(ctx)
         assert "[Paris]" in result
@@ -148,7 +150,10 @@ class TestDataLoader:
         mock_ds = [
             {
                 "question": "What is the capital?",
-                "context": {"title": ["France"], "sentences": [["Paris is the capital."]]},
+                "context": {
+                    "title": ["France"],
+                    "sentences": [["Paris is the capital."]],
+                },
                 "answer": "Paris",
             }
         ]
