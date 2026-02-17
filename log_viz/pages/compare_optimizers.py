@@ -7,10 +7,27 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
+from components.sidebar import render_sidebar
+from data_loader import TrialDataLoader
+
 st.set_page_config(page_title="Optimizer Comparison", page_icon="⚖️", layout="wide")
+
+
+# Initialize data loader and shared sidebar
+@st.cache_resource
+def get_data_loader():
+    return TrialDataLoader()
+
+
+loader = get_data_loader()
+sidebar_state = render_sidebar(loader)
+selected_run = sidebar_state["selected_run"]
 
 st.title("⚖️ Optimizer Comparison")
 st.markdown("*Compare GEPA vs MIPROv2 instruction evolution and performance*")
+
+if selected_run:
+    st.info(f"Viewing run: **{selected_run.replace('trials_', '')}**")
 
 # Find all result files
 result_files = {}

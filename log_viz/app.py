@@ -7,6 +7,7 @@ import streamlit as st
 
 from components.instruction_viewer import display_instruction_evolution
 from components.metrics_cards import display_metrics_cards
+from components.sidebar import render_sidebar
 from components.trials_table import display_trials_table
 from data_loader import TrialDataLoader
 from plots import (
@@ -15,7 +16,6 @@ from plots import (
     create_score_distribution_plot,
     create_score_over_time_plot,
 )
-from utils.config import RUNS_DIR
 
 # Page config
 st.set_page_config(
@@ -43,60 +43,15 @@ def get_data_loader():
 
 loader = get_data_loader()
 
-# Sidebar controls
-with st.sidebar:
-    st.header("⚙️ Controls")
+# Sidebar controls (shared across pages)
+sidebar_state = render_sidebar(loader)
+selected_run = sidebar_state["selected_run"]
+auto_refresh = sidebar_state["auto_refresh"]
+refresh_interval = sidebar_state["refresh_interval"]
+show_historical = sidebar_state["show_historical"]
 
-    # Auto-refresh toggle
-    auto_refresh = st.checkbox("Auto-refresh", value=True)
-
-    if auto_refresh:
-        refresh_interval = st.slider(
-            "Refresh interval (seconds)", min_value=1, max_value=10, value=2
-        )
-
-    st.divider()
-
-    # Run selection
-    st.subheader("Select Run")
-    available_runs = loader.get_available_runs()
-
-    if not available_runs:
-        st.warning("No optimization runs found.")
-        st.info(f"Run demo.py to generate trial data.\nData will appear in: {RUNS_DIR}")
-        st.stop()
-
-    selected_run = st.selectbox(
-        "Run ID", options=available_runs, format_func=lambda x: x.replace("trials_", "")
-    )
-
-    # Run metadata
-    metadata = loader.get_run_metadata(selected_run)
-    if metadata:
-        st.caption(f"Started: {metadata.get('timestamp', 'N/A')}")
-        st.caption(f"Status: {metadata.get('status', 'unknown')}")
-
-    st.divider()
-
-    # Dataset info
-    st.subheader("📚 Dataset Splits")
-    st.caption("**Training Set:** 200 examples")
-    st.caption("Used by GEPA for optimization")
-    st.caption("")
-    st.caption("**Test Set:** 100 examples")
-    st.caption("Held-out for final evaluation")
-
-    st.divider()
-
-    # Historical comparison toggle
-    show_historical = st.checkbox("Compare with historical run", value=False)
-
-    st.divider()
-
-    # Refresh button
-    if st.button("🔄 Force Refresh"):
-        st.cache_data.clear()
-        st.rerun()
+if selected_run is None:
+    st.stop()
 
 # Load current run data
 df = loader.load_jsonl_full(selected_run)
