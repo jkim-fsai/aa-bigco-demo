@@ -30,7 +30,10 @@ class TestRenderSidebar:
         with patch("log_viz.components.sidebar.st") as mock_st:
             mock_st.sidebar.__enter__ = MagicMock(return_value=None)
             mock_st.sidebar.__exit__ = MagicMock(return_value=False)
-            mock_st.checkbox.side_effect = [True, False]  # auto_refresh, show_historical
+            mock_st.checkbox.side_effect = [
+                True,
+                False,
+            ]  # auto_refresh, show_historical
             mock_st.slider.return_value = 2
             mock_st.selectbox.return_value = "trials_20260217_100000"
             # Use MagicMock for session_state to support attribute-style access
