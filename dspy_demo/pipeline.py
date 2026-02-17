@@ -197,7 +197,6 @@ class OptimizationPipeline:
             return optimizer.compile(
                 module_class(),
                 trainset=self.data_loader.trainset,
-                num_trials=OPTIMIZER_CONFIG.mipro_num_trials,
                 max_bootstrapped_demos=OPTIMIZER_CONFIG.mipro_max_bootstrapped_demos,
                 max_labeled_demos=OPTIMIZER_CONFIG.mipro_max_labeled_demos,
             )
