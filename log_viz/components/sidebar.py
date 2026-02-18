@@ -7,6 +7,44 @@ import streamlit as st
 from data_loader import TrialDataLoader
 from utils.config import RUNS_DIR
 
+_METADATA_KEYS = {
+    "type",
+    "run_id",
+    "timestamp",
+    "status",
+    "trainset_size",
+    "valset_size",
+    "testset_size",
+    "optimizer",
+}
+
+_HYPERPARAM_LABELS = {
+    "model": "Inference Model",
+    "reflection_model": "Reflection Model",
+    "auto": "Auto Budget",
+    "num_threads": "Threads",
+    "reflection_minibatch_size": "Reflection Minibatch",
+    "num_trials": "Num Trials",
+    "max_bootstrapped_demos": "Max Bootstrap Demos",
+    "max_labeled_demos": "Max Labeled Demos",
+}
+
+
+def _display_hyperparams(metadata: Optional[Dict[str, Any]]) -> None:
+    """Display optimizer hyperparameters from run metadata."""
+    if not metadata:
+        st.caption("No hyperparameter info available")
+        return
+
+    hyperparams = {k: v for k, v in metadata.items() if k not in _METADATA_KEYS}
+    if not hyperparams:
+        st.caption("No hyperparameter info available for this run")
+        return
+
+    for key, value in hyperparams.items():
+        label = _HYPERPARAM_LABELS.get(key, key.replace("_", " ").title())
+        st.caption(f"**{label}:** {value}")
+
 
 def render_sidebar(loader: TrialDataLoader) -> Dict[str, Any]:
     """Render shared sidebar controls and return sidebar state.
@@ -93,6 +131,12 @@ def render_sidebar(loader: TrialDataLoader) -> Dict[str, Any]:
                 st.caption("Held-out for final evaluation")
         else:
             st.caption("Dataset split info not available for this run")
+
+        st.divider()
+
+        # Hyperparameters (derived from run metadata)
+        st.subheader("🔧 Hyperparameters")
+        _display_hyperparams(metadata)
 
         st.divider()
 

@@ -26,6 +26,7 @@ class TestModelConfig:
         """Test default configuration values."""
         config = ModelConfig()
         assert config.default_model == "openai/gpt-4.1-nano"
+        assert config.reflection_model == "openai/gpt-4.1-nano"
         assert config.reflection_temperature == 1.0
         assert config.summary_temperature == 0.3
         assert config.async_max == 100
@@ -49,13 +50,13 @@ class TestDatasetConfig:
         config = DatasetConfig()
         assert config.dataset_name == "hotpotqa/hotpot_qa"
         assert config.dataset_config == "distractor"
-        assert config.train_slice == "train[:9045]"
-        assert config.val_slice == "validation[:370]"
-        assert config.test_slice == "validation[370:740]"
+        assert config.train_slice == "train"
+        assert config.val_slice == "validation[:3700]"
+        assert config.test_slice == "validation[3700:]"
 
     def test_global_instance(self):
         """Test global DATASET_CONFIG instance."""
-        assert DATASET_CONFIG.train_slice == "train[:9045]"
+        assert DATASET_CONFIG.train_slice == "train"
 
 
 class TestOptimizerConfig:
@@ -64,13 +65,14 @@ class TestOptimizerConfig:
     def test_gepa_defaults(self):
         """Test GEPA optimizer defaults."""
         config = OptimizerConfig()
-        assert config.gepa_auto == "medium"
+        assert config.gepa_auto == "heavy"
         assert config.gepa_num_threads == 25
+        assert config.gepa_reflection_minibatch_size == 3
 
     def test_mipro_defaults(self):
         """Test MIPROv2 optimizer defaults."""
         config = OptimizerConfig()
-        assert config.mipro_auto == "light"
+        assert config.mipro_auto == "heavy"
         assert config.mipro_num_threads == 10
         assert config.mipro_num_trials == 30
         assert config.mipro_max_bootstrapped_demos == 3
@@ -78,7 +80,7 @@ class TestOptimizerConfig:
 
     def test_global_instance(self):
         """Test global OPTIMIZER_CONFIG instance."""
-        assert OPTIMIZER_CONFIG.gepa_auto == "medium"
+        assert OPTIMIZER_CONFIG.gepa_auto == "heavy"
 
 
 class TestProcessingConfig:

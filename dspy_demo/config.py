@@ -14,6 +14,7 @@ class ModelConfig:
     """Language model configuration."""
 
     default_model: str = "openai/gpt-4.1-nano"
+    reflection_model: str = "openai/gpt-4.1-nano"
     reflection_temperature: float = 1.0
     summary_temperature: float = 0.3
     async_max: int = 100
@@ -23,26 +24,27 @@ class ModelConfig:
 class DatasetConfig:
     """Dataset split configuration.
 
-    10% of standard HotPotQA (90,447 train / 7,405 dev):
-    - Train: 9,045 examples
-    - Val: 370 examples
-    - Test: 370 examples (held out)
+    Full HotPotQA (90,447 train / 7,405 dev):
+    - Train: 90,447 examples
+    - Val: 3,700 examples (first half of dev)
+    - Test: 3,705 examples (second half of dev, held out)
     """
 
     dataset_name: str = "hotpotqa/hotpot_qa"
     dataset_config: str = "distractor"
-    train_slice: str = "train[:9045]"
-    val_slice: str = "validation[:370]"
-    test_slice: str = "validation[370:740]"
+    train_slice: str = "train"
+    val_slice: str = "validation[:3700]"
+    test_slice: str = "validation[3700:]"
 
 
 @dataclass(frozen=True)
 class OptimizerConfig:
     """Optimizer default parameters."""
 
-    gepa_auto: str = "medium"  # medium/heavy for paper-quality results
+    gepa_auto: str = "heavy"  # heavy+nano is fastest at +2.1%
     gepa_num_threads: int = 25
-    mipro_auto: str = "light"
+    gepa_reflection_minibatch_size: int = 3
+    mipro_auto: str = "heavy"
     mipro_num_threads: int = 10
     mipro_num_trials: int = 30
     mipro_max_bootstrapped_demos: int = 3
