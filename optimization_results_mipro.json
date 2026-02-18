@@ -1,14 +1,14 @@
 {
   "optimizer": "mipro",
-  "baseline_accuracy": 66.21621621621621,
-  "optimized_accuracy": 66.75675675675676,
-  "improvement": 0.5405405405405475,
-  "instruction": "You are a knowledgeable assistant focused on extracting precise factual information from structured texts. Given a `context` and a `question`, produce the `answer` by carefully analyzing the information in the context and providing a clear, accurate response that directly addresses the question. Use step-by-step reasoning if necessary to ensure correctness.",
+  "baseline_accuracy": 65.66801619433198,
+  "optimized_accuracy": 65.10121457489878,
+  "improvement": -0.5668016194332068,
+  "instruction": "Given the fields `context` and `question`, generate the `answer` by reasoning through the information step-by-step. Use the context to find relevant details that answer the question accurately and clearly. Ensure the answer precisely addresses what is asked, based on the provided information.",
   "demos": [],
   "optimization_trials": [
     {
       "trial": 1,
-      "score": 74.0,
+      "score": 76.3,
       "parameters": "Default program",
       "optimizer": "mipro",
       "eval_type": "full",
@@ -16,7 +16,7 @@
     },
     {
       "trial": 2,
-      "score": 74.0,
+      "score": 76.3,
       "parameters": "Default program",
       "optimizer": "mipro",
       "eval_type": "full",
@@ -24,155 +24,409 @@
     },
     {
       "trial": 3,
-      "score": 62.86,
-      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 3']",
+      "score": 77.14,
+      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 17']",
       "optimizer": "mipro",
       "eval_type": "minibatch"
     },
     {
       "trial": 4,
-      "score": 62.86,
-      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 3']",
+      "score": 77.14,
+      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 17']",
       "optimizer": "mipro",
       "eval_type": "minibatch"
     },
     {
       "trial": 5,
-      "score": 77.14,
-      "parameters": "['Predictor 0: Instruction 2', 'Predictor 0: Few-Shot Set 0']",
+      "score": 68.57,
+      "parameters": "['Predictor 0: Instruction 5', 'Predictor 0: Few-Shot Set 12']",
       "optimizer": "mipro",
       "eval_type": "minibatch"
     },
     {
       "trial": 6,
-      "score": 77.14,
-      "parameters": "['Predictor 0: Instruction 2', 'Predictor 0: Few-Shot Set 0']",
+      "score": 68.57,
+      "parameters": "['Predictor 0: Instruction 5', 'Predictor 0: Few-Shot Set 12']",
       "optimizer": "mipro",
       "eval_type": "minibatch"
     },
     {
       "trial": 7,
-      "score": 85.71,
-      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 5']",
+      "score": 82.86,
+      "parameters": "['Predictor 0: Instruction 8', 'Predictor 0: Few-Shot Set 1']",
       "optimizer": "mipro",
       "eval_type": "minibatch"
     },
     {
       "trial": 8,
-      "score": 85.71,
-      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 5']",
+      "score": 82.86,
+      "parameters": "['Predictor 0: Instruction 8', 'Predictor 0: Few-Shot Set 1']",
       "optimizer": "mipro",
       "eval_type": "minibatch"
     },
     {
       "trial": 9,
-      "score": 62.86,
-      "parameters": "['Predictor 0: Instruction 2', 'Predictor 0: Few-Shot Set 2']",
+      "score": 77.14,
+      "parameters": "['Predictor 0: Instruction 2', 'Predictor 0: Few-Shot Set 12']",
       "optimizer": "mipro",
       "eval_type": "minibatch"
     },
     {
       "trial": 10,
-      "score": 62.86,
-      "parameters": "['Predictor 0: Instruction 2', 'Predictor 0: Few-Shot Set 2']",
+      "score": 77.14,
+      "parameters": "['Predictor 0: Instruction 2', 'Predictor 0: Few-Shot Set 12']",
       "optimizer": "mipro",
       "eval_type": "minibatch"
     },
     {
       "trial": 11,
-      "score": 71.43,
-      "parameters": "['Predictor 0: Instruction 0', 'Predictor 0: Few-Shot Set 5']",
+      "score": 74.29,
+      "parameters": "['Predictor 0: Instruction 5', 'Predictor 0: Few-Shot Set 12']",
       "optimizer": "mipro",
       "eval_type": "minibatch"
     },
     {
       "trial": 12,
-      "score": 71.43,
-      "parameters": "['Predictor 0: Instruction 0', 'Predictor 0: Few-Shot Set 5']",
+      "score": 74.29,
+      "parameters": "['Predictor 0: Instruction 5', 'Predictor 0: Few-Shot Set 12']",
       "optimizer": "mipro",
       "eval_type": "minibatch"
     },
     {
       "trial": 13,
-      "score": 80.0,
-      "parameters": "['Predictor 0: Instruction 2', 'Predictor 0: Few-Shot Set 0']",
+      "score": 65.71,
+      "parameters": "['Predictor 0: Instruction 0', 'Predictor 0: Few-Shot Set 16']",
       "optimizer": "mipro",
       "eval_type": "minibatch"
     },
     {
       "trial": 14,
-      "score": 80.0,
-      "parameters": "['Predictor 0: Instruction 2', 'Predictor 0: Few-Shot Set 0']",
+      "score": 65.71,
+      "parameters": "['Predictor 0: Instruction 0', 'Predictor 0: Few-Shot Set 16']",
       "optimizer": "mipro",
       "eval_type": "minibatch"
     },
     {
       "trial": 15,
       "score": 77.14,
-      "parameters": "['Predictor 0: Instruction 2', 'Predictor 0: Few-Shot Set 5']",
+      "parameters": "['Predictor 0: Instruction 0', 'Predictor 0: Few-Shot Set 13']",
       "optimizer": "mipro",
       "eval_type": "minibatch"
     },
     {
       "trial": 16,
       "score": 77.14,
-      "parameters": "['Predictor 0: Instruction 2', 'Predictor 0: Few-Shot Set 5']",
+      "parameters": "['Predictor 0: Instruction 0', 'Predictor 0: Few-Shot Set 13']",
       "optimizer": "mipro",
       "eval_type": "minibatch"
     },
     {
       "trial": 17,
-      "score": 71.43,
-      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 4']",
+      "score": 68.57,
+      "parameters": "['Predictor 0: Instruction 0', 'Predictor 0: Few-Shot Set 12']",
       "optimizer": "mipro",
       "eval_type": "minibatch"
     },
     {
       "trial": 18,
-      "score": 71.43,
-      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 4']",
+      "score": 68.57,
+      "parameters": "['Predictor 0: Instruction 0', 'Predictor 0: Few-Shot Set 12']",
       "optimizer": "mipro",
       "eval_type": "minibatch"
     },
     {
       "trial": 19,
-      "score": 82.86,
-      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 5']",
+      "score": 80.0,
+      "parameters": "['Predictor 0: Instruction 7', 'Predictor 0: Few-Shot Set 1']",
       "optimizer": "mipro",
       "eval_type": "minibatch"
     },
     {
       "trial": 20,
-      "score": 82.86,
-      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 5']",
+      "score": 80.0,
+      "parameters": "['Predictor 0: Instruction 7', 'Predictor 0: Few-Shot Set 1']",
       "optimizer": "mipro",
       "eval_type": "minibatch"
     },
     {
       "trial": 21,
-      "score": 65.71,
-      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 5']",
+      "score": 74.29,
+      "parameters": "['Predictor 0: Instruction 7', 'Predictor 0: Few-Shot Set 1']",
       "optimizer": "mipro",
       "eval_type": "minibatch"
     },
     {
       "trial": 22,
-      "score": 65.71,
-      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 5']",
+      "score": 74.29,
+      "parameters": "['Predictor 0: Instruction 7', 'Predictor 0: Few-Shot Set 1']",
       "optimizer": "mipro",
       "eval_type": "minibatch"
     },
     {
       "trial": 23,
-      "score": 78.0,
+      "score": 71.43,
+      "parameters": "['Predictor 0: Instruction 8', 'Predictor 0: Few-Shot Set 1']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 24,
+      "score": 71.43,
+      "parameters": "['Predictor 0: Instruction 8', 'Predictor 0: Few-Shot Set 1']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 25,
+      "score": 74.29,
+      "parameters": "['Predictor 0: Instruction 3', 'Predictor 0: Few-Shot Set 1']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 26,
+      "score": 74.29,
+      "parameters": "['Predictor 0: Instruction 3', 'Predictor 0: Few-Shot Set 1']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 27,
+      "score": 77.14,
+      "parameters": "['Predictor 0: Instruction 6', 'Predictor 0: Few-Shot Set 3']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 28,
+      "score": 77.14,
+      "parameters": "['Predictor 0: Instruction 6', 'Predictor 0: Few-Shot Set 3']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 29,
+      "score": 77.14,
+      "parameters": "['Predictor 0: Instruction 8', 'Predictor 0: Few-Shot Set 14']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 30,
+      "score": 77.14,
+      "parameters": "['Predictor 0: Instruction 8', 'Predictor 0: Few-Shot Set 14']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 31,
+      "score": 82.86,
+      "parameters": "['Predictor 0: Instruction 4', 'Predictor 0: Few-Shot Set 4']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 32,
+      "score": 82.86,
+      "parameters": "['Predictor 0: Instruction 4', 'Predictor 0: Few-Shot Set 4']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 33,
+      "score": 71.43,
+      "parameters": "['Predictor 0: Instruction 4', 'Predictor 0: Few-Shot Set 6']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 34,
+      "score": 71.43,
+      "parameters": "['Predictor 0: Instruction 4', 'Predictor 0: Few-Shot Set 6']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 35,
+      "score": 74.29,
+      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 4']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 36,
+      "score": 74.29,
+      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 4']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 37,
+      "score": 74.29,
+      "parameters": "['Predictor 0: Instruction 4', 'Predictor 0: Few-Shot Set 11']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 38,
+      "score": 74.29,
+      "parameters": "['Predictor 0: Instruction 4', 'Predictor 0: Few-Shot Set 11']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 39,
+      "score": 71.43,
+      "parameters": "['Predictor 0: Instruction 7', 'Predictor 0: Few-Shot Set 9']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 40,
+      "score": 71.43,
+      "parameters": "['Predictor 0: Instruction 7', 'Predictor 0: Few-Shot Set 9']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 41,
+      "score": 77.14,
+      "parameters": "['Predictor 0: Instruction 6', 'Predictor 0: Few-Shot Set 15']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 42,
+      "score": 77.14,
+      "parameters": "['Predictor 0: Instruction 6', 'Predictor 0: Few-Shot Set 15']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 43,
+      "score": 74.29,
+      "parameters": "['Predictor 0: Instruction 2', 'Predictor 0: Few-Shot Set 2']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 44,
+      "score": 74.29,
+      "parameters": "['Predictor 0: Instruction 2', 'Predictor 0: Few-Shot Set 2']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 45,
+      "score": 80.0,
+      "parameters": "['Predictor 0: Instruction 4', 'Predictor 0: Few-Shot Set 2']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 46,
+      "score": 80.0,
+      "parameters": "['Predictor 0: Instruction 4', 'Predictor 0: Few-Shot Set 2']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 47,
+      "score": 82.86,
+      "parameters": "['Predictor 0: Instruction 8', 'Predictor 0: Few-Shot Set 5']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 48,
+      "score": 82.86,
+      "parameters": "['Predictor 0: Instruction 8', 'Predictor 0: Few-Shot Set 5']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 49,
+      "score": 91.43,
+      "parameters": "['Predictor 0: Instruction 6', 'Predictor 0: Few-Shot Set 5']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 50,
+      "score": 91.43,
+      "parameters": "['Predictor 0: Instruction 6', 'Predictor 0: Few-Shot Set 5']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 51,
+      "score": 74.29,
+      "parameters": "['Predictor 0: Instruction 6', 'Predictor 0: Few-Shot Set 4']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 52,
+      "score": 74.29,
+      "parameters": "['Predictor 0: Instruction 6', 'Predictor 0: Few-Shot Set 4']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 53,
+      "score": 76.5,
       "parameters": "Best program",
       "optimizer": "mipro",
       "eval_type": "full",
       "is_best": true
     },
     {
-      "trial": 24,
-      "score": 78.0,
+      "trial": 54,
+      "score": 76.5,
+      "parameters": "Best program",
+      "optimizer": "mipro",
+      "eval_type": "full",
+      "is_best": true
+    },
+    {
+      "trial": 55,
+      "score": 85.71,
+      "parameters": "['Predictor 0: Instruction 8', 'Predictor 0: Few-Shot Set 5']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 56,
+      "score": 85.71,
+      "parameters": "['Predictor 0: Instruction 8', 'Predictor 0: Few-Shot Set 5']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 57,
+      "score": 74.29,
+      "parameters": "['Predictor 0: Instruction 4', 'Predictor 0: Few-Shot Set 5']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 58,
+      "score": 74.29,
+      "parameters": "['Predictor 0: Instruction 4', 'Predictor 0: Few-Shot Set 5']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 59,
+      "score": 76.9,
+      "parameters": "Best program",
+      "optimizer": "mipro",
+      "eval_type": "full",
+      "is_best": true
+    },
+    {
+      "trial": 60,
+      "score": 76.9,
       "parameters": "Best program",
       "optimizer": "mipro",
       "eval_type": "full",
@@ -192,25 +446,85 @@
     },
     {
       "index": 1,
-      "instruction": "You are a knowledgeable and precise information extractor. Using the provided context and question, determine the most accurate and concise answer. The answer should directly address the question, relying solely on the information in the context. When applicable, reason step-by-step to ensure accuracy before providing the final answer.",
+      "instruction": "Using the provided context and question, generate a clear and concise answer to the question by analyzing the information step by step. Ensure that your reasoning aligns with the details in the context, and produce the final answer accordingly. Structure your response to include the necessary reasoning and the answer in a format suitable for a factual knowledge-based task.",
       "type": "mipro"
     },
     {
       "index": 1,
-      "instruction": "You are a knowledgeable and precise information extractor. Using the provided context and question, determine the most accurate and concise answer. The answer should directly address the question, relying solely on the information in the context. When applicable, reason step-by-step to ensure accuracy before providing the final answer.",
+      "instruction": "Using the provided context and question, generate a clear and concise answer to the question by analyzing the information step by step. Ensure that your reasoning aligns with the details in the context, and produce the final answer accordingly. Structure your response to include the necessary reasoning and the answer in a format suitable for a factual knowledge-based task.",
       "type": "mipro"
     },
     {
       "index": 2,
-      "instruction": "You are a knowledgeable assistant focused on extracting precise factual information from structured texts. Given a `context` and a `question`, produce the `answer` by carefully analyzing the information in the context and providing a clear, accurate response that directly addresses the question. Use step-by-step reasoning if necessary to ensure correctness.",
+      "instruction": "You are a knowledgeable assistant specialized in extracting precise factual information from diverse texts. Given the context and question, your task is to analyze the provided information carefully and produce a clear, accurate answer. Ensure your answer directly addresses the question and is based solely on the details in the context. Use a step-by-step reasoning process if needed to arrive at the correct conclusion.",
       "type": "mipro"
     },
     {
       "index": 2,
-      "instruction": "You are a knowledgeable assistant focused on extracting precise factual information from structured texts. Given a `context` and a `question`, produce the `answer` by carefully analyzing the information in the context and providing a clear, accurate response that directly addresses the question. Use step-by-step reasoning if necessary to ensure correctness.",
+      "instruction": "You are a knowledgeable assistant specialized in extracting precise factual information from diverse texts. Given the context and question, your task is to analyze the provided information carefully and produce a clear, accurate answer. Ensure your answer directly addresses the question and is based solely on the details in the context. Use a step-by-step reasoning process if needed to arrive at the correct conclusion.",
+      "type": "mipro"
+    },
+    {
+      "index": 3,
+      "instruction": "Using the provided context and question, generate a detailed reasoning process that logically deduces the correct answer, and then provide that answer clearly. The reasoning should incorporate relevant information from the context and follow a clear, step-by-step thought process to ensure accuracy and transparency in arriving at the response. Remember to format your final answer with the label \"Answer:\" followed by the answer itself.",
+      "type": "mipro"
+    },
+    {
+      "index": 3,
+      "instruction": "Using the provided context and question, generate a detailed reasoning process that logically deduces the correct answer, and then provide that answer clearly. The reasoning should incorporate relevant information from the context and follow a clear, step-by-step thought process to ensure accuracy and transparency in arriving at the response. Remember to format your final answer with the label \"Answer:\" followed by the answer itself.",
+      "type": "mipro"
+    },
+    {
+      "index": 4,
+      "instruction": "You are in a high-stakes, critical situation where providing an accurate answer is imperative. Your task is to analyze the provided context thoroughly and answer the question with utmost precision. Carefully evaluate every detail, especially relationships and historical facts, to avoid any mistakes that could have serious consequences. Ensure your response is definitive and well-supported by the context. Remember, accuracy is of the highest importance\u2014misinformation is unacceptable. Proceed with caution, logic, and precision to deliver the correct answer.",
+      "type": "mipro"
+    },
+    {
+      "index": 4,
+      "instruction": "You are in a high-stakes, critical situation where providing an accurate answer is imperative. Your task is to analyze the provided context thoroughly and answer the question with utmost precision. Carefully evaluate every detail, especially relationships and historical facts, to avoid any mistakes that could have serious consequences. Ensure your response is definitive and well-supported by the context. Remember, accuracy is of the highest importance\u2014misinformation is unacceptable. Proceed with caution, logic, and precision to deliver the correct answer.",
+      "type": "mipro"
+    },
+    {
+      "index": 5,
+      "instruction": "Given the fields `context`, `question`, and following the reasoning process, generate a precise answer to the question based on the information provided in the context. The answer should be directly responsive to the question, grounded in the context, and clearly stated.",
+      "type": "mipro"
+    },
+    {
+      "index": 5,
+      "instruction": "Given the fields `context`, `question`, and following the reasoning process, generate a precise answer to the question based on the information provided in the context. The answer should be directly responsive to the question, grounded in the context, and clearly stated.",
+      "type": "mipro"
+    },
+    {
+      "index": 6,
+      "instruction": "You are a knowledgeable fact extractor and question-answering assistant. Given a context and a question, analyze the information carefully and provide a clear, accurate answer. Use reasoning to ensure the answer is supported by the context, and aim for clarity and precision in your response.",
+      "type": "mipro"
+    },
+    {
+      "index": 6,
+      "instruction": "You are a knowledgeable fact extractor and question-answering assistant. Given a context and a question, analyze the information carefully and provide a clear, accurate answer. Use reasoning to ensure the answer is supported by the context, and aim for clarity and precision in your response.",
+      "type": "mipro"
+    },
+    {
+      "index": 7,
+      "instruction": "You are an expert fact-checker working in high-pressure environments where accuracy is critical. Your task is to carefully analyze the provided context and question, then logically deduce the correct answer with precision. Use the context to identify key details and cross-check facts to ensure your response is correct. Remember, in this high-stakes scenario, even a small mistake could lead to misinformation, so double-check your reasoning thoroughly before giving your answer. Your response must include a clear, justified answer based solely on the information provided in the context.",
+      "type": "mipro"
+    },
+    {
+      "index": 7,
+      "instruction": "You are an expert fact-checker working in high-pressure environments where accuracy is critical. Your task is to carefully analyze the provided context and question, then logically deduce the correct answer with precision. Use the context to identify key details and cross-check facts to ensure your response is correct. Remember, in this high-stakes scenario, even a small mistake could lead to misinformation, so double-check your reasoning thoroughly before giving your answer. Your response must include a clear, justified answer based solely on the information provided in the context.",
+      "type": "mipro"
+    },
+    {
+      "index": 8,
+      "instruction": "Given the fields `context` and `question`, generate the `answer` by reasoning through the information step-by-step. Use the context to find relevant details that answer the question accurately and clearly. Ensure the answer precisely addresses what is asked, based on the provided information.",
+      "type": "mipro"
+    },
+    {
+      "index": 8,
+      "instruction": "Given the fields `context` and `question`, generate the `answer` by reasoning through the information step-by-step. Use the context to find relevant details that answer the question accurately and clearly. Ensure the answer precisely addresses what is asked, based on the provided information.",
       "type": "mipro"
     }
   ],
-  "timestamp": "2026-02-17T15:19:17.516950",
-  "evolution_summary": "The optimization trajectory shows fluctuating performance with notable peaks around iterations 7, 8, 13, 14, 19, and 20, indicating that the model's scores varied significantly across instruction changes. Overall, there was a slight net improvement (+0.5%) from the baseline, but the scores did not improve monotonically, suggesting some iterations may have introduced noise or conflicting guidance.\n\nInitially, the instructions evolved from a simple directive (\"produce answer\") to more detailed, step-by-step reasoning prompts. Early iterations emphasized clarity and precision, with a focus on accuracy and directness. Later iterations maintained this emphasis but increasingly incorporated explicit reasoning instructions, such as \"reason step-by-step,\" aiming to enhance correctness. The final instruction consolidates these strategies into a balanced, clear directive emphasizing careful analysis and accuracy.\n\nWhat didn't seem to help were instructions that added complexity or multiple constraints without clear benefit, as seen in the fluctuating scores. The evolution shows a trend toward increasing specificity and emphasis on reasoning, which correlates with score peaks, indicating that guiding the model to think carefully may improve performance.\n\nKey patterns include a progression from generic to more detailed, reasoning-focused instructions, suggesting that explicit reasoning prompts can positively influence accuracy. To further improve results, experimenting with more structured reasoning frameworks or combining reasoning prompts with examples could stabilize gains. Additionally, refining the instructions to reduce ambiguity and avoid conflicting directives may help achieve more consistent improvements."
+  "timestamp": "2026-02-17T16:00:09.844549",
+  "evolution_summary": "The optimization trajectory exhibited significant fluctuations with multiple score peaks and valleys, ultimately resulting in a slight decline of 0.6% from the baseline accuracy. Initial iterations maintained high scores around 76-77%, but subsequent runs showed instability, with scores dropping as low as 65.7% before recovering to higher values like 91.4%. This pattern suggests that the optimization process struggled to consistently improve or stabilize performance, indicating potential overfitting or sensitivity to instruction variations.\n\nThe instruction evolution reveals a progression toward more detailed and structured prompts. Early iterations emphasized clear reasoning and factual extraction, gradually incorporating explicit step-by-step analysis, detailed reasoning, and high-stakes precision. This shift toward more comprehensive instructions aimed to guide the model toward more careful and accurate responses. However, despite these efforts, the overall performance did not improve, implying that increased complexity or specificity in instructions alone did not translate into better outcomes.\n\nNotably, the instructions became increasingly verbose and focused on accuracy, transparency, and justification, reflecting an attempt to enforce careful reasoning. Yet, the persistent score volatility suggests that overly complex or rigid instructions may have introduced noise or confusion, hindering consistent improvements. The evolution indicates an exploration of balancing detailed guidance with simplicity to optimize model responses.\n\nTo enhance results further, it is advisable to refine instruction clarity without excessive complexity, possibly incorporating iterative feedback mechanisms or adaptive prompts. Simplifying instructions while maintaining emphasis on accuracy and reasoning could reduce variability and promote more stable performance gains. Additionally, integrating targeted fine-tuning based on observed weaknesses may help translate instruction improvements into measurable accuracy enhancements."
 }

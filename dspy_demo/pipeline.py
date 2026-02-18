@@ -159,7 +159,7 @@ class OptimizationPipeline:
         """
         if optimizer_type == OptimizerType.GEPA:
             reflection_lm = dspy.LM(
-                self.model_name,
+                MODEL_CONFIG.reflection_model,
                 temperature=MODEL_CONFIG.reflection_temperature,
             )
             return dspy.GEPA(
@@ -167,6 +167,7 @@ class OptimizationPipeline:
                 auto=OPTIMIZER_CONFIG.gepa_auto,
                 reflection_lm=reflection_lm,
                 num_threads=OPTIMIZER_CONFIG.gepa_num_threads,
+                reflection_minibatch_size=OPTIMIZER_CONFIG.gepa_reflection_minibatch_size,
             )
         elif optimizer_type in (OptimizerType.MIPRO, OptimizerType.MIPROV2):
             return dspy.MIPROv2(
@@ -258,11 +259,35 @@ class OptimizationPipeline:
 
         # Reset tracker for new run
         self.tracker.reset()
+
+        # Build optimizer-specific hyperparameters for metadata
+        hyperparams: Dict[str, Any] = {"model": self.model_name}
+        if optimizer_type == OptimizerType.GEPA:
+            hyperparams.update(
+                {
+                    "auto": OPTIMIZER_CONFIG.gepa_auto,
+                    "num_threads": OPTIMIZER_CONFIG.gepa_num_threads,
+                    "reflection_model": MODEL_CONFIG.reflection_model,
+                    "reflection_minibatch_size": OPTIMIZER_CONFIG.gepa_reflection_minibatch_size,
+                }
+            )
+        elif optimizer_type in (OptimizerType.MIPRO, OptimizerType.MIPROV2):
+            hyperparams.update(
+                {
+                    "auto": OPTIMIZER_CONFIG.mipro_auto,
+                    "num_threads": OPTIMIZER_CONFIG.mipro_num_threads,
+                    "num_trials": OPTIMIZER_CONFIG.mipro_num_trials,
+                    "max_bootstrapped_demos": OPTIMIZER_CONFIG.mipro_max_bootstrapped_demos,
+                    "max_labeled_demos": OPTIMIZER_CONFIG.mipro_max_labeled_demos,
+                }
+            )
+
         self.tracker.set_dataset_info(
             trainset_size=len(self.data_loader.trainset),
             valset_size=len(self.data_loader.valset),
             testset_size=len(self.data_loader.testset),
             optimizer=optimizer_type.value,
+            **hyperparams,
         )
         self.tracker.open_jsonl()
 

@@ -99,20 +99,23 @@ class OptimizationTracker(logging.Handler):
         valset_size: int,
         testset_size: int,
         optimizer: str = "",
+        **hyperparams: Any,
     ) -> None:
-        """Store dataset split sizes to include in run metadata.
+        """Store dataset split sizes and hyperparameters in run metadata.
 
         Args:
             trainset_size: Number of training examples.
             valset_size: Number of validation examples.
             testset_size: Number of test examples.
             optimizer: Name of the optimizer used.
+            **hyperparams: Optimizer hyperparameters (model, auto, etc.).
         """
         self._dataset_info = {
             "trainset_size": trainset_size,
             "valset_size": valset_size,
             "testset_size": testset_size,
             "optimizer": optimizer,
+            **hyperparams,
         }
 
     def open_jsonl(self) -> None:
