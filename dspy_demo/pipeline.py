@@ -11,7 +11,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Sequence, Type
+from typing import Any, Callable, Dict, List, Optional, Sequence, Type
 
 import dspy
 from dspy.primitives.example import Example
@@ -100,6 +100,8 @@ class OptimizationPipeline:
         model: Optional[str] = None,
         async_max: int = MODEL_CONFIG.async_max,
         data_loader: Optional[DataLoader] = None,
+        metric: Optional[Callable] = None,
+        gepa_metric_fn: Optional[Callable] = None,
     ) -> None:
         """Initialize the optimization pipeline.
 
@@ -107,10 +109,14 @@ class OptimizationPipeline:
             model: Model name for DSPy LM. Defaults to MODEL_CONFIG.default_model.
             async_max: Maximum async concurrency. Defaults to MODEL_CONFIG.async_max.
             data_loader: DataLoader instance. Defaults to new DataLoader().
+            metric: Evaluation metric function. Defaults to validate_answer.
+            gepa_metric_fn: GEPA-compatible metric (returns float). Defaults to gepa_metric.
         """
         self.model_name = model or MODEL_CONFIG.default_model
         self.async_max = async_max
         self.data_loader = data_loader or DataLoader()
+        self._metric = metric or validate_answer
+        self._gepa_metric = gepa_metric_fn or gepa_metric
         self.tracker = OptimizationTracker()
         self._configured = False
 
@@ -163,7 +169,7 @@ class OptimizationPipeline:
                 temperature=MODEL_CONFIG.reflection_temperature,
             )
             return dspy.GEPA(
-                metric=gepa_metric,
+                metric=self._gepa_metric,
                 auto=OPTIMIZER_CONFIG.gepa_auto,
                 reflection_lm=reflection_lm,
                 num_threads=OPTIMIZER_CONFIG.gepa_num_threads,
@@ -171,7 +177,7 @@ class OptimizationPipeline:
             )
         elif optimizer_type in (OptimizerType.MIPRO, OptimizerType.MIPROV2):
             return dspy.MIPROv2(
-                metric=validate_answer,
+                metric=self._metric,
                 auto=OPTIMIZER_CONFIG.mipro_auto,
                 num_threads=OPTIMIZER_CONFIG.mipro_num_threads,
             )
@@ -222,14 +228,13 @@ class OptimizationPipeline:
         Returns:
             Accuracy percentage (0-100).
         """
+        metric = self._metric
 
         async def evaluate_one(example: Example) -> bool:
             try:
-                pred = await module.acall(
-                    context=example.context,
-                    question=example.question,
-                )
-                return validate_answer(example, pred)
+                inputs = {k: getattr(example, k) for k in example.inputs().keys()}
+                pred = await module.acall(**inputs)
+                return metric(example, pred)
             except Exception:
                 return False
 

@@ -4,6 +4,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
+from dspy_demo.config import STRATEGYQA_DATASET_CONFIG
 from dspy_demo.core.data import DataLoader, format_context
 
 
@@ -171,3 +172,72 @@ class TestDataLoader:
         assert example.question == "What is the capital?"
         assert "Paris is the capital." in example.context
         assert example.answer == "Paris"
+
+
+class TestDataLoaderStrategyQA:
+    """Tests for DataLoader with StrategyQA dataset."""
+
+    @patch("dspy_demo.core.data.load_dataset")
+    def test_loads_strategyqa_format(self, mock_load_dataset):
+        """Test that StrategyQA examples are loaded correctly."""
+        mock_ds = [
+            {"question": "Did Aristotle use a laptop?", "answer": False},
+            {"question": "Would a monocle suit a cyclops?", "answer": True},
+        ]
+        mock_load_dataset.return_value = mock_ds
+
+        loader = DataLoader(config=STRATEGYQA_DATASET_CONFIG)
+        examples = loader.trainset
+
+        assert len(examples) == 2
+        assert examples[0].question == "Did Aristotle use a laptop?"
+        assert examples[0].answer == "no"
+        assert examples[1].answer == "yes"
+
+    @patch("dspy_demo.core.data.load_dataset")
+    def test_no_context_field(self, mock_load_dataset):
+        """Test that StrategyQA examples have no context field."""
+        mock_ds = [
+            {"question": "Can one spot helium?", "answer": False},
+        ]
+        mock_load_dataset.return_value = mock_ds
+
+        loader = DataLoader(config=STRATEGYQA_DATASET_CONFIG)
+        examples = loader.trainset
+
+        assert hasattr(examples[0], "question")
+        assert hasattr(examples[0], "answer")
+        assert not hasattr(examples[0], "context")
+
+    @patch("dspy_demo.core.data.load_dataset")
+    def test_boolean_true_converts_to_yes(self, mock_load_dataset):
+        """Test that boolean True converts to 'yes'."""
+        mock_ds = [{"question": "Q?", "answer": True}]
+        mock_load_dataset.return_value = mock_ds
+
+        loader = DataLoader(config=STRATEGYQA_DATASET_CONFIG)
+        assert loader.trainset[0].answer == "yes"
+
+    @patch("dspy_demo.core.data.load_dataset")
+    def test_boolean_false_converts_to_no(self, mock_load_dataset):
+        """Test that boolean False converts to 'no'."""
+        mock_ds = [{"question": "Q?", "answer": False}]
+        mock_load_dataset.return_value = mock_ds
+
+        loader = DataLoader(config=STRATEGYQA_DATASET_CONFIG)
+        assert loader.trainset[0].answer == "no"
+
+    @patch("dspy_demo.core.data.load_dataset")
+    def test_no_dataset_config_passed(self, mock_load_dataset):
+        """Test that load_dataset is called without config for StrategyQA."""
+        mock_ds = [{"question": "Q?", "answer": True}]
+        mock_load_dataset.return_value = mock_ds
+
+        loader = DataLoader(config=STRATEGYQA_DATASET_CONFIG)
+        _ = loader.trainset
+
+        # Should be called with just dataset_name (no config arg)
+        mock_load_dataset.assert_called_once_with(
+            "ChilleD/StrategyQA",
+            split="train[:1280]",
+        )

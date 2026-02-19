@@ -11,6 +11,7 @@ from dspy_demo.config import (
     OPTIMIZER_CONFIG,
     PATH_CONFIG,
     PROCESSING_CONFIG,
+    STRATEGYQA_DATASET_CONFIG,
     DatasetConfig,
     ModelConfig,
     OptimizerConfig,
@@ -57,6 +58,32 @@ class TestDatasetConfig:
     def test_global_instance(self):
         """Test global DATASET_CONFIG instance."""
         assert DATASET_CONFIG.train_slice == "train"
+
+
+class TestStrategyQADatasetConfig:
+    """Tests for StrategyQA dataset configuration."""
+
+    def test_dataset_name(self):
+        """Test StrategyQA dataset name."""
+        assert STRATEGYQA_DATASET_CONFIG.dataset_name == "ChilleD/StrategyQA"
+
+    def test_no_dataset_config(self):
+        """Test StrategyQA has no dataset config (no subset like 'distractor')."""
+        assert STRATEGYQA_DATASET_CONFIG.dataset_config is None
+
+    def test_train_val_split_from_train(self):
+        """Test that val is carved from the train split."""
+        assert STRATEGYQA_DATASET_CONFIG.train_slice == "train[:1280]"
+        assert STRATEGYQA_DATASET_CONFIG.val_slice == "train[1280:]"
+
+    def test_test_split(self):
+        """Test that test uses the dedicated test split."""
+        assert STRATEGYQA_DATASET_CONFIG.test_slice == "test"
+
+    def test_optional_dataset_config(self):
+        """Test that dataset_config accepts None."""
+        config = DatasetConfig(dataset_name="test", dataset_config=None)
+        assert config.dataset_config is None
 
 
 class TestOptimizerConfig:

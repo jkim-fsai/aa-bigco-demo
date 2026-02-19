@@ -51,19 +51,34 @@ class DataLoader:
         self._testset: Optional[List[Example]] = None
 
     def _load_split(self, split: str) -> List[Example]:
-        """Load examples from HotPotQA with formatted context.
+        """Load examples from the configured dataset.
+
+        Routes to dataset-specific loading based on config.dataset_name.
 
         Args:
             split: Dataset split string (e.g., "train[:200]").
 
         Returns:
+            List of Example objects with appropriate input fields.
+        """
+        load_args = [self._config.dataset_name]
+        if self._config.dataset_config is not None:
+            load_args.append(self._config.dataset_config)
+        ds = load_dataset(*load_args, split=split)
+
+        if self._config.dataset_name == "ChilleD/StrategyQA":
+            return self._format_strategyqa(ds)
+        return self._format_hotpotqa(ds)
+
+    def _format_hotpotqa(self, ds) -> List[Example]:
+        """Format HotPotQA dataset items into DSPy Examples.
+
+        Args:
+            ds: HuggingFace dataset split.
+
+        Returns:
             List of Example objects with question, context, and answer.
         """
-        ds = load_dataset(
-            self._config.dataset_name,
-            self._config.dataset_config,
-            split=split,
-        )
         examples = []
         for item in ds:
             ex = Example(
@@ -71,6 +86,27 @@ class DataLoader:
                 context=format_context(item["context"]),
                 answer=item["answer"],
             ).with_inputs("question", "context")
+            examples.append(ex)
+        return examples
+
+    def _format_strategyqa(self, ds) -> List[Example]:
+        """Format StrategyQA dataset items into DSPy Examples.
+
+        Converts boolean answers to "yes"/"no" strings.
+
+        Args:
+            ds: HuggingFace dataset split.
+
+        Returns:
+            List of Example objects with question and answer (no context).
+        """
+        examples = []
+        for item in ds:
+            answer = "yes" if item["answer"] else "no"
+            ex = Example(
+                question=item["question"],
+                answer=answer,
+            ).with_inputs("question")
             examples.append(ex)
         return examples
 
