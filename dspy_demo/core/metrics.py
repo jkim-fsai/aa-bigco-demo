@@ -1,5 +1,6 @@
 """Evaluation metrics for DSPy optimization."""
 
+import re
 from typing import Any, Optional
 
 from dspy.primitives.example import Example
@@ -111,3 +112,68 @@ def gepa_boolean_metric(
         1.0 if correct, 0.0 otherwise.
     """
     return 1.0 if validate_boolean_answer(example, pred) else 0.0
+
+
+def _extract_choice_label(text: str) -> Optional[str]:
+    """Extract the first A-E choice label from a text string.
+
+    Handles formats like "A", "A)", "(A)", "The answer is A", "A.", etc.
+
+    Args:
+        text: Prediction text that may contain a choice label.
+
+    Returns:
+        Uppercase letter (A-E) if found, None otherwise.
+    """
+    # Match a standalone A-E letter (not part of a longer word)
+    match = re.search(r"\b([A-Ea-e])\b", text)
+    if match:
+        return match.group(1).upper()
+    return None
+
+
+def validate_multiple_choice(
+    example: Example,
+    pred: Prediction,
+    trace: Optional[Any] = None,  # noqa: ARG001 - required by DSPy metric interface
+) -> bool:
+    """Check if predicted answer matches the gold choice label.
+
+    Extracts the first A-E label from the prediction and compares
+    against the gold answer key.
+
+    Args:
+        example: Ground truth example with answer field (A/B/C/D/E).
+        pred: Model prediction with answer field.
+        trace: Optional trace object (unused, for DSPy compatibility).
+
+    Returns:
+        True if predicted label matches gold answer.
+    """
+    gold = example.answer.strip().upper()
+    predicted = _extract_choice_label(pred.answer)
+    if predicted is not None:
+        return predicted == gold
+    return pred.answer.strip().upper() == gold
+
+
+def gepa_multiple_choice_metric(
+    example: Example,
+    pred: Prediction,
+    trace: Optional[Any] = None,  # noqa: ARG001 - required by GEPA interface
+    student_code: Optional[Any] = None,  # noqa: ARG001 - required by GEPA interface
+    teacher_code: Optional[Any] = None,  # noqa: ARG001 - required by GEPA interface
+) -> float:
+    """GEPA-compatible multiple-choice metric wrapper.
+
+    Args:
+        example: Ground truth example with answer field (A/B/C/D/E).
+        pred: Model prediction with answer field.
+        trace: Optional trace object (unused).
+        student_code: Optional student code (unused).
+        teacher_code: Optional teacher code (unused).
+
+    Returns:
+        1.0 if correct, 0.0 otherwise.
+    """
+    return 1.0 if validate_multiple_choice(example, pred) else 0.0

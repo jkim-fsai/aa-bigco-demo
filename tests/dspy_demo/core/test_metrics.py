@@ -7,8 +7,10 @@ import pytest
 from dspy_demo.core.metrics import (
     gepa_boolean_metric,
     gepa_metric,
+    gepa_multiple_choice_metric,
     validate_answer,
     validate_boolean_answer,
+    validate_multiple_choice,
 )
 
 
@@ -225,4 +227,89 @@ class TestGepaBooleanMetric:
         mock_boolean_example.answer = "yes"
         mock_boolean_prediction.answer = "yes"
         result = gepa_boolean_metric(mock_boolean_example, mock_boolean_prediction)
+        assert isinstance(result, float)
+
+
+class TestValidateMultipleChoice:
+    """Tests for validate_multiple_choice function."""
+
+    def test_exact_label_match(self, mock_mc_example, mock_mc_prediction):
+        """Test exact label match (A == A)."""
+        mock_mc_example.answer = "A"
+        mock_mc_prediction.answer = "A"
+        assert validate_multiple_choice(mock_mc_example, mock_mc_prediction) is True
+
+    def test_wrong_label(self, mock_mc_example, mock_mc_prediction_wrong):
+        """Test wrong label returns False."""
+        mock_mc_example.answer = "A"
+        assert validate_multiple_choice(mock_mc_example, mock_mc_prediction_wrong) is False
+
+    def test_extracts_from_verbose(self, mock_mc_example, mock_mc_prediction):
+        """Test extraction of label from verbose prediction."""
+        mock_mc_example.answer = "B"
+        mock_mc_prediction.answer = "The answer is B because wet palms create friction."
+        assert validate_multiple_choice(mock_mc_example, mock_mc_prediction) is True
+
+    def test_case_insensitive(self, mock_mc_example, mock_mc_prediction):
+        """Test case insensitive label matching."""
+        mock_mc_example.answer = "C"
+        mock_mc_prediction.answer = "c"
+        assert validate_multiple_choice(mock_mc_example, mock_mc_prediction) is True
+
+    def test_with_parentheses(self, mock_mc_example, mock_mc_prediction):
+        """Test extraction from parenthesized format."""
+        mock_mc_example.answer = "D"
+        mock_mc_prediction.answer = "D) lotion palms"
+        assert validate_multiple_choice(mock_mc_example, mock_mc_prediction) is True
+
+    def test_with_punctuation(self, mock_mc_example, mock_mc_prediction):
+        """Test label followed by punctuation."""
+        mock_mc_example.answer = "A"
+        mock_mc_prediction.answer = "A."
+        assert validate_multiple_choice(mock_mc_example, mock_mc_prediction) is True
+
+    def test_with_trace_parameter(self, mock_mc_example, mock_mc_prediction):
+        """Test that trace parameter doesn't affect result."""
+        mock_mc_example.answer = "A"
+        mock_mc_prediction.answer = "A"
+        assert (
+            validate_multiple_choice(mock_mc_example, mock_mc_prediction, trace="trace")
+            is True
+        )
+
+
+class TestGepaMultipleChoiceMetric:
+    """Tests for gepa_multiple_choice_metric function."""
+
+    def test_correct_returns_one(self, mock_mc_example, mock_mc_prediction):
+        """Test correct label returns 1.0."""
+        mock_mc_example.answer = "A"
+        mock_mc_prediction.answer = "A"
+        assert gepa_multiple_choice_metric(mock_mc_example, mock_mc_prediction) == 1.0
+
+    def test_wrong_returns_zero(self, mock_mc_example, mock_mc_prediction_wrong):
+        """Test wrong label returns 0.0."""
+        mock_mc_example.answer = "A"
+        assert (
+            gepa_multiple_choice_metric(mock_mc_example, mock_mc_prediction_wrong) == 0.0
+        )
+
+    def test_accepts_five_parameters(self, mock_mc_example, mock_mc_prediction):
+        """Test that function accepts all 5 GEPA-required parameters."""
+        mock_mc_example.answer = "A"
+        mock_mc_prediction.answer = "A"
+        result = gepa_multiple_choice_metric(
+            mock_mc_example,
+            mock_mc_prediction,
+            trace=None,
+            student_code="code",
+            teacher_code="code",
+        )
+        assert result == 1.0
+
+    def test_returns_float(self, mock_mc_example, mock_mc_prediction):
+        """Test that return value is float type."""
+        mock_mc_example.answer = "A"
+        mock_mc_prediction.answer = "A"
+        result = gepa_multiple_choice_metric(mock_mc_example, mock_mc_prediction)
         assert isinstance(result, float)

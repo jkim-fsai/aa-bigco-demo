@@ -1,0 +1,530 @@
+{
+  "optimizer": "mipro",
+  "baseline_accuracy": 89.50511945392492,
+  "optimized_accuracy": 91.12627986348123,
+  "improvement": 1.6211604095563104,
+  "instruction": "Given the fields `question`, `choices`, produce the fields `answer`.",
+  "demos": [],
+  "optimization_trials": [
+    {
+      "trial": 1,
+      "score": 90.61,
+      "parameters": "Default program",
+      "optimizer": "mipro",
+      "eval_type": "full",
+      "is_best": false
+    },
+    {
+      "trial": 2,
+      "score": 90.61,
+      "parameters": "Default program",
+      "optimizer": "mipro",
+      "eval_type": "full",
+      "is_best": false
+    },
+    {
+      "trial": 3,
+      "score": 97.14,
+      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 17']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 4,
+      "score": 97.14,
+      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 17']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 5,
+      "score": 91.43,
+      "parameters": "['Predictor 0: Instruction 5', 'Predictor 0: Few-Shot Set 12']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 6,
+      "score": 91.43,
+      "parameters": "['Predictor 0: Instruction 5', 'Predictor 0: Few-Shot Set 12']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 7,
+      "score": 100.0,
+      "parameters": "['Predictor 0: Instruction 8', 'Predictor 0: Few-Shot Set 1']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 8,
+      "score": 100.0,
+      "parameters": "['Predictor 0: Instruction 8', 'Predictor 0: Few-Shot Set 1']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 9,
+      "score": 91.43,
+      "parameters": "['Predictor 0: Instruction 2', 'Predictor 0: Few-Shot Set 12']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 10,
+      "score": 91.43,
+      "parameters": "['Predictor 0: Instruction 2', 'Predictor 0: Few-Shot Set 12']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 11,
+      "score": 97.14,
+      "parameters": "['Predictor 0: Instruction 5', 'Predictor 0: Few-Shot Set 12']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 12,
+      "score": 97.14,
+      "parameters": "['Predictor 0: Instruction 5', 'Predictor 0: Few-Shot Set 12']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 13,
+      "score": 91.96,
+      "parameters": "Best program",
+      "optimizer": "mipro",
+      "eval_type": "full",
+      "is_best": true
+    },
+    {
+      "trial": 14,
+      "score": 91.96,
+      "parameters": "Best program",
+      "optimizer": "mipro",
+      "eval_type": "full",
+      "is_best": true
+    },
+    {
+      "trial": 15,
+      "score": 94.29,
+      "parameters": "['Predictor 0: Instruction 0', 'Predictor 0: Few-Shot Set 16']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 16,
+      "score": 94.29,
+      "parameters": "['Predictor 0: Instruction 0', 'Predictor 0: Few-Shot Set 16']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 17,
+      "score": 91.43,
+      "parameters": "['Predictor 0: Instruction 0', 'Predictor 0: Few-Shot Set 13']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 18,
+      "score": 91.43,
+      "parameters": "['Predictor 0: Instruction 0', 'Predictor 0: Few-Shot Set 13']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 19,
+      "score": 94.29,
+      "parameters": "['Predictor 0: Instruction 0', 'Predictor 0: Few-Shot Set 12']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 20,
+      "score": 94.29,
+      "parameters": "['Predictor 0: Instruction 0', 'Predictor 0: Few-Shot Set 12']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 21,
+      "score": 91.43,
+      "parameters": "['Predictor 0: Instruction 7', 'Predictor 0: Few-Shot Set 1']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 22,
+      "score": 91.43,
+      "parameters": "['Predictor 0: Instruction 7', 'Predictor 0: Few-Shot Set 1']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 23,
+      "score": 91.43,
+      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 17']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 24,
+      "score": 91.43,
+      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 17']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 25,
+      "score": 93.85,
+      "parameters": "Best program",
+      "optimizer": "mipro",
+      "eval_type": "full",
+      "is_best": true
+    },
+    {
+      "trial": 26,
+      "score": 93.85,
+      "parameters": "Best program",
+      "optimizer": "mipro",
+      "eval_type": "full",
+      "is_best": true
+    },
+    {
+      "trial": 27,
+      "score": 91.43,
+      "parameters": "['Predictor 0: Instruction 8', 'Predictor 0: Few-Shot Set 1']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 28,
+      "score": 91.43,
+      "parameters": "['Predictor 0: Instruction 8', 'Predictor 0: Few-Shot Set 1']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 29,
+      "score": 94.29,
+      "parameters": "['Predictor 0: Instruction 3', 'Predictor 0: Few-Shot Set 17']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 30,
+      "score": 94.29,
+      "parameters": "['Predictor 0: Instruction 3', 'Predictor 0: Few-Shot Set 17']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 31,
+      "score": 94.29,
+      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 5']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 32,
+      "score": 94.29,
+      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 5']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 33,
+      "score": 97.14,
+      "parameters": "['Predictor 0: Instruction 6', 'Predictor 0: Few-Shot Set 3']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 34,
+      "score": 97.14,
+      "parameters": "['Predictor 0: Instruction 6', 'Predictor 0: Few-Shot Set 3']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 35,
+      "score": 97.14,
+      "parameters": "['Predictor 0: Instruction 4', 'Predictor 0: Few-Shot Set 7']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 36,
+      "score": 97.14,
+      "parameters": "['Predictor 0: Instruction 4', 'Predictor 0: Few-Shot Set 7']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 37,
+      "score": 85.71,
+      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 14']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 38,
+      "score": 85.71,
+      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 14']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 39,
+      "score": 97.14,
+      "parameters": "['Predictor 0: Instruction 2', 'Predictor 0: Few-Shot Set 4']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 40,
+      "score": 97.14,
+      "parameters": "['Predictor 0: Instruction 2', 'Predictor 0: Few-Shot Set 4']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 41,
+      "score": 88.57,
+      "parameters": "['Predictor 0: Instruction 5', 'Predictor 0: Few-Shot Set 2']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 42,
+      "score": 88.57,
+      "parameters": "['Predictor 0: Instruction 5', 'Predictor 0: Few-Shot Set 2']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 43,
+      "score": 91.43,
+      "parameters": "['Predictor 0: Instruction 8', 'Predictor 0: Few-Shot Set 11']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 44,
+      "score": 91.43,
+      "parameters": "['Predictor 0: Instruction 8', 'Predictor 0: Few-Shot Set 11']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 45,
+      "score": 100.0,
+      "parameters": "['Predictor 0: Instruction 5', 'Predictor 0: Few-Shot Set 10']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 46,
+      "score": 100.0,
+      "parameters": "['Predictor 0: Instruction 5', 'Predictor 0: Few-Shot Set 10']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 47,
+      "score": 94.29,
+      "parameters": "['Predictor 0: Instruction 3', 'Predictor 0: Few-Shot Set 10']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 48,
+      "score": 94.29,
+      "parameters": "['Predictor 0: Instruction 3', 'Predictor 0: Few-Shot Set 10']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 49,
+      "score": 82.86,
+      "parameters": "['Predictor 0: Instruction 5', 'Predictor 0: Few-Shot Set 10']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 50,
+      "score": 82.86,
+      "parameters": "['Predictor 0: Instruction 5', 'Predictor 0: Few-Shot Set 10']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 51,
+      "score": 94.29,
+      "parameters": "['Predictor 0: Instruction 7', 'Predictor 0: Few-Shot Set 9']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 52,
+      "score": 94.29,
+      "parameters": "['Predictor 0: Instruction 7', 'Predictor 0: Few-Shot Set 9']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 53,
+      "score": 94.29,
+      "parameters": "['Predictor 0: Instruction 8', 'Predictor 0: Few-Shot Set 15']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 54,
+      "score": 94.29,
+      "parameters": "['Predictor 0: Instruction 8', 'Predictor 0: Few-Shot Set 15']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 55,
+      "score": 88.57,
+      "parameters": "['Predictor 0: Instruction 4', 'Predictor 0: Few-Shot Set 10']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 56,
+      "score": 88.57,
+      "parameters": "['Predictor 0: Instruction 4', 'Predictor 0: Few-Shot Set 10']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 57,
+      "score": 97.14,
+      "parameters": "['Predictor 0: Instruction 5', 'Predictor 0: Few-Shot Set 3']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 58,
+      "score": 97.14,
+      "parameters": "['Predictor 0: Instruction 5', 'Predictor 0: Few-Shot Set 3']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 59,
+      "score": 82.86,
+      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 1']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    },
+    {
+      "trial": 60,
+      "score": 82.86,
+      "parameters": "['Predictor 0: Instruction 1', 'Predictor 0: Few-Shot Set 1']",
+      "optimizer": "mipro",
+      "eval_type": "minibatch"
+    }
+  ],
+  "instruction_candidates": [
+    {
+      "index": 0,
+      "instruction": "Given the fields `question`, `choices`, produce the fields `answer`.",
+      "type": "mipro"
+    },
+    {
+      "index": 0,
+      "instruction": "Given the fields `question`, `choices`, produce the fields `answer`.",
+      "type": "mipro"
+    },
+    {
+      "index": 1,
+      "instruction": "Using the provided question and multiple-choice options, generate a detailed reasoning process that logically analyzes the options and leads to a clear conclusion. Based on this reasoning, determine the most appropriate answer choice, typically represented by a letter (A, B, C, or D). The reasoning should demonstrate step-by-step thinking, highlighting key concepts and considerations relevant to the question, to ensure clarity and interpretability of the decision-making process. The final answer should be concise, correct, and aligned with the detailed reasoning.",
+      "type": "mipro"
+    },
+    {
+      "index": 1,
+      "instruction": "Using the provided question and multiple-choice options, generate a detailed reasoning process that logically analyzes the options and leads to a clear conclusion. Based on this reasoning, determine the most appropriate answer choice, typically represented by a letter (A, B, C, or D). The reasoning should demonstrate step-by-step thinking, highlighting key concepts and considerations relevant to the question, to ensure clarity and interpretability of the decision-making process. The final answer should be concise, correct, and aligned with the detailed reasoning.",
+      "type": "mipro"
+    },
+    {
+      "index": 2,
+      "instruction": "You are tasked with creating a highly detailed, clear, and instructive prompt for a language model to correctly answer multiple-choice science questions that require reasoning and critical thinking. The instruction should specify that, given a question and multiple answer choices, the model must perform a chain-of-thought reasoning process to logically analyze each option, consider relevant scientific concepts, and systematically arrive at the most appropriate answer choice. Emphasize the importance of step-by-step thinking, clarity, and accuracy in reasoning, and ensure that the final output is the single correct answer choice (e.g., A, B, C, or D). Your prompt should be explicit in asking the language model to generate reasoning first, followed by the answer, using the provided question and choices as input. This will help the model better understand the question context and improve its reasoning capabilities for scientific multiple-choice questions.",
+      "type": "mipro"
+    },
+    {
+      "index": 2,
+      "instruction": "You are tasked with creating a highly detailed, clear, and instructive prompt for a language model to correctly answer multiple-choice science questions that require reasoning and critical thinking. The instruction should specify that, given a question and multiple answer choices, the model must perform a chain-of-thought reasoning process to logically analyze each option, consider relevant scientific concepts, and systematically arrive at the most appropriate answer choice. Emphasize the importance of step-by-step thinking, clarity, and accuracy in reasoning, and ensure that the final output is the single correct answer choice (e.g., A, B, C, or D). Your prompt should be explicit in asking the language model to generate reasoning first, followed by the answer, using the provided question and choices as input. This will help the model better understand the question context and improve its reasoning capabilities for scientific multiple-choice questions.",
+      "type": "mipro"
+    },
+    {
+      "index": 3,
+      "instruction": "Given a multiple-choice question along with the answer choices, generate a detailed reasoning process that leads to selecting the correct answer, then specify the final answer choice (e.g., \"A\", \"B\", \"C\", or \"D\"). Your reasoning should be clear, logically structured, and demonstrate step-by-step thinking suitable for educational contexts. The output should include both the reasoning and the final answer.",
+      "type": "mipro"
+    },
+    {
+      "index": 3,
+      "instruction": "Given a multiple-choice question along with the answer choices, generate a detailed reasoning process that leads to selecting the correct answer, then specify the final answer choice (e.g., \"A\", \"B\", \"C\", or \"D\"). Your reasoning should be clear, logically structured, and demonstrate step-by-step thinking suitable for educational contexts. The output should include both the reasoning and the final answer.",
+      "type": "mipro"
+    },
+    {
+      "index": 4,
+      "instruction": "Analyze the given science question and its multiple answer choices. Use a clear, step-by-step reasoning process to evaluate the options, considering relevant scientific principles and logical deductions. Based on this reasoning, determine the most accurate answer choice and present it as a single letter (A, B, C, or D). Your explanation should be detailed enough to demonstrate your thought process and justify your final answer.",
+      "type": "mipro"
+    },
+    {
+      "index": 4,
+      "instruction": "Analyze the given science question and its multiple answer choices. Use a clear, step-by-step reasoning process to evaluate the options, considering relevant scientific principles and logical deductions. Based on this reasoning, determine the most accurate answer choice and present it as a single letter (A, B, C, or D). Your explanation should be detailed enough to demonstrate your thought process and justify your final answer.",
+      "type": "mipro"
+    },
+    {
+      "index": 5,
+      "instruction": "You are tasked with generating the final answer to a multiple-choice science question based on a detailed reasoning process. Your input includes a question and a set of answer choices formatted clearly. Your goal is to analyze the question and choices step-by-step, considering scientific principles and observational cues, to determine the most appropriate answer. The output should include only the answer option (e.g., \"A\", \"B\", \"C\", or \"D\") that best addresses the question after reasoning through it carefully. Focus on clarity, correctness, and logical coherence in reaching the final decision.",
+      "type": "mipro"
+    },
+    {
+      "index": 5,
+      "instruction": "You are tasked with generating the final answer to a multiple-choice science question based on a detailed reasoning process. Your input includes a question and a set of answer choices formatted clearly. Your goal is to analyze the question and choices step-by-step, considering scientific principles and observational cues, to determine the most appropriate answer. The output should include only the answer option (e.g., \"A\", \"B\", \"C\", or \"D\") that best addresses the question after reasoning through it carefully. Focus on clarity, correctness, and logical coherence in reaching the final decision.",
+      "type": "mipro"
+    },
+    {
+      "index": 6,
+      "instruction": "Given a multiple-choice question and a list of answer choices, generate a detailed reasoning process that carefully analyzes the question and each choice. Use step-by-step logical thinking to evaluate the options based on scientific principles or knowledge. After this reasoning, select and return the most appropriate answer choice, typically represented as a letter or label. Ensure your explanation clarifies how the conclusion was reached and considers the key concepts involved. The goal is to produce an interpretable, well-justified answer that demonstrates thorough understanding and reasoning.",
+      "type": "mipro"
+    },
+    {
+      "index": 6,
+      "instruction": "Given a multiple-choice question and a list of answer choices, generate a detailed reasoning process that carefully analyzes the question and each choice. Use step-by-step logical thinking to evaluate the options based on scientific principles or knowledge. After this reasoning, select and return the most appropriate answer choice, typically represented as a letter or label. Ensure your explanation clarifies how the conclusion was reached and considers the key concepts involved. The goal is to produce an interpretable, well-justified answer that demonstrates thorough understanding and reasoning.",
+      "type": "mipro"
+    },
+    {
+      "index": 7,
+      "instruction": "You are a science educator or an AI model trained to answer multiple-choice science questions that require reasoning. Given a question and a set of formatted answer choices, carefully analyze the question using scientific principles and reasoning step-by-step. Based on this analysis, determine the most appropriate answer choice (A, B, C, or D). Provide the final answer along with a detailed reasoning process that justifies your choice and demonstrates critical thinking. The reasoning should be clear, logical, and grounded in scientific knowledge, helping the user understand how the answer was derived.",
+      "type": "mipro"
+    },
+    {
+      "index": 7,
+      "instruction": "You are a science educator or an AI model trained to answer multiple-choice science questions that require reasoning. Given a question and a set of formatted answer choices, carefully analyze the question using scientific principles and reasoning step-by-step. Based on this analysis, determine the most appropriate answer choice (A, B, C, or D). Provide the final answer along with a detailed reasoning process that justifies your choice and demonstrates critical thinking. The reasoning should be clear, logical, and grounded in scientific knowledge, helping the user understand how the answer was derived.",
+      "type": "mipro"
+    },
+    {
+      "index": 8,
+      "instruction": "Using the detailed description of the dataset, the provided code for a multiple-choice question-answering module, and the explanation of the program's reasoning approach, generate a comprehensive, clear, and instructive prompt. This prompt should instruct a language model to take as input a scientific multiple-choice question along with its choices, and produce as output the most appropriate answer along with a detailed step-by-step reasoning process. The instruction should emphasize the importance of logical, scientific reasoning that aligns with the nature of the dataset, encouraging explicit explanations to improve accuracy and interpretability. Ensure the instruction is highly descriptive and guides the model to think carefully and systematically through the question before arriving at an answer.",
+      "type": "mipro"
+    },
+    {
+      "index": 8,
+      "instruction": "Using the detailed description of the dataset, the provided code for a multiple-choice question-answering module, and the explanation of the program's reasoning approach, generate a comprehensive, clear, and instructive prompt. This prompt should instruct a language model to take as input a scientific multiple-choice question along with its choices, and produce as output the most appropriate answer along with a detailed step-by-step reasoning process. The instruction should emphasize the importance of logical, scientific reasoning that aligns with the nature of the dataset, encouraging explicit explanations to improve accuracy and interpretability. Ensure the instruction is highly descriptive and guides the model to think carefully and systematically through the question before arriving at an answer.",
+      "type": "mipro"
+    }
+  ],
+  "timestamp": "2026-02-20T14:16:04.820761",
+  "evolution_summary": "The optimization run shows a generally positive trajectory, with the score improving from an initial baseline accuracy of 89.5% to a final of 91.1%, reflecting a +1.6% gain. Early iterations (1-4) achieved rapid improvements, reaching up to 97.1%, indicating that initial instruction modifications effectively enhanced the model's reasoning capabilities. However, subsequent iterations exhibited fluctuations, with scores oscillating between approximately 85.7% and 100%, suggesting diminishing returns and some instability in the optimization process.\n\nThe most effective strategy involved progressively emphasizing detailed, step-by-step reasoning prompts. Early instructions focused on generating logical, chain-of-thought explanations before selecting an answer, which helped improve accuracy. Over iterations, instructions became more explicit about analyzing options systematically, considering relevant scientific principles, and justifying each choice. This increased specificity and emphasis on clarity appeared to contribute to performance gains.\n\nLess effective approaches included overly vague or generic prompts that lacked explicit reasoning guidance, leading to score plateaus or declines. Additionally, attempts to simplify instructions or reduce reasoning steps sometimes resulted in decreased accuracy, indicating that thorough, structured reasoning prompts are crucial. The evolution shows a trend toward more detailed, structured instructions with explicit reasoning and answer justification.\n\nTo further improve results, incorporating explicit constraints, such as requesting reasoning summaries or highlighting key concepts, could enhance interpretability and accuracy. Additionally, experimenting with hybrid prompts that balance detailed reasoning with concise final answers may optimize both performance and efficiency. Overall, emphasizing systematic, transparent reasoning in instructions remains the most promising avenue for continued gains."
+}

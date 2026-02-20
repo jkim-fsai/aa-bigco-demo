@@ -4,7 +4,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from dspy_demo.config import STRATEGYQA_DATASET_CONFIG
+from dspy_demo.config import ARC_DATASET_CONFIG, STRATEGYQA_DATASET_CONFIG
 from dspy_demo.core.data import DataLoader, format_context
 
 
@@ -240,4 +240,111 @@ class TestDataLoaderStrategyQA:
         mock_load_dataset.assert_called_once_with(
             "ChilleD/StrategyQA",
             split="train[:1280]",
+        )
+
+
+class TestDataLoaderARC:
+    """Tests for DataLoader with ARC-Challenge dataset."""
+
+    @patch("dspy_demo.core.data.load_dataset")
+    def test_loads_arc_format(self, mock_load_dataset):
+        """Test that ARC examples are loaded correctly."""
+        mock_ds = [
+            {
+                "question": "Which surface produces the most heat?",
+                "choices": {
+                    "text": ["dry palms", "wet palms", "oily palms", "lotion palms"],
+                    "label": ["A", "B", "C", "D"],
+                },
+                "answerKey": "A",
+            },
+        ]
+        mock_load_dataset.return_value = mock_ds
+
+        loader = DataLoader(config=ARC_DATASET_CONFIG)
+        examples = loader.trainset
+
+        assert len(examples) == 1
+        assert examples[0].question == "Which surface produces the most heat?"
+        assert examples[0].answer == "A"
+
+    @patch("dspy_demo.core.data.load_dataset")
+    def test_choices_formatted(self, mock_load_dataset):
+        """Test that choices are formatted as 'A) text' lines."""
+        mock_ds = [
+            {
+                "question": "Q?",
+                "choices": {
+                    "text": ["option1", "option2", "option3"],
+                    "label": ["A", "B", "C"],
+                },
+                "answerKey": "B",
+            },
+        ]
+        mock_load_dataset.return_value = mock_ds
+
+        loader = DataLoader(config=ARC_DATASET_CONFIG)
+        examples = loader.trainset
+
+        assert "A) option1" in examples[0].choices
+        assert "B) option2" in examples[0].choices
+        assert "C) option3" in examples[0].choices
+
+    @patch("dspy_demo.core.data.load_dataset")
+    def test_has_choices_field(self, mock_load_dataset):
+        """Test that ARC examples have a choices field."""
+        mock_ds = [
+            {
+                "question": "Q?",
+                "choices": {"text": ["a", "b"], "label": ["A", "B"]},
+                "answerKey": "A",
+            },
+        ]
+        mock_load_dataset.return_value = mock_ds
+
+        loader = DataLoader(config=ARC_DATASET_CONFIG)
+        examples = loader.trainset
+
+        assert hasattr(examples[0], "question")
+        assert hasattr(examples[0], "choices")
+        assert hasattr(examples[0], "answer")
+        assert not hasattr(examples[0], "context")
+
+    @patch("dspy_demo.core.data.load_dataset")
+    def test_answer_is_label_not_text(self, mock_load_dataset):
+        """Test that answer is the label (A/B/C/D), not the choice text."""
+        mock_ds = [
+            {
+                "question": "Q?",
+                "choices": {"text": ["Paris", "London"], "label": ["A", "B"]},
+                "answerKey": "A",
+            },
+        ]
+        mock_load_dataset.return_value = mock_ds
+
+        loader = DataLoader(config=ARC_DATASET_CONFIG)
+        examples = loader.trainset
+
+        assert examples[0].answer == "A"
+        assert examples[0].answer != "Paris"
+
+    @patch("dspy_demo.core.data.load_dataset")
+    def test_dataset_config_passed(self, mock_load_dataset):
+        """Test that load_dataset is called with 'ARC-Challenge' config."""
+        mock_ds = [
+            {
+                "question": "Q?",
+                "choices": {"text": ["a"], "label": ["A"]},
+                "answerKey": "A",
+            },
+        ]
+        mock_load_dataset.return_value = mock_ds
+
+        loader = DataLoader(config=ARC_DATASET_CONFIG)
+        _ = loader.trainset
+
+        mock_load_dataset.assert_called_once_with(
+            "allenai/ai2_arc",
+            "ARC-Challenge",
+            split="train",
         )
