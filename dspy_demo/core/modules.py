@@ -46,6 +46,49 @@ class BasicQA(dspy.Module):
         return await self.generate_answer.acall(context=context, question=question)
 
 
+class MultipleChoiceQA(dspy.Module):
+    """Multiple-choice question-answering module using chain-of-thought.
+
+    This module takes a question and formatted answer choices as input
+    and produces a single letter answer (A/B/C/D). Designed for datasets
+    like ARC-Challenge where the model must select from provided options.
+
+    Example:
+        qa = MultipleChoiceQA()
+        result = qa(question="Which is largest?", choices="A) ant\\nB) whale")
+        print(result.answer)  # "B"
+    """
+
+    def __init__(self) -> None:
+        """Initialize the multiple-choice QA module with a ChainOfThought predictor."""
+        super().__init__()
+        self.generate_answer = dspy.ChainOfThought("question, choices -> answer")
+
+    def forward(self, question: str, choices: str) -> Prediction:
+        """Generate an answer for the given question and choices.
+
+        Args:
+            question: The question to answer.
+            choices: Formatted answer choices (e.g., "A) option1\\nB) option2").
+
+        Returns:
+            Prediction object containing the answer.
+        """
+        return self.generate_answer(question=question, choices=choices)
+
+    async def aforward(self, question: str, choices: str) -> Prediction:
+        """Async version of forward for parallel evaluation.
+
+        Args:
+            question: The question to answer.
+            choices: Formatted answer choices.
+
+        Returns:
+            Prediction object containing the answer.
+        """
+        return await self.generate_answer.acall(question=question, choices=choices)
+
+
 class BooleanQA(dspy.Module):
     """Boolean question-answering module using chain-of-thought.
 

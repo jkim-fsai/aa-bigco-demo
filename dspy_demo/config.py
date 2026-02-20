@@ -33,6 +33,11 @@ class DatasetConfig:
     - Train: 1,280 examples (first 80% of train)
     - Val: 320 examples (last 20% of train)
     - Test: 687 examples (held out)
+
+    ARC-Challenge (2,590 total):
+    - Train: 1,119 examples
+    - Val: 299 examples
+    - Test: 1,172 examples (held out)
     """
 
     dataset_name: str = "hotpotqa/hotpot_qa"
@@ -102,6 +107,13 @@ STRATEGYQA_DATASET_CONFIG = DatasetConfig(
     dataset_config=None,
     train_slice="train[:1280]",
     val_slice="train[1280:]",
+    test_slice="test",
+)
+ARC_DATASET_CONFIG = DatasetConfig(
+    dataset_name="allenai/ai2_arc",
+    dataset_config="ARC-Challenge",
+    train_slice="train",
+    val_slice="validation",
     test_slice="test",
 )
 OPTIMIZER_CONFIG = OptimizerConfig()

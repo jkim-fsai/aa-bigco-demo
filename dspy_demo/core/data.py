@@ -68,6 +68,8 @@ class DataLoader:
 
         if self._config.dataset_name == "ChilleD/StrategyQA":
             return self._format_strategyqa(ds)
+        elif self._config.dataset_name == "allenai/ai2_arc":
+            return self._format_arc(ds)
         return self._format_hotpotqa(ds)
 
     def _format_hotpotqa(self, ds) -> List[Example]:
@@ -110,6 +112,34 @@ class DataLoader:
             examples.append(ex)
         return examples
 
+    def _format_arc(self, ds) -> List[Example]:
+        """Format ARC dataset items into DSPy Examples.
+
+        Formats multiple-choice options into a readable string and
+        uses the answer key (A/B/C/D) as the gold answer.
+
+        Args:
+            ds: HuggingFace dataset split.
+
+        Returns:
+            List of Example objects with question, choices, and answer.
+        """
+        examples = []
+        for item in ds:
+            choices_text = "\n".join(
+                f"{label}) {text}"
+                for label, text in zip(
+                    item["choices"]["label"], item["choices"]["text"]
+                )
+            )
+            ex = Example(
+                question=item["question"],
+                choices=choices_text,
+                answer=item["answerKey"],
+            ).with_inputs("question", "choices")
+            examples.append(ex)
+        return examples
+
     @property
     def dataset_name(self) -> str:
         """Human-readable dataset name derived from config."""
@@ -118,6 +148,7 @@ class DataLoader:
         name_map = {
             "hotpotqa/hotpot_qa": "HotPotQA",
             "ChilleD/StrategyQA": "StrategyQA",
+            "allenai/ai2_arc": "ARC-Challenge",
         }
         return name_map.get(name, name)
 

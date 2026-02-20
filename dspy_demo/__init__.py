@@ -12,6 +12,7 @@ Usage:
 """
 
 from .config import (
+    ARC_DATASET_CONFIG,
     DATASET_CONFIG,
     MODEL_CONFIG,
     OPTIMIZER_CONFIG,
@@ -27,10 +28,13 @@ from .config import (
 from .core import (
     BasicQA,
     BooleanQA,
+    MultipleChoiceQA,
     gepa_boolean_metric,
     gepa_metric,
+    gepa_multiple_choice_metric,
     validate_answer,
     validate_boolean_answer,
+    validate_multiple_choice,
 )
 from .pipeline import OptimizationPipeline, OptimizationResult, OptimizerType
 
@@ -42,11 +46,14 @@ __all__ = [
     # Modules
     "BasicQA",
     "BooleanQA",
+    "MultipleChoiceQA",
     # Metrics
     "validate_answer",
     "validate_boolean_answer",
+    "validate_multiple_choice",
     "gepa_metric",
     "gepa_boolean_metric",
+    "gepa_multiple_choice_metric",
     # Config classes
     "ModelConfig",
     "DatasetConfig",
@@ -57,6 +64,7 @@ __all__ = [
     "MODEL_CONFIG",
     "DATASET_CONFIG",
     "STRATEGYQA_DATASET_CONFIG",
+    "ARC_DATASET_CONFIG",
     "OPTIMIZER_CONFIG",
     "PROCESSING_CONFIG",
     "PATH_CONFIG",

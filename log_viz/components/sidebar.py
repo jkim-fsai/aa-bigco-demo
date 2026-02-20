@@ -113,6 +113,8 @@ def render_sidebar(loader: TrialDataLoader) -> Dict[str, Any]:
                 train_size = metadata.get("trainset_size", 0)
                 if train_size == 1280:
                     dataset_name = "StrategyQA"
+                elif train_size == 1119:
+                    dataset_name = "ARC-Challenge"
                 elif train_size:
                     dataset_name = "HotPotQA"
             if dataset_name:

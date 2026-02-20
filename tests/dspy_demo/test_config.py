@@ -5,6 +5,7 @@ from pathlib import Path
 import pytest
 
 from dspy_demo.config import (
+    ARC_DATASET_CONFIG,
     COLORS,
     DATASET_CONFIG,
     MODEL_CONFIG,
@@ -84,6 +85,24 @@ class TestStrategyQADatasetConfig:
         """Test that dataset_config accepts None."""
         config = DatasetConfig(dataset_name="test", dataset_config=None)
         assert config.dataset_config is None
+
+
+class TestARCDatasetConfig:
+    """Tests for ARC-Challenge dataset configuration."""
+
+    def test_dataset_name(self):
+        """Test ARC dataset name."""
+        assert ARC_DATASET_CONFIG.dataset_name == "allenai/ai2_arc"
+
+    def test_dataset_config(self):
+        """Test ARC uses 'ARC-Challenge' config."""
+        assert ARC_DATASET_CONFIG.dataset_config == "ARC-Challenge"
+
+    def test_native_splits(self):
+        """Test that ARC uses native train/validation/test splits."""
+        assert ARC_DATASET_CONFIG.train_slice == "train"
+        assert ARC_DATASET_CONFIG.val_slice == "validation"
+        assert ARC_DATASET_CONFIG.test_slice == "test"
 
 
 class TestOptimizerConfig:

@@ -8,7 +8,7 @@ Usage:
     python demo_compare.py [optimizer] [dataset]
 
     optimizer: gepa (default), mipro, or miprov2
-    dataset:   hotpotqa (default) or strategyqa
+    dataset:   hotpotqa (default), strategyqa, or arc
 """
 
 import asyncio
@@ -17,16 +17,20 @@ from pathlib import Path
 from typing import Any, Dict
 
 from dspy_demo import (
+    ARC_DATASET_CONFIG,
     DATASET_CONFIG,
     STRATEGYQA_DATASET_CONFIG,
     BasicQA,
     BooleanQA,
+    MultipleChoiceQA,
     OptimizationPipeline,
     OptimizerType,
     gepa_boolean_metric,
     gepa_metric,
+    gepa_multiple_choice_metric,
     validate_answer,
     validate_boolean_answer,
+    validate_multiple_choice,
 )
 from dspy_demo.core import DataLoader
 
@@ -48,6 +52,12 @@ DATASET_MAP: Dict[str, Dict[str, Any]] = {
         "module": BooleanQA,
         "metric": validate_boolean_answer,
         "gepa_metric": gepa_boolean_metric,
+    },
+    "arc": {
+        "config": ARC_DATASET_CONFIG,
+        "module": MultipleChoiceQA,
+        "metric": validate_multiple_choice,
+        "gepa_metric": gepa_multiple_choice_metric,
     },
 }
 
@@ -103,6 +113,7 @@ if __name__ == "__main__":
         print("  mipro       - Use MIPROv2 optimizer (instruction + few-shot)")
         print("  hotpotqa    - Multi-hop reading comprehension (default)")
         print("  strategyqa  - Implicit boolean reasoning")
+        print("  arc         - Science multiple-choice (ARC-Challenge)")
         sys.exit(1)
 
     asyncio.run(main(optimizer, dataset))
