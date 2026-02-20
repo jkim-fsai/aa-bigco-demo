@@ -229,3 +229,28 @@ def mock_prediction_wrong() -> MagicMock:
     pred = MagicMock()
     pred.answer = "The capital is London."
     return pred
+
+
+@pytest.fixture
+def mock_boolean_example() -> MagicMock:
+    """Create a mock DSPy Example object for boolean QA."""
+    example = MagicMock()
+    example.question = "Did Aristotle use a laptop?"
+    example.answer = "no"
+    return example
+
+
+@pytest.fixture
+def mock_boolean_prediction() -> MagicMock:
+    """Create a mock DSPy Prediction object with boolean answer."""
+    pred = MagicMock()
+    pred.answer = "no"
+    return pred
+
+
+@pytest.fixture
+def mock_boolean_prediction_wrong() -> MagicMock:
+    """Create a mock DSPy Prediction object with wrong boolean answer."""
+    pred = MagicMock()
+    pred.answer = "yes"
+    return pred

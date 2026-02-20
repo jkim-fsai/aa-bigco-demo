@@ -17,11 +17,20 @@ from .config import (
     OPTIMIZER_CONFIG,
     PATH_CONFIG,
     PROCESSING_CONFIG,
+    STRATEGYQA_DATASET_CONFIG,
     DatasetConfig,
     ModelConfig,
     OptimizerConfig,
     PathConfig,
     ProcessingConfig,
+)
+from .core import (
+    BasicQA,
+    BooleanQA,
+    gepa_boolean_metric,
+    gepa_metric,
+    validate_answer,
+    validate_boolean_answer,
 )
 from .pipeline import OptimizationPipeline, OptimizationResult, OptimizerType
 
@@ -30,6 +39,14 @@ __all__ = [
     "OptimizationPipeline",
     "OptimizationResult",
     "OptimizerType",
+    # Modules
+    "BasicQA",
+    "BooleanQA",
+    # Metrics
+    "validate_answer",
+    "validate_boolean_answer",
+    "gepa_metric",
+    "gepa_boolean_metric",
     # Config classes
     "ModelConfig",
     "DatasetConfig",
@@ -39,6 +56,7 @@ __all__ = [
     # Config instances
     "MODEL_CONFIG",
     "DATASET_CONFIG",
+    "STRATEGYQA_DATASET_CONFIG",
     "OPTIMIZER_CONFIG",
     "PROCESSING_CONFIG",
     "PATH_CONFIG",

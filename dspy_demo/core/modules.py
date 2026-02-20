@@ -44,3 +44,44 @@ class BasicQA(dspy.Module):
             Prediction object containing the answer.
         """
         return await self.generate_answer.acall(context=context, question=question)
+
+
+class BooleanQA(dspy.Module):
+    """Boolean question-answering module using chain-of-thought.
+
+    This module takes a question (no context) and produces a yes/no answer.
+    Designed for datasets like StrategyQA where the model must reason
+    from parametric knowledge.
+
+    Example:
+        qa = BooleanQA()
+        result = qa(question="Did Aristotle use a laptop?")
+        print(result.answer)  # "no"
+    """
+
+    def __init__(self) -> None:
+        """Initialize the boolean QA module with a ChainOfThought predictor."""
+        super().__init__()
+        self.generate_answer = dspy.ChainOfThought("question -> answer")
+
+    def forward(self, question: str) -> Prediction:
+        """Generate a yes/no answer for the given question.
+
+        Args:
+            question: The question to answer.
+
+        Returns:
+            Prediction object containing the answer.
+        """
+        return self.generate_answer(question=question)
+
+    async def aforward(self, question: str) -> Prediction:
+        """Async version of forward for parallel evaluation.
+
+        Args:
+            question: The question to answer.
+
+        Returns:
+            Prediction object containing the answer.
+        """
+        return await self.generate_answer.acall(question=question)

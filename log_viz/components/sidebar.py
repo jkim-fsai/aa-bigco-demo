@@ -16,6 +16,7 @@ _METADATA_KEYS = {
     "valset_size",
     "testset_size",
     "optimizer",
+    "dataset",
 }
 
 _HYPERPARAM_LABELS = {
@@ -106,6 +107,16 @@ def render_sidebar(loader: TrialDataLoader) -> Dict[str, Any]:
         # Run metadata
         metadata = loader.get_run_metadata(selected_run)
         if metadata:
+            dataset_name = metadata.get("dataset", "")
+            if not dataset_name:
+                # Infer from split sizes for runs created before dataset field was added
+                train_size = metadata.get("trainset_size", 0)
+                if train_size == 1280:
+                    dataset_name = "StrategyQA"
+                elif train_size:
+                    dataset_name = "HotPotQA"
+            if dataset_name:
+                st.caption(f"**Dataset:** {dataset_name}")
             st.caption(f"Started: {metadata.get('timestamp', 'N/A')}")
             st.caption(f"Status: {metadata.get('status', 'unknown')}")
 

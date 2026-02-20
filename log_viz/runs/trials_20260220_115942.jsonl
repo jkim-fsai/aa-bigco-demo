@@ -1,0 +1,1 @@
+{"type": "metadata", "run_id": "20260220_115942", "timestamp": "2026-02-20T11:59:47.533209", "status": "started", "trainset_size": 1280, "valset_size": 323, "testset_size": 687, "optimizer": "gepa", "dataset": "StrategyQA", "model": "openai/gpt-4.1-nano", "auto": "medium", "num_threads": 25, "reflection_model": "openai/gpt-4.1-nano", "reflection_minibatch_size": 16}

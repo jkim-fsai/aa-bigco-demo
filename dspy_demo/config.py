@@ -6,7 +6,7 @@ No side effects occur on import - only data structures are defined.
 
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict
+from typing import Dict, Optional
 
 
 @dataclass(frozen=True)
@@ -24,14 +24,19 @@ class ModelConfig:
 class DatasetConfig:
     """Dataset split configuration.
 
-    Full HotPotQA (90,447 train / 7,405 dev):
+    HotPotQA (90,447 train / 7,405 dev):
     - Train: 90,447 examples
     - Val: 3,700 examples (first half of dev)
     - Test: 3,705 examples (second half of dev, held out)
+
+    StrategyQA (1,600 train / 687 test):
+    - Train: 1,280 examples (first 80% of train)
+    - Val: 320 examples (last 20% of train)
+    - Test: 687 examples (held out)
     """
 
     dataset_name: str = "hotpotqa/hotpot_qa"
-    dataset_config: str = "distractor"
+    dataset_config: Optional[str] = "distractor"
     train_slice: str = "train"
     val_slice: str = "validation[:3700]"
     test_slice: str = "validation[3700:]"
@@ -92,6 +97,13 @@ COLORS: Dict[str, str] = {
 # Global config instances (immutable where possible)
 MODEL_CONFIG = ModelConfig()
 DATASET_CONFIG = DatasetConfig()
+STRATEGYQA_DATASET_CONFIG = DatasetConfig(
+    dataset_name="ChilleD/StrategyQA",
+    dataset_config=None,
+    train_slice="train[:1280]",
+    val_slice="train[1280:]",
+    test_slice="test",
+)
 OPTIMIZER_CONFIG = OptimizerConfig()
 PROCESSING_CONFIG = ProcessingConfig()
 PATH_CONFIG = PathConfig()

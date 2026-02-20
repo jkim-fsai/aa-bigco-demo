@@ -1,0 +1,12 @@
+{"type": "metadata", "run_id": "20260220_123333", "timestamp": "2026-02-20T12:33:39.763349", "status": "started", "trainset_size": 1280, "valset_size": 323, "testset_size": 687, "optimizer": "gepa", "dataset": "StrategyQA", "model": "openai/gpt-4.1-nano", "auto": "medium", "num_threads": 25, "reflection_model": "openai/gpt-4.1", "reflection_minibatch_size": 3}
+{"type": "trial", "run_id": "20260220_123333", "timestamp": "2026-02-20T12:33:41.768930", "trial": 4, "score": 70.58823529411765, "parameters": "GEPA Iteration 4", "optimizer": "gepa"}
+{"type": "trial", "run_id": "20260220_123333", "timestamp": "2026-02-20T12:33:42.661249", "trial": 16, "score": 71.51702786377709, "parameters": "GEPA Iteration 16", "optimizer": "gepa"}
+{"type": "trial", "run_id": "20260220_123333", "timestamp": "2026-02-20T12:33:43.378365", "trial": 20, "score": 71.20743034055728, "parameters": "GEPA Iteration 20", "optimizer": "gepa"}
+{"type": "trial", "run_id": "20260220_123333", "timestamp": "2026-02-20T12:33:43.378819", "trial": 20, "score": 71.51702786377709, "parameters": "GEPA Iteration 20", "optimizer": "gepa"}
+{"type": "trial", "run_id": "20260220_123333", "timestamp": "2026-02-20T12:33:44.174495", "trial": 25, "score": 69.96904024767801, "parameters": "GEPA Iteration 25", "optimizer": "gepa"}
+{"type": "trial", "run_id": "20260220_123333", "timestamp": "2026-02-20T12:33:44.174949", "trial": 25, "score": 71.51702786377709, "parameters": "GEPA Iteration 25", "optimizer": "gepa"}
+{"type": "trial", "run_id": "20260220_123333", "timestamp": "2026-02-20T12:33:44.927741", "trial": 32, "score": 71.20743034055728, "parameters": "GEPA Iteration 32", "optimizer": "gepa"}
+{"type": "trial", "run_id": "20260220_123333", "timestamp": "2026-02-20T12:33:44.928364", "trial": 32, "score": 71.51702786377709, "parameters": "GEPA Iteration 32", "optimizer": "gepa"}
+{"type": "trial", "run_id": "20260220_123333", "timestamp": "2026-02-20T12:33:45.712327", "trial": 34, "score": 71.20743034055728, "parameters": "GEPA Iteration 34", "optimizer": "gepa"}
+{"type": "trial", "run_id": "20260220_123333", "timestamp": "2026-02-20T12:33:45.712899", "trial": 34, "score": 71.51702786377709, "parameters": "GEPA Iteration 34", "optimizer": "gepa"}
+{"type": "metadata", "run_id": "20260220_123333", "timestamp": "2026-02-20T12:34:12.432546", "status": "completed", "total_trials": 24}
