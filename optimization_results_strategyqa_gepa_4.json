@@ -1,0 +1,254 @@
+{
+  "optimizer": "gepa",
+  "baseline_accuracy": 68.12227074235808,
+  "optimized_accuracy": 68.12227074235808,
+  "improvement": 0.0,
+  "instruction": "Given the fields `question`, produce the fields `answer`.",
+  "demos": [],
+  "optimization_trials": [
+    {
+      "trial": 1,
+      "score": 60.371517027863774,
+      "parameters": "GEPA Iteration 1",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 1,
+      "score": 60.371517027863774,
+      "parameters": "GEPA Iteration 1",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 1,
+      "score": 69.04024767801857,
+      "parameters": "GEPA Iteration 1",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 1,
+      "score": 69.04024767801857,
+      "parameters": "GEPA Iteration 1",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 4,
+      "score": 64.39628482972137,
+      "parameters": "GEPA Iteration 4",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 4,
+      "score": 64.39628482972137,
+      "parameters": "GEPA Iteration 4",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 4,
+      "score": 69.04024767801857,
+      "parameters": "GEPA Iteration 4",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 4,
+      "score": 69.04024767801857,
+      "parameters": "GEPA Iteration 4",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 5,
+      "score": 64.39628482972137,
+      "parameters": "GEPA Iteration 5",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 5,
+      "score": 64.39628482972137,
+      "parameters": "GEPA Iteration 5",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 5,
+      "score": 69.04024767801857,
+      "parameters": "GEPA Iteration 5",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 5,
+      "score": 69.04024767801857,
+      "parameters": "GEPA Iteration 5",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 6,
+      "score": 66.56346749226006,
+      "parameters": "GEPA Iteration 6",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 6,
+      "score": 66.56346749226006,
+      "parameters": "GEPA Iteration 6",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 6,
+      "score": 69.04024767801857,
+      "parameters": "GEPA Iteration 6",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 6,
+      "score": 69.04024767801857,
+      "parameters": "GEPA Iteration 6",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 7,
+      "score": 62.848297213622295,
+      "parameters": "GEPA Iteration 7",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 7,
+      "score": 62.848297213622295,
+      "parameters": "GEPA Iteration 7",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 7,
+      "score": 69.04024767801857,
+      "parameters": "GEPA Iteration 7",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 7,
+      "score": 69.04024767801857,
+      "parameters": "GEPA Iteration 7",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 8,
+      "score": 63.1578947368421,
+      "parameters": "GEPA Iteration 8",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 8,
+      "score": 63.1578947368421,
+      "parameters": "GEPA Iteration 8",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 8,
+      "score": 69.04024767801857,
+      "parameters": "GEPA Iteration 8",
+      "optimizer": "gepa"
+    },
+    {
+      "trial": 8,
+      "score": 69.04024767801857,
+      "parameters": "GEPA Iteration 8",
+      "optimizer": "gepa"
+    }
+  ],
+  "instruction_candidates": [
+    {
+      "index": 1,
+      "instruction": "Given an input field `question`, produce the output field `answer`.\n\nYour task involves analyzing the `question` to generate a concise, accurate, and relevant answer. You should focus on the following:\n\n1. **Understanding the Question:** Carefully interpret what is being asked, noting any nuances, assumptions, or specific details within the question.\n\n2. **Utilizing Factual and Domain Knowledge:** Apply relevant factual knowledge, including cultural, historical, scientific, or general world knowledge, to construct a well-informed response. Keep in mind that some questions may relate to niche or specialized areas (e.g., mythology, astronomy, history, linguistics, geography), so be prepared to draw upon detailed, specific facts.\n\n3. **Ensuring Logical Coherence:** Your answer should be logically consistent and directly address the query without unnecessary elaboration. Avoid speculation unless explicitly appropriate; rely on established facts.\n\n4. **Distinguishing Context and Nuance:** Recognize when questions involve cultural significance, historical context, or technical precision, and tailor your answer accordingly.\n\n5. **Addressing Ambiguity or Misconceptions:** If the question contains misconceptions or ambiguities, clarify or correct them in your answer, explaining relevant distinctions where necessary.\n\n6. **Handling Hypotheticals and Rhetorical Questions:** For hypothetical or rhetorical questions, answer with acknowledgment of their nature, providing factual clarity or context.\n\n7. **Providing Clear, Neutral, and Fact-Based Responses:** Maintain an impartial tone, especially with sensitive or potentially controversial topics. Restate facts objectively and avoid biased language.\n\n8. **Examples of Good Practice:**\n   - Instead of guessing, indicate when there is limited or no publicly available information.\n   - When a question involves a potential misunderstanding (e.g., comparing biological vs. botanical entities), clearly delineate the differences in your an... [truncated]",
+      "type": "gepa",
+      "iteration": 1
+    },
+    {
+      "index": 1,
+      "instruction": "Given an input field `question`, produce the output field `answer`.\n\nYour task involves analyzing the `question` to generate a concise, accurate, and relevant answer. You should focus on the following:\n\n1. **Understanding the Question:** Carefully interpret what is being asked, noting any nuances, assumptions, or specific details within the question.\n\n2. **Utilizing Factual and Domain Knowledge:** Apply relevant factual knowledge, including cultural, historical, scientific, or general world knowledge, to construct a well-informed response. Keep in mind that some questions may relate to niche or specialized areas (e.g., mythology, astronomy, history, linguistics, geography), so be prepared to draw upon detailed, specific facts.\n\n3. **Ensuring Logical Coherence:** Your answer should be logically consistent and directly address the query without unnecessary elaboration. Avoid speculation unless explicitly appropriate; rely on established facts.\n\n4. **Distinguishing Context and Nuance:** Recognize when questions involve cultural significance, historical context, or technical precision, and tailor your answer accordingly.\n\n5. **Addressing Ambiguity or Misconceptions:** If the question contains misconceptions or ambiguities, clarify or correct them in your answer, explaining relevant distinctions where necessary.\n\n6. **Handling Hypotheticals and Rhetorical Questions:** For hypothetical or rhetorical questions, answer with acknowledgment of their nature, providing factual clarity or context.\n\n7. **Providing Clear, Neutral, and Fact-Based Responses:** Maintain an impartial tone, especially with sensitive or potentially controversial topics. Restate facts objectively and avoid biased language.\n\n8. **Examples of Good Practice:**\n   - Instead of guessing, indicate when there is limited or no publicly available information.\n   - When a question involves a potential misunderstanding (e.g., comparing biological vs. botanical entities), clearly delineate the differences in your answer.\n   - For questions on whether something is possible, address both the theoretical possibility and practical considerations.\n\nUse this methodology to produce precise, factual, and contextually appropriate `answer` outputs for all given `question` inputs.",
+      "type": "gepa",
+      "iteration": 1
+    },
+    {
+      "index": 2,
+      "instruction": "You are tasked with transforming a given question into a concise, accurate answer. \n\nYour output should include **only** the final answer to the question, not any reasoning, explanation, or commentary. While producing the answer, you should rely on general knowledge up to October 2023, as well as common, factual, or widely accepted information. If the question involves specific facts, historical details, or domain-specific knowledge, ensure your answer is correct and based on reliable information.\n\nIn your response, aim for clarity and correctness, avoiding speculation or assumptions. Do not include reasoning, elaborations, or justifications\u2014only provide the direct answer to the question.\n\n**Note:** Your success hinges on understanding the question's context, verifying the factual accuracy of your answer, and ensuring it is relevant and precise. Use a neutral tone, and tailor your answer to the question's nature, whether it requires a Yes/No, a specific piece of data, or a brief explanation.\n\n**Guidelines:**\n- Do not add introductory or concluding phrases.\n- Do not include in your answer anything beyond the direct response.\n- When relevant, incorporate widely known facts, historical dates, or scientific knowledge.\n- For ambiguous or subjective questions, provide the most appropriate factual answer or state if the question is opinion-based.\n\nRemember, your task is solely to produce the best possible short answer to each question based on established knowledge.",
+      "type": "gepa",
+      "iteration": 2
+    },
+    {
+      "index": 2,
+      "instruction": "You are tasked with transforming a given question into a concise, accurate answer. \n\nYour output should include **only** the final answer to the question, not any reasoning, explanation, or commentary. While producing the answer, you should rely on general knowledge up to October 2023, as well as common, factual, or widely accepted information. If the question involves specific facts, historical details, or domain-specific knowledge, ensure your answer is correct and based on reliable information.\n\nIn your response, aim for clarity and correctness, avoiding speculation or assumptions. Do not include reasoning, elaborations, or justifications\u2014only provide the direct answer to the question.\n\n**Note:** Your success hinges on understanding the question's context, verifying the factual accuracy of your answer, and ensuring it is relevant and precise. Use a neutral tone, and tailor your answer to the question's nature, whether it requires a Yes/No, a specific piece of data, or a brief explanation.\n\n**Guidelines:**\n- Do not add introductory or concluding phrases.\n- Do not include in your answer anything beyond the direct response.\n- When relevant, incorporate widely known facts, historical dates, or scientific knowledge.\n- For ambiguous or subjective questions, provide the most appropriate factual answer or state if the question is opinion-based.\n\nRemember, your task is solely to produce the best possible short answer to each question based on established knowledge.",
+      "type": "gepa",
+      "iteration": 2
+    },
+    {
+      "index": 3,
+      "instruction": "Your task is to generate a concise, accurate, and factual answer to a given question by analyzing and synthesizing relevant information. \n\nThe input will contain a single field labeled `question`, and you must produce a corresponding `answer` field. Your answer should be a clear, direct response that appropriately addresses the question, relying on general knowledge and verified facts up to October 2023. You are encouraged to perform necessary reasoning or reasoning-based inference to ensure the answer is accurate and comprehensive.\n\nImportant guidelines:\n- Do not include explanations, reasoning, or justifications in your answer\u2014only provide the final, factual reply.\n- When appropriate, consider context, typical domain knowledge, and common facts, even if not explicitly stated in the question.\n- Avoid speculation; base your response on established knowledge, scientific consensus, or reputable information.\n- For questions involving probabilities, opinions, or subjective assessments, clearly state the most supported or typical stance.\n- If the question involves a hypothetical or conditional scenario, craft your answer to reflect realistic conclusions based on available facts.\n\nThis task requires careful understanding of the question's intent, and the ability to distill relevant information into an accurate and concise answer without additional commentary.",
+      "type": "gepa",
+      "iteration": 3
+    },
+    {
+      "index": 3,
+      "instruction": "Your task is to generate a concise, accurate, and factual answer to a given question by analyzing and synthesizing relevant information. \n\nThe input will contain a single field labeled `question`, and you must produce a corresponding `answer` field. Your answer should be a clear, direct response that appropriately addresses the question, relying on general knowledge and verified facts up to October 2023. You are encouraged to perform necessary reasoning or reasoning-based inference to ensure the answer is accurate and comprehensive.\n\nImportant guidelines:\n- Do not include explanations, reasoning, or justifications in your answer\u2014only provide the final, factual reply.\n- When appropriate, consider context, typical domain knowledge, and common facts, even if not explicitly stated in the question.\n- Avoid speculation; base your response on established knowledge, scientific consensus, or reputable information.\n- For questions involving probabilities, opinions, or subjective assessments, clearly state the most supported or typical stance.\n- If the question involves a hypothetical or conditional scenario, craft your answer to reflect realistic conclusions based on available facts.\n\nThis task requires careful understanding of the question's intent, and the ability to distill relevant information into an accurate and concise answer without additional commentary.",
+      "type": "gepa",
+      "iteration": 3
+    },
+    {
+      "index": 4,
+      "instruction": "You are provided with a `question` input, and your task is to generate a precise, well-informed `answer` based solely on the question and relevant factual or domain knowledge. Your response should adhere to the following guidelines:\n\n1. **Careful Interpretation:** Fully understand what each question is asking. Identify any nuances, assumptions, or implied meanings to ensure your answer directly addresses the core inquiry.\n\n2. **Accurate Use of Knowledge:** Apply factual, scientific, historical, cultural, or technical knowledge where appropriate. For example, you should know key details such as the approximate number of stars in the Milky Way galaxy (roughly 100 billion to 400 billion), the origin and influence of classical art, or the typical dietary habits of specific animals. Be aware of common misconceptions and correct them if necessary.\n\n3. **Logical and Clear Responses:** Construct responses that are logically coherent, concise, and directly answer the question without unnecessary elaboration or speculation. When information is limited or uncertain, clearly state this and avoid unfounded assumptions.\n\n4. **Handling Ambiguity and Misconceptions:** If the question involves misconceptions or is ambiguous, clarify the correct understanding or state the uncertainty. When a question refers to metaphorical or philosophical concepts (e.g., \"yin and yang\" colors), interpret whether the query is literal or metaphorical, and respond accordingly.\n\n5. **Distinguishing Context:** Recognize when questions relate to different contexts (e.g., physical structures vs. digital entities, historical figures vs. current individuals, real phenomena vs. metaphorical concepts) and tailor your answer to suit the context.\n\n6. **Addressing Hypotheticals and Speculative Scenarios:** When questions involve hypothetical situations, consider the real-world implications and provide fact-based assessments. Do not speculate beyond established facts unless explicitly asked.\n\n7. **Neutral and Obje... [truncated]",
+      "type": "gepa",
+      "iteration": 4
+    },
+    {
+      "index": 4,
+      "instruction": "You are provided with a `question` input, and your task is to generate a precise, well-informed `answer` based solely on the question and relevant factual or domain knowledge. Your response should adhere to the following guidelines:\n\n1. **Careful Interpretation:** Fully understand what each question is asking. Identify any nuances, assumptions, or implied meanings to ensure your answer directly addresses the core inquiry.\n\n2. **Accurate Use of Knowledge:** Apply factual, scientific, historical, cultural, or technical knowledge where appropriate. For example, you should know key details such as the approximate number of stars in the Milky Way galaxy (roughly 100 billion to 400 billion), the origin and influence of classical art, or the typical dietary habits of specific animals. Be aware of common misconceptions and correct them if necessary.\n\n3. **Logical and Clear Responses:** Construct responses that are logically coherent, concise, and directly answer the question without unnecessary elaboration or speculation. When information is limited or uncertain, clearly state this and avoid unfounded assumptions.\n\n4. **Handling Ambiguity and Misconceptions:** If the question involves misconceptions or is ambiguous, clarify the correct understanding or state the uncertainty. When a question refers to metaphorical or philosophical concepts (e.g., \"yin and yang\" colors), interpret whether the query is literal or metaphorical, and respond accordingly.\n\n5. **Distinguishing Context:** Recognize when questions relate to different contexts (e.g., physical structures vs. digital entities, historical figures vs. current individuals, real phenomena vs. metaphorical concepts) and tailor your answer to suit the context.\n\n6. **Addressing Hypotheticals and Speculative Scenarios:** When questions involve hypothetical situations, consider the real-world implications and provide fact-based assessments. Do not speculate beyond established facts unless explicitly asked.\n\n7. **Neutral and Objective Tone:** Maintain an impartial, factual tone, especially when addressing sensitive topics, controversies, or personal attributes.\n\n8. **Use of Examples and Quantitative Data:** When relevant, include specific data, estimates, or examples to support your answer, indicating sources or typical values where possible (e.g., height of famous monuments, quantities in nature, or statistical facts).\n\n9. **Limitations:** If certain information is not available or cannot be determined, state this explicitly rather than guessing.\n\n10. **Structure and Clarity:** Present your answer clearly, starting with a direct response to the question, followed by necessary explanations or context as needed to clarify your reasoning.\n\nThis approach ensures the answers are accurate, contextually appropriate, and useful for informative purposes.",
+      "type": "gepa",
+      "iteration": 4
+    },
+    {
+      "index": 5,
+      "instruction": "Given an input field `question`, generate the `answer` field by producing a clear, accurate, and concise response to the question. Your response should adhere to the following guidelines:\n\n1. **Thorough Understanding of the Question**: Carefully interpret the question, noting any specific details, context, or nuances. Clarify any potential ambiguities before formulating your answer.\n\n2. **Factual and Domain Knowledge Application**: Utilize accurate, established facts and well-known domain knowledge. Be aware of specialized or niche areas such as history, culture, science, geography, linguistics, or media. For example:\n   - When referencing literary works, historical figures, or scientific concepts, rely on accepted facts or widely available information.\n   - For questions involving geography, understand the relative locations, boundaries, and physical features of regions, countries, or bodies of water.\n   - For media or pop culture questions, be familiar with common titles, authors, adaptations, or notable facts.\n   - When dealing with scientific or technical topics, distinguish between theoretical possibility and practical feasibility.\n\n3. **Logical and Objective Reasoning**: Construct your answer based solely on factual information and logical inference. Do not speculate or include unsupported assumptions.\n\n4. **Handling Ambiguity and Misconceptions**: If the question contains misconceptions, misconceptions, or ambiguities, clarify or correct them explicitly. Provide relevant context or distinctions when needed.\n\n5. **Addressing Hypotheticals and Rhetorical Questions**: If the question is hypothetical or rhetorical, respond by providing the factual or contextual background, acknowledging the nature of the query.\n\n6. **Use Neutral and Impartial Tone**: Maintain objectivity and neutrality, especially on sensitive or controversial topics.\n\n7. **Concise and Focused Responses**: Ensure your answer directly addresses the question without unnecessary elaboration. Strive ... [truncated]",
+      "type": "gepa",
+      "iteration": 5
+    },
+    {
+      "index": 5,
+      "instruction": "Given an input field `question`, generate the `answer` field by producing a clear, accurate, and concise response to the question. Your response should adhere to the following guidelines:\n\n1. **Thorough Understanding of the Question**: Carefully interpret the question, noting any specific details, context, or nuances. Clarify any potential ambiguities before formulating your answer.\n\n2. **Factual and Domain Knowledge Application**: Utilize accurate, established facts and well-known domain knowledge. Be aware of specialized or niche areas such as history, culture, science, geography, linguistics, or media. For example:\n   - When referencing literary works, historical figures, or scientific concepts, rely on accepted facts or widely available information.\n   - For questions involving geography, understand the relative locations, boundaries, and physical features of regions, countries, or bodies of water.\n   - For media or pop culture questions, be familiar with common titles, authors, adaptations, or notable facts.\n   - When dealing with scientific or technical topics, distinguish between theoretical possibility and practical feasibility.\n\n3. **Logical and Objective Reasoning**: Construct your answer based solely on factual information and logical inference. Do not speculate or include unsupported assumptions.\n\n4. **Handling Ambiguity and Misconceptions**: If the question contains misconceptions, misconceptions, or ambiguities, clarify or correct them explicitly. Provide relevant context or distinctions when needed.\n\n5. **Addressing Hypotheticals and Rhetorical Questions**: If the question is hypothetical or rhetorical, respond by providing the factual or contextual background, acknowledging the nature of the query.\n\n6. **Use Neutral and Impartial Tone**: Maintain objectivity and neutrality, especially on sensitive or controversial topics.\n\n7. **Concise and Focused Responses**: Ensure your answer directly addresses the question without unnecessary elaboration. Strive for brevity where possible, while maintaining completeness and clarity.\n\n8. **Empirical and Verifiable Responses**: If the question asks for current or specific data, acknowledge your knowledge limitations if the exact data is not accessible; do not guess.\n\n9. **Consistency and Clarity**: Present information in a clear, structured manner to facilitate understanding.\n\nThis approach combines careful analysis, application of authoritative knowledge, and logical reasoning to produce precise and reliable answers across a range of topics.",
+      "type": "gepa",
+      "iteration": 5
+    },
+    {
+      "index": 6,
+      "instruction": "You are given a question that seeks a factual, scientific, historical, cultural, or technical answer. Your task is to produce a clear, concise, and objective answer that directly addresses the core of the question using well-established knowledge and logical reasoning. Follow these detailed guidelines:\n\n1. **Understand the Question Fully:** Carefully interpret what each question is asking, including any nuances, assumptions, or implied meanings. Clarify ambiguities or cultural references if necessary.\n\n2. **Use Accurate, Domain-Specific Knowledge:** Apply relevant factual information. For example:\n   - The approximate number of stars in the Milky Way galaxy (roughly 100 billion to 400 billion).\n   - The typical height range of high-fashion runway models (around 5'9\" to 6'0\").\n   - The cultural practices and environmental conditions influencing natural mummification in desert regions.\n   - Known safety standards and environmental effects related to technology or biology.\n   \n   When applicable, include specific data, estimates, or examples to support your answer. If the information is uncertain or not available, explicitly state this.\n\n3. **Logical and Objective Responses:** Ensure responses are logical, straightforward, and avoid unnecessary speculation. When dealing with hypothetical scenarios, assess real-world implications without unfounded assumptions.\n\n4. **Clarify and Address Misconceptions:** If the question involves misconceptions, clarify the accurate understanding. When the question is vague or ambiguous, interpret it based on common knowledge or typical usage, and state any assumptions made.\n\n5. **Differentiate Contexts and Perspectives:** Recognize when questions involve different contexts (e.g., physical objects versus cultural phenomena, real versus fictional entities) and tailor your response accordingly.\n\n6. **Handle Hypotheticals Carefully:** When asked about hypothetical scenarios, provide fact-based assessments or recognize the limitations in your... [truncated]",
+      "type": "gepa",
+      "iteration": 6
+    },
+    {
+      "index": 6,
+      "instruction": "You are given a question that seeks a factual, scientific, historical, cultural, or technical answer. Your task is to produce a clear, concise, and objective answer that directly addresses the core of the question using well-established knowledge and logical reasoning. Follow these detailed guidelines:\n\n1. **Understand the Question Fully:** Carefully interpret what each question is asking, including any nuances, assumptions, or implied meanings. Clarify ambiguities or cultural references if necessary.\n\n2. **Use Accurate, Domain-Specific Knowledge:** Apply relevant factual information. For example:\n   - The approximate number of stars in the Milky Way galaxy (roughly 100 billion to 400 billion).\n   - The typical height range of high-fashion runway models (around 5'9\" to 6'0\").\n   - The cultural practices and environmental conditions influencing natural mummification in desert regions.\n   - Known safety standards and environmental effects related to technology or biology.\n   \n   When applicable, include specific data, estimates, or examples to support your answer. If the information is uncertain or not available, explicitly state this.\n\n3. **Logical and Objective Responses:** Ensure responses are logical, straightforward, and avoid unnecessary speculation. When dealing with hypothetical scenarios, assess real-world implications without unfounded assumptions.\n\n4. **Clarify and Address Misconceptions:** If the question involves misconceptions, clarify the accurate understanding. When the question is vague or ambiguous, interpret it based on common knowledge or typical usage, and state any assumptions made.\n\n5. **Differentiate Contexts and Perspectives:** Recognize when questions involve different contexts (e.g., physical objects versus cultural phenomena, real versus fictional entities) and tailor your response accordingly.\n\n6. **Handle Hypotheticals Carefully:** When asked about hypothetical scenarios, provide fact-based assessments or recognize the limitations in your knowledge, avoiding unfounded guesses.\n\n7. **Maintain Neutrality and Objectivity:** Keep an impartial tone, especially with sensitive or controversial topics.\n\n8. **Include Quantitative or Specific Data When Relevant:** Use precise figures, measurements, or data points that support your explanation. Example: \"Most modern CPUs include a dedicated cooling fan, as they generate significant heat during operation.\"\n\n9. **Explicitly State When Information Is Unknown:** If certain details are unavailable or cannot be determined, clearly mention this instead of guessing.\n\n10. **Structured and Clear Responses:** Start with a direct, brief answer to the question. Follow with necessary explanations, context, or supporting details to ensure clarity and completeness.\n\n**Additional domain-specific knowledge tips:**\n- The Earth's magnetic field is extremely weak; ferromagnetic implants are not affected by it to any practical degree.\n- Mummification processes are influenced by environmental conditions like humidity and temperature; arid, dry climates favor natural preservation.\n- Medical implants such as plates and screws are unaffected by Earth's magnetic field in normal circumstances, though ferromagnetic materials can interact with strong magnetic fields like MRI scanners.\n- Recognition of cultural and historical practices (e.g., the deliberate mummification of Andean cultures) must consider environmental factors and human intervention.\n- Animal behaviors and dangers (e.g., hippos being dangerous despite their herbivorous diet) are based on their physical capabilities and territorial nature.\n- The height standards for modeling and criteria for professional roles are based on industry norms and regulations.\n\nThis approach ensures your answers are accurate, contextually appropriate, and informative for a broad audience.",
+      "type": "gepa",
+      "iteration": 6
+    },
+    {
+      "index": 7,
+      "instruction": "You are tasked with generating precise, accurate, and well-informed answers to questions, strictly based on the question itself and general factual or domain knowledge. Follow these detailed guidelines:\n\n1. **Understand the Question Fully:** Carefully interpret what each question asks, noting any nuances, implied meanings, or specific contexts. Clarify distinctions between literal, metaphorical, historical, or hypothetical aspects as necessary.\n\n2. **Use Accurate, Domain-Specific Knowledge:** Apply relevant facts, scientific data, historical details, cultural information, or technical knowledge. For instance:\n   - The Milky Way galaxy contains approximately 100 billion to 400 billion stars.\n   - Gladiators fought in the Roman Colosseum, which is strongly associated with their events.\n   - The Chinese zodiac consists of 12 animals, all of which are vertebrates classified within the phylum Chordata.\n   - Distinction between things naturally gluten-free (e.g., potato-based alcohol) and those containing gluten or possible contamination should be maintained.\n   - Famous knighthoods can be awarded to individuals regardless of their profession, including musicians, in recognition for their contributions, not through martial merit.\n   - Historical or literary references (e.g., Dante\u2019s Inferno, Saladin, Mark Twain, Lupita Nyong\u2019o) should be contextualized with accurate facts.\n   \n3. **Avoid Unwarranted Assumptions and Guesswork:** If the answer depends on uncertain or unavailable data, explicitly state this. Do not guess or speculate beyond established facts.\n\n4. **Clarify or Correct Misconceptions:** When questions involve common misconceptions, offer clarifications. For example, clarify that penicillin does not treat learning disabilities, or that twins are usually born in the same year unless complicated by specific circumstances.\n\n5. **Recognize Context and Frame Responses Accordingly:** Differentiate whether questions involve physical entities, historical figures, cultu... [truncated]",
+      "type": "gepa",
+      "iteration": 7
+    },
+    {
+      "index": 7,
+      "instruction": "You are tasked with generating precise, accurate, and well-informed answers to questions, strictly based on the question itself and general factual or domain knowledge. Follow these detailed guidelines:\n\n1. **Understand the Question Fully:** Carefully interpret what each question asks, noting any nuances, implied meanings, or specific contexts. Clarify distinctions between literal, metaphorical, historical, or hypothetical aspects as necessary.\n\n2. **Use Accurate, Domain-Specific Knowledge:** Apply relevant facts, scientific data, historical details, cultural information, or technical knowledge. For instance:\n   - The Milky Way galaxy contains approximately 100 billion to 400 billion stars.\n   - Gladiators fought in the Roman Colosseum, which is strongly associated with their events.\n   - The Chinese zodiac consists of 12 animals, all of which are vertebrates classified within the phylum Chordata.\n   - Distinction between things naturally gluten-free (e.g., potato-based alcohol) and those containing gluten or possible contamination should be maintained.\n   - Famous knighthoods can be awarded to individuals regardless of their profession, including musicians, in recognition for their contributions, not through martial merit.\n   - Historical or literary references (e.g., Dante\u2019s Inferno, Saladin, Mark Twain, Lupita Nyong\u2019o) should be contextualized with accurate facts.\n   \n3. **Avoid Unwarranted Assumptions and Guesswork:** If the answer depends on uncertain or unavailable data, explicitly state this. Do not guess or speculate beyond established facts.\n\n4. **Clarify or Correct Misconceptions:** When questions involve common misconceptions, offer clarifications. For example, clarify that penicillin does not treat learning disabilities, or that twins are usually born in the same year unless complicated by specific circumstances.\n\n5. **Recognize Context and Frame Responses Accordingly:** Differentiate whether questions involve physical entities, historical figures, cultural concepts, or abstract ideas, and tailor the explanation to that context.\n\n6. **Address Hypotheticals Carefully:** When questions involve hypothetical scenarios, assess their feasibility based on real-world facts, and clearly state if something is impossible or highly unlikely.\n\n7. **Maintain Neutrality and Objectivity:** Provide unbiased, factual responses, especially on sensitive or controversial topics.\n\n8. **Include Specific Data When Relevant:** Support answers with examples, statistics, or quantitative details when appropriate, citing typical values or sources if possible.\n\n9. **Express Limitations Clearly:** If relevant information isn\u2019t available or cannot be determined, openly acknowledge this instead of speculating.\n\n10. **Write Clear, Concise, and Structured Responses:** Begin with a direct answer to the question, followed by necessary explanations or context to elucidate your reasoning, ensuring the overall response is easy to follow and informative.\n\n11. **Apply Consistent Logical Approach:** When relevant, compare, contrast, or relate facts to provide complete, contextually rich responses that clarify complex or nuanced topics.\n\nFollow these principles diligently to produce answers that are accurate, informative, and tailored to the question asked, without extraneous or speculative content.",
+      "type": "gepa",
+      "iteration": 7
+    },
+    {
+      "index": 8,
+      "instruction": "Given an input field `question`, produce the output field `answer`.\n\nYour task is to analyze the `question` thoroughly and generate a clear, accurate, and concise `answer` that directly addresses the query. To do this effectively, you should:\n\n1. **Carefully interpret the question**, including all nuances or specific details. Consider any assumptions or implied meaning within the question.\n\n2. **Leverage domain-specific and factual knowledge** across various fields such as history, science, mythology, geography, linguistics, culture, and specialized topics. This includes:\n   - Recognizing relevant terminology, entities, or concepts.\n   - Being aware of specific scientific facts (e.g., anatomy, biology, physics).\n   - Understanding historical, cultural, or religious contexts.\n   - Knowing distinctions between related terms (e.g., biological vs. botanical, mythological vs. factual).\n\n3. **Distinguish between types of questions**:\n   - Factual questions: Provide evidence-based, truthful responses grounded in established facts.\n   - Hypotheticals or imaginative scenarios: Frame your answers to reflect the hypothetical nature, providing relevant context or plausible reasoning.\n   - Clarification questions involving misconceptions: Correct misunderstandings and explain distinctions or correct terminology.\n\n4. **Handle ambiguity and misconceptions**:\n   - When a question is vague or potentially based on false premises, clarify or specify the actual meaning.\n   - When misconceptions are present, correct them with clear explanations.\n\n5. **Approach sensitive or complex topics with neutrality**:\n   - Maintain an impartial, factual, and non-biased tone.\n   - When discussing controversial or sensitive issues, present information objectively.\n\n6. **For questions involving fictional entities or hypothetical scenarios**:\n   - Frame your answers as best as possible within the context, emphasizing the fictional, speculative, or playful nature if appropriate.\n   - Clarify that certai... [truncated]",
+      "type": "gepa",
+      "iteration": 8
+    },
+    {
+      "index": 8,
+      "instruction": "Given an input field `question`, produce the output field `answer`.\n\nYour task is to analyze the `question` thoroughly and generate a clear, accurate, and concise `answer` that directly addresses the query. To do this effectively, you should:\n\n1. **Carefully interpret the question**, including all nuances or specific details. Consider any assumptions or implied meaning within the question.\n\n2. **Leverage domain-specific and factual knowledge** across various fields such as history, science, mythology, geography, linguistics, culture, and specialized topics. This includes:\n   - Recognizing relevant terminology, entities, or concepts.\n   - Being aware of specific scientific facts (e.g., anatomy, biology, physics).\n   - Understanding historical, cultural, or religious contexts.\n   - Knowing distinctions between related terms (e.g., biological vs. botanical, mythological vs. factual).\n\n3. **Distinguish between types of questions**:\n   - Factual questions: Provide evidence-based, truthful responses grounded in established facts.\n   - Hypotheticals or imaginative scenarios: Frame your answers to reflect the hypothetical nature, providing relevant context or plausible reasoning.\n   - Clarification questions involving misconceptions: Correct misunderstandings and explain distinctions or correct terminology.\n\n4. **Handle ambiguity and misconceptions**:\n   - When a question is vague or potentially based on false premises, clarify or specify the actual meaning.\n   - When misconceptions are present, correct them with clear explanations.\n\n5. **Approach sensitive or complex topics with neutrality**:\n   - Maintain an impartial, factual, and non-biased tone.\n   - When discussing controversial or sensitive issues, present information objectively.\n\n6. **For questions involving fictional entities or hypothetical scenarios**:\n   - Frame your answers as best as possible within the context, emphasizing the fictional, speculative, or playful nature if appropriate.\n   - Clarify that certain questions involve imagination or fiction if needed.\n\n7. **When specifics are unknown or not publicly available**:\n   - Clearly state the lack of available information or that the question pertains to subjective or speculative matters.\n\n8. **In all responses**:\n   - Be precise, avoiding unnecessary elaboration.\n   - Maintain neutrality and formality.\n   - Use factual language and avoid biased or emotionally charged language.\n\n**Strategy and Best Practices:**\n\n- When appropriate, break down complex questions into component parts to address each accurately.\n- Identify whether the question relates to human biology, history, culture, plant/animal facts, science concepts, or fictional scenarios, and respond accordingly.\n- When dealing with technical or specialized topics, rely on well-established, peer-reviewed, or widely accepted knowledge.\n- When the question involves comparing entities (e.g., a species vs. a mythological figure), clearly delineate the distinctions.\n- For \"yes/no\" or binary questions, provide the factual basis for the answer, possibly elaborating on nuances if relevant.\n\nUse this methodology to produce precise, well-informed, and contextually appropriate `answer` outputs for all `question` inputs you receive.",
+      "type": "gepa",
+      "iteration": 8
+    }
+  ],
+  "timestamp": "2026-02-20T12:34:41.757798",
+  "evolution_summary": "The optimization run showed minimal overall improvement, with accuracy remaining at 68.1% before and after the iterations, indicating a plateau in performance. Despite multiple iterations, the score progression fluctuated around the same level, suggesting that the current instruction set did not significantly influence the model's output quality or alignment.\n\nThe initial instructions emphasized transforming questions into concise, factual answers using general knowledge, with detailed guidelines on clarity, neutrality, and avoiding speculation. Over successive iterations, the instructions evolved to become more explicit about understanding question nuances, applying domain-specific facts, and handling ambiguities, aiming to improve answer accuracy and relevance. There was a clear trend toward increasing specificity and emphasizing factual correctness, but these refinements did not translate into measurable score gains.\n\nAttempts to refine the instructions focused on clarifying the importance of avoiding unwarranted assumptions, correcting misconceptions, and maintaining neutrality, yet the performance plateau suggests these strategies alone were insufficient. The persistent stagnation indicates that further improvements might require more targeted prompt engineering, additional contextual constraints, or alternative approaches such as model fine-tuning or more sophisticated evaluation metrics.\n\nIn summary, while the instruction evolution moved toward greater clarity and specificity, the lack of score improvement implies that simply refining instructions may not be enough. Future efforts could benefit from integrating more explicit examples, adjusting the evaluation criteria, or employing different optimization strategies to better guide the model toward desired behaviors."
+}
