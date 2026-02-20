@@ -111,6 +111,17 @@ class DataLoader:
         return examples
 
     @property
+    def dataset_name(self) -> str:
+        """Human-readable dataset name derived from config."""
+        name = self._config.dataset_name
+        # Map HuggingFace identifiers to short display names
+        name_map = {
+            "hotpotqa/hotpot_qa": "HotPotQA",
+            "ChilleD/StrategyQA": "StrategyQA",
+        }
+        return name_map.get(name, name)
+
+    @property
     def trainset(self) -> List[Example]:
         """Training dataset (lazy-loaded)."""
         if self._trainset is None:

@@ -292,6 +292,7 @@ class OptimizationPipeline:
             valset_size=len(self.data_loader.valset),
             testset_size=len(self.data_loader.testset),
             optimizer=optimizer_type.value,
+            dataset=self.data_loader.dataset_name,
             **hyperparams,
         )
         self.tracker.open_jsonl()
